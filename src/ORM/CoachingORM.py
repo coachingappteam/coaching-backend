@@ -1,18 +1,20 @@
+from sqlalchemy.dialects.postgresql import UUID, DOUBLE_PRECISION
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, TIMESTAMP, Text, Boolean, ForeignKey, Date
-from sqlalchemy.dialects.postgresql import UUID
-from datetime import datetime
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column, Integer, String, TIMESTAMP, Text, Boolean, ForeignKey, Date, \
+    PrimaryKeyConstraint, Enum, create_engine
+from datetime import datetime
+from src.pg_config import pg_config
 
 Base = declarative_base()
 
 
 class Database:
 
-    def __init__(self, user, password, host, port, db):
-        self.__DATABASE_URI = 'postgres+psycopg2://' + str(user) + ':' + str(password) + '@' + str(host) + \
-                            ':' + str(port) + '/' + str(db)
+    def __init__(self):
+        self.__DATABASE_URI = 'postgres+psycopg2://%s:%s@%s:%s/%s' % \
+                              (pg_config['user'], pg_config['passwd'], pg_config['host'],
+                               pg_config['port'], pg_config['dbname'])
         self.db = create_engine(self.__DATABASE_URI)
         self.session = None
 
@@ -47,7 +49,7 @@ class Coach(Base):
     isActiveMember = Column(Boolean, nullable=False, default=False)
     isActiveUser = Column(Boolean, nullable=False, default=True)
     prefersImperial = Column(Boolean, nullable=False)
-    createDate = Column(TIMESTAMP, nullable=False)
+    createDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
 
     def __repr__(self):
         return "<coach(firstName='{}', lastName='{}', email={}, isActiveMember={})>" \
@@ -70,179 +72,217 @@ class Security(Base):
 
 class Payment(Base):
     __tablename__ = 'payment'
-    securityID = Column(Integer, primary_key=True)
+    paymentID = Column(Integer, primary_key=True)
     coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
-    token = Column(String, nullable=False)
-    createDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
-    lastAccess = Column(TIMESTAMP, nullable=False, default=datetime.today())
-    isActive = Column(Boolean, nullable=False, default=True)
+    payDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+    payTotal = Column(DOUBLE_PRECISION, nullable=False)
+    paymentSource = Column(Text, nullable=False)
+    sourceReceiptID = Column(Text, nullable=False)
 
     def __repr__(self):
-        return "<security(coachID='{}', createDate='{}', lastAccess={}, isActive={})>" \
-            .format(self.coachID, self.createDate, self.lastAccess, self.isActive)
-#
-# CREATE TABLE payment (
-#     paymentID uuid,
-#     coachID uuid NOT NULL,
-#     payDate TIMESTAMP,
-#     payTotal DOUBLE PRECISION,
-#     paymentSource text,
-#     sourceReceiptID VARCHAR(100),
-#     PRIMARY KEY (paymentID),
-#     FOREIGN KEY (coachID) REFERENCES coach(coachID)
-# );
-#
-# CREATE TABLE sport (
-#     sportID BIGSERIAL,
-#     sportName VARCHAR(30) NOT NULL,
-#     type SportType NOT NULL,
-#     PRIMARY KEY (sportID)
-# );
-#
-# CREATE TABLE team (
-#     teamID BIGSERIAL,
-#     coachID uuid NOT NULL,
-#     sportID BIGINT NOT NULL,
-#     teamName varchar(20) NOT NULL,
-#     isDeleted BOOLEAN,
-#     creationDate TIMESTAMP NOT NULL ,
-#     description TEXT,
-#     PRIMARY KEY (teamID),
-#     FOREIGN KEY (coachID) REFERENCES coach(coachID),
-#     FOREIGN KEY (sportID) REFERENCES sport(sportID)
-# );
-#
-# CREATE TABLE athlete (
-#     athleteID bigserial,
-#     coachID uuid NOT NULL,
-#     firstName varchar(20) NOT NULL ,
-#     lastName varchar(20) NOT NULL ,
-#     phone varchar(11),
-#     email varchar(50) NOT NULL ,
-#     weight DOUBLE PRECISION NOT NULL ,
-#     height DOUBLE PRECISION NOT NULL ,
-#     birthDate DATE NOT NULL ,
-#     sex Sex NOT NULL,
-#     creationDate TIMESTAMP NOT NULL ,
-#     PRIMARY KEY (athleteID),
-#     FOREIGN KEY (coachID) REFERENCES coach(coachID)
-# );
-#
-# CREATE TABLE member (
-#     athleteID BIGINT NOT NULL ,
-#     teamID BIGINT NOT NULL ,
-#     isActivePlayer BOOLEAN,
-#     PRIMARY KEY (athleteID, teamID),
-#     FOREIGN KEY (athleteID) REFERENCES athlete(athleteID),
-#     FOREIGN KEY (teamID) REFERENCES team(teamID)
-#  );
-#
-# CREATE TABLE role (
-#     roleID BIGSERIAL,
-#     sportID BIGINT NOT NULL ,
-#     roleName varchar(30) NOT NULL ,
-#     roleDescription varchar(300),
-#     PRIMARY KEY (roleID),
-#     FOREIGN KEY (sportID) REFERENCES sport(sportID)
-# );
-#
-# CREATE TABLE focus(
-#     athleteID BIGINT,
-#     roleID BIGINT,
-#     isPrimaryFocus BOOLEAN,
-#     PRIMARY KEY (athleteID, roleID),
-#     FOREIGN KEY (athleteID) REFERENCES athlete(athleteID),
-#     FOREIGN KEY (roleID) REFERENCES role(roleID)
-# );
-#
-# CREATE TABLE trainingPlan(
-#     planID BIGSERIAL,
-#     teamID BIGINT NOT NULL,
-#     parentPlanID BIGINT,
-#     title varchar(20) NOT NULL,
-#     isParentPlan BOOLEAN,
-#     isDeleted BOOLEAN,
-#     startDate DATE NOT NULL,
-#     endDate DATE NOT NULL,
-#     description text,
-#     PRIMARY KEY (planID),
-#     FOREIGN KEY (teamID) REFERENCES team(teamID),
-#     FOREIGN KEY (parentPlanID) REFERENCES trainingPlan(planID)
-# );
-#
-# CREATE TABLE exercise(
-#     exerciseID BIGSERIAL,
-#     exerciseName varchar(20) NOT NULL,
-#     exerciseDescription text,
-#     PRIMARY KEY (exerciseID)
-# );
-#
-# CREATE TABLE improves(
-#     exerciseID BIGINT NOT NULL,
-#     roleID BIGINT NOT NULL,
-#     PRIMARY KEY (exerciseID, roleID),
-#     FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID),
-#     FOREIGN KEY (roleID) REFERENCES role(roleID)
-# );
-#
-# CREATE TABLE session(
-#     sessionID BIGSERIAL,
-#     planID BIGINT NOT NULL,
-#     parentSessionID BIGINT,
-#     sessionTitle varchar(20) NOT NULL,
-#     sessionDescription text,
-#     sessionDate DATE NOT NULL,
-#     location text,
-#     isCompetition boolean,
-#     isCompleted boolean,
-#     PRIMARY KEY (sessionID),
-#     FOREIGN KEY (planID) REFERENCES trainingPlan(planID),
-#     FOREIGN KEY (parentSessionID) REFERENCES session(sessionID)
-# );
-#
-# CREATE TABLE attendance(
-#     sessionID BIGINT NOT NULL,
-#     athleteID BIGINT NOT NULL,
-#     PRIMARY KEY (sessionID, athleteID),
-#     FOREIGN KEY (sessionID) REFERENCES session(sessionID),
-#     FOREIGN KEY (athleteID) REFERENCES athlete(athleteID)
-# );
-#
-# CREATE TABLE practice(
-#   practiceID BIGSERIAL,
-#   exerciseID BIGINT,
-#   sessionID BIGINT,
-#   PRIMARY KEY(practiceID),
-#   FOREIGN KEY (exerciseID) REFERENCES exercise(exerciseID),
-#   FOREIGN KEY (sessionID) REFERENCES session(sessionID)
-# );
-#
-# CREATE TABLE unit (
-#     unitID BIGSERIAL,
-#     unitName VARCHAR(30) NOT NULL,
-#     units VARCHAR(10) NOT NULL,
-#     PRIMARY KEY (unitID)
-# );
-#
-# CREATE TABLE conversion (
-#     conversionID BIGSERIAL,
-#     fromUnit BIGINT NOT NULL,
-#     toUnit BIGINT NOT NULL,
-#     conversion text,
-#     PRIMARY KEY (conversionID),
-#     FOREIGN KEY (fromUnit) REFERENCES unit(unitID),
-#     FOREIGN KEY (toUnit) REFERENCES unit(unitID)
-# );
-#
-# CREATE TABLE result (
-#     resultID BIGSERIAL,
-#     practiceID BIGINT NOT NULL,
-#     athleteID BIGINT NOT NULL,
-#     unitID BIGINT NOT NULL,
-#     resultDate TIMESTAMP NOT NULL,
-#     resultDescription text,
-#     PRIMARY KEY (resultID),
-#     FOREIGN KEY (practiceID) REFERENCES practice(practiceID),
-#     FOREIGN KEY (athleteID) REFERENCES athlete(athleteID),
-#     FOREIGN KEY (unitID) REFERENCES unit(unitID)
-# );
+        return "<payment(paymentSource='{}', sourceReceiptID='{}', payDate={}, payTotal={})>" \
+            .format(self.paymentSource, self.sourceReceiptID, self.payDate, self.payTotal)
+
+
+class Sport(Base):
+    __tablename__ = 'sport'
+    sportID = Column(Integer, primary_key=True)
+    sportName = Column(String, nullable=False)
+    type = Column(Enum('Individual', 'Team', 'Mixed', name='Type'), nullable=False)
+
+    def __repr__(self):
+        return "<sport(sportName='{}', type='{}')>" \
+            .format(self.sportName, self.type)
+
+
+class Team(Base):
+    __tablename__ = 'team'
+    teamID = Column(Integer, primary_key=True)
+    coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
+    sportID = Column(Integer, ForeignKey('sport.sportID'), nullable=False)
+    teamName = Column(String, nullable=False)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+    teamDescription = Column(Text)
+
+    def __repr__(self):
+        return "<team(teamName='{}', creationDate='{}', teamDescription={}, teamDescription={})>" \
+            .format(self.teamName, self.creationDate, self.teamDescription, self.teamDescription)
+
+
+class Athlete(Base):
+    __tablename__ = 'athlete'
+    athleteID = Column(Integer, primary_key=True)
+    coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
+    firstName = Column(String, nullable=False)
+    lastName = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    phone = Column(String)
+    weight = Column(DOUBLE_PRECISION, nullable=False)
+    height = Column(DOUBLE_PRECISION, nullable=False)
+    sex = Column(Enum('M', 'F', 'X', name='Sex'), nullable=False)
+    birthdate = Column(Date, nullable=False)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+
+    def __repr__(self):
+        return "<athlete(firstName='{}', lastName='{}', email={}, birthdate={})>" \
+            .format(self.firstName, self.lastName, self.email, self.birthdate)
+
+
+class Member(Base):
+    __tablename__ = 'member'
+    athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
+    teamID = Column(Integer, ForeignKey('team.teamID'), nullable=False)
+    isActive = Column(Boolean, nullable=False, default=True)
+    __table_args__ = (PrimaryKeyConstraint('athleteID', 'teamID'), {},)
+
+    def __repr__(self):
+        return "<athlete(athleteID='{}', teamID='{}', isActive={})>" \
+            .format(self.athleteID, self.teamID, self.isActive)
+
+
+class Role(Base):
+    __tablename__ = 'role'
+    roleID = Column(Integer, primary_key=True)
+    sportID = Column(Integer, ForeignKey('sport.sportID'), nullable=False)
+    roleName = Column(String, nullable=False)
+    roleDescription = Column(Text)
+    creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+
+    def __repr__(self):
+        return "<athlete(roleName='{}', roleDescription='{}')>" \
+            .format(self.roleName, self.roleDescription)
+
+
+class Focus(Base):
+    __tablename__ = 'focus'
+    athleteID = Column(Integer,  ForeignKey('athlete.athleteID'), nullable=False)
+    roleID = Column(Integer, ForeignKey('role.roleID'), nullable=False)
+    isPrimaryFocus = Column(Boolean, nullable=False, default=False)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    __table_args__ = (PrimaryKeyConstraint('athleteID', 'roleID'), {},)
+
+    def __repr__(self):
+        return "<athlete(athleteID='{}', roleID='{}', isPrimaryFocus='{}')>" \
+            .format(self.athleteID, self.roleID, self.isPrimaryFocus)
+
+
+class TrainingPlan(Base):
+    __tablename__ = 'trainingPlan'
+    planID = Column(Integer, primary_key=True)
+    teamID = Column(Integer, ForeignKey('team.teamID'), nullable=False)
+    parentPlanID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=True)
+    title = Column(String, nullable=False)
+    isParentPlan = Column(Boolean, nullable=False, default=False)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    startDate = Column(Date, nullable=False)
+    endDate = Column(Date, nullable=False)
+    planDescription = Column(Text)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+
+    def __repr__(self):
+        return "<athlete(title='{}', planDescription='{}', startDate={}, endDate={})>" \
+            .format(self.title, self.planDescription, self.startDate, self.endDate)
+
+
+class Exercise(Base):
+    __tablename__ = 'exercise'
+    exerciseID = Column(Integer, primary_key=True)
+    exerciseName = Column(String, nullable=False)
+    exerciseDescription = Column(Text)
+    creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+
+    def __repr__(self):
+        return "<athlete(exerciseName='{}', exerciseDescription='{}')>" \
+            .format(self.exerciseName, self.exerciseDescription)
+
+
+class Improves(Base):
+    __tablename__ = 'improves'
+    exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
+    roleID = Column(Integer, ForeignKey('role.roleID'), nullable=False)
+    __table_args__ = (PrimaryKeyConstraint('exerciseID', 'roleID'), {},)
+
+    def __repr__(self):
+        return "<athlete(exerciseID='{}', roleID='{}')>" \
+            .format(self.exerciseID, self.roleID)
+
+
+class Session(Base):
+    __tablename__ = 'session'
+    sessionID = Column(Integer, primary_key=True)
+    planID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=False)
+    sessionTitle = Column(String, nullable=False)
+    location = Column(Text)
+    isCompetition = Column(Boolean, default=False)
+    isCompleted = Column(Boolean, nullable=False, default=False)
+    isDeleted = Column(Boolean, nullable=False, default=False)
+    sessionDate = Column(Date, nullable=False)
+    sessionDescription = Column(Text)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+
+    def __repr__(self):
+        return "<athlete(sessionTitle='{}', sessionDescription='{}', startDsessionDateate={}, location={})>" \
+            .format(self.sessionTitle, self.sessionDescription, self.sessionDate, self.location)
+
+
+class Attendance(Base):
+    __tablename__ = 'attendance'
+    sessionID = Column(Integer,  ForeignKey('session.sessionID'), nullable=False)
+    athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+    __table_args__ = (PrimaryKeyConstraint('sessionID', 'athleteID'), {},)
+
+    def __repr__(self):
+        return "<athlete(athleteID='{}', sessionID='{}')>" \
+            .format(self.athleteID, self.sessionID)
+
+
+class Practice(Base):
+    __tablename__ = 'practice'
+    practiceID = Column(Integer, primary_key=True)
+    exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
+    sessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
+
+    def __repr__(self):
+        return "<athlete(practiceID='{}', sessionID='{}')>" \
+            .format(self.practiceID, self.sessionID)
+
+
+class Unit(Base):
+    __tablename__ = 'unit'
+    unitID = Column(Integer, primary_key=True)
+    unitName = Column(String, nullable=False)
+    unit = Column(String, nullable=False)
+
+    def __repr__(self):
+        return "<athlete(unitName='{}', unit='{}')>" \
+            .format(self.unitName, self.unit)
+
+
+class Conversion(Base):
+    __tablename__ = 'conversion'
+    conversionID = Column(Integer, primary_key=True)
+    fromID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
+    toID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
+    conversion = Column(Text, nullable=False)
+
+    def __repr__(self):
+        return "<athlete(fromID='{}', conversion='{}', toUnit='{}')>" \
+            .format(self.fromID, self.conversion, self.toID)
+
+
+class Result(Base):
+    __tablename__ = 'result'
+    resultID = Column(Integer, primary_key=True)
+    practiceID = Column(Integer, ForeignKey('practice.practiceID'), nullable=False)
+    athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
+    unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
+    resultDate = Column(Date, nullable=False, default=datetime.today())
+    resultDescription = Column(Text)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
