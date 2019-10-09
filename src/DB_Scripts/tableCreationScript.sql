@@ -18,17 +18,20 @@ DROP TABLE IF EXISTS security;
 DROP TABLE IF EXISTS coach;
 
 DROP TYPE IF EXISTS SportType;
-DROP TYPE IF EXISTS PaySource;
+DROP TYPE IF EXISTS Sex;
 
+
+--CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE SportType AS ENUM ('individual', 'team', 'hybrid');
-CREATE TYPE PaySource AS ENUM ('paypal', 'amazon_pay', 'google_pay', 'apple_pay');
+CREATE TYPE Sex AS ENUM ('M', 'F', 'X');
 
 CREATE TABLE coach (
     coachID uuid,
+    password text NOT NULL,
     firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
     phone VARCHAR(11),
     isActiveMember BOOLEAN,
     isActiveUser BOOLEAN,
@@ -53,7 +56,7 @@ CREATE TABLE payment (
     coachID uuid NOT NULL,
     payDate TIMESTAMP,
     payTotal DOUBLE PRECISION,
-    paymentSource PaySource,
+    paymentSource text,
     sourceReceiptID VARCHAR(100),
     PRIMARY KEY (paymentID),
     FOREIGN KEY (coachID) REFERENCES coach(coachID)
@@ -89,6 +92,7 @@ CREATE TABLE athlete (
     weight DOUBLE PRECISION NOT NULL ,
     height DOUBLE PRECISION NOT NULL ,
     birthDate DATE NOT NULL ,
+    sex Sex NOT NULL,
     creationDate TIMESTAMP NOT NULL ,
     PRIMARY KEY (athleteID),
     FOREIGN KEY (coachID) REFERENCES coach(coachID)
@@ -155,6 +159,7 @@ CREATE TABLE session(
     sessionID BIGSERIAL,
     planID BIGINT NOT NULL,
     parentSessionID BIGINT,
+    sessionTitle varchar(20) NOT NULL,
     sessionDescription text,
     sessionDate DATE NOT NULL,
     location text,

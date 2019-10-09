@@ -15,7 +15,7 @@ pg_config = {
 pg_config = {
     'user':'coaching_admin',
     'passwd': 'admin',
-    'dbname':'qdb',
+    'dbname':'coaching_app',
     'host': '127.0.0.1',
     'post': 5432
 }
