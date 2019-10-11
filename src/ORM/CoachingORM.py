@@ -1,5 +1,6 @@
 from sqlalchemy.dialects.postgresql import UUID, DOUBLE_PRECISION
 from sqlalchemy.ext.declarative import declarative_base
+from uuid import uuid4
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Text, Boolean, ForeignKey, Date, \
     PrimaryKeyConstraint, Enum, create_engine
@@ -16,7 +17,7 @@ class Database:
                               (pg_config['user'], pg_config['passwd'], pg_config['host'],
                                pg_config['port'], pg_config['dbname'])
         self.db = create_engine(self.__DATABASE_URI)
-        self.session = None
+        self.session = sessionmaker(bind=self.db)
 
     def createTables(self):
         Base.metadata.create_all(self.db)
@@ -28,23 +29,17 @@ class Database:
         self.dropTables()
         self.createTables()
 
-    def openSession(self):
-        if self.session is None:
-            self.session = sessionmaker(bind=self.db)
+    def getNewSession(self):
         return self.session()
-
-    def closeSession(self):
-        if self.session is not None:
-            self.session().close()
 
 
 class Coach(Base):
     __tablename__ = 'coach'
-    coachID = Column(UUID, primary_key=True)
-    password = Column(Text, nullable=False)
+    coachID = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    password = Column(String, nullable=False)
     firstName = Column(String, nullable=False)
     lastName = Column(String, nullable=False)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
     phone = Column(String)
     isActiveMember = Column(Boolean, nullable=False, default=False)
     isActiveUser = Column(Boolean, nullable=False, default=True)
@@ -55,12 +50,25 @@ class Coach(Base):
         return "<coach(firstName='{}', lastName='{}', email={}, isActiveMember={})>" \
             .format(self.firstName, self.lastName, self.email, self.isActiveMember)
 
+    def json(self):
+        return {
+            "coachID": self.coachID,
+            "firstName": self.firstName,
+            "lastName": self.lastName,
+            "email": self.email,
+            "phone": self.phone,
+            "isActiveMember": self.isActiveMember,
+            "isActiveUser": self.isActiveUser,
+            "prefersImperial": self.prefersImperial,
+            "createDate": self.createDate
+        }
+
 
 class Security(Base):
     __tablename__ = 'security'
-    securityID = Column(Integer, primary_key=True)
+    securityID = Column(Integer, primary_key=True, autoincrement=True)
     coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
-    token = Column(String, nullable=False)
+    token = Column(String, nullable=False, unique=True)
     createDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
     lastAccess = Column(TIMESTAMP, nullable=False, default=datetime.today())
     isActive = Column(Boolean, nullable=False, default=True)
@@ -72,7 +80,7 @@ class Security(Base):
 
 class Payment(Base):
     __tablename__ = 'payment'
-    paymentID = Column(Integer, primary_key=True)
+    paymentID = Column(Integer, primary_key=True, autoincrement=True)
     coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
     payDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
     payTotal = Column(DOUBLE_PRECISION, nullable=False)
@@ -97,7 +105,7 @@ class Sport(Base):
 
 class Team(Base):
     __tablename__ = 'team'
-    teamID = Column(Integer, primary_key=True)
+    teamID = Column(Integer, primary_key=True, autoincrement=True)
     coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
     sportID = Column(Integer, ForeignKey('sport.sportID'), nullable=False)
     teamName = Column(String, nullable=False)
@@ -112,7 +120,7 @@ class Team(Base):
 
 class Athlete(Base):
     __tablename__ = 'athlete'
-    athleteID = Column(Integer, primary_key=True)
+    athleteID = Column(Integer, primary_key=True, autoincrement=True)
     coachID = Column(UUID, ForeignKey('coach.coachID'), nullable=False)
     firstName = Column(String, nullable=False)
     lastName = Column(String, nullable=False)
@@ -144,7 +152,7 @@ class Member(Base):
 
 class Role(Base):
     __tablename__ = 'role'
-    roleID = Column(Integer, primary_key=True)
+    roleID = Column(Integer, primary_key=True, autoincrement=True)
     sportID = Column(Integer, ForeignKey('sport.sportID'), nullable=False)
     roleName = Column(String, nullable=False)
     roleDescription = Column(Text)
@@ -172,7 +180,7 @@ class Focus(Base):
 
 class TrainingPlan(Base):
     __tablename__ = 'trainingPlan'
-    planID = Column(Integer, primary_key=True)
+    planID = Column(Integer, primary_key=True, autoincrement=True)
     teamID = Column(Integer, ForeignKey('team.teamID'), nullable=False)
     parentPlanID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=True)
     title = Column(String, nullable=False)
@@ -190,7 +198,7 @@ class TrainingPlan(Base):
 
 class Exercise(Base):
     __tablename__ = 'exercise'
-    exerciseID = Column(Integer, primary_key=True)
+    exerciseID = Column(Integer, primary_key=True, autoincrement=True)
     exerciseName = Column(String, nullable=False)
     exerciseDescription = Column(Text)
     creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
@@ -215,7 +223,7 @@ class Improves(Base):
 
 class Session(Base):
     __tablename__ = 'session'
-    sessionID = Column(Integer, primary_key=True)
+    sessionID = Column(Integer, primary_key=True, autoincrement=True)
     planID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=False)
     sessionTitle = Column(String, nullable=False)
     location = Column(Text)
@@ -245,7 +253,7 @@ class Attendance(Base):
 
 class Practice(Base):
     __tablename__ = 'practice'
-    practiceID = Column(Integer, primary_key=True)
+    practiceID = Column(Integer, primary_key=True, autoincrement=True)
     exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
     sessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
 
@@ -256,7 +264,7 @@ class Practice(Base):
 
 class Unit(Base):
     __tablename__ = 'unit'
-    unitID = Column(Integer, primary_key=True)
+    unitID = Column(Integer, primary_key=True, autoincrement=True)
     unitName = Column(String, nullable=False)
     unit = Column(String, nullable=False)
 
@@ -267,7 +275,7 @@ class Unit(Base):
 
 class Conversion(Base):
     __tablename__ = 'conversion'
-    conversionID = Column(Integer, primary_key=True)
+    conversionID = Column(Integer, primary_key=True, autoincrement=True)
     fromID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     toID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     conversion = Column(Text, nullable=False)
@@ -279,7 +287,7 @@ class Conversion(Base):
 
 class Result(Base):
     __tablename__ = 'result'
-    resultID = Column(Integer, primary_key=True)
+    resultID = Column(Integer, primary_key=True, autoincrement=True)
     practiceID = Column(Integer, ForeignKey('practice.practiceID'), nullable=False)
     athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
     unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)

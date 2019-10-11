@@ -18,6 +18,8 @@ def mainPage():
 @app.route('/users', methods=['GET', 'POST'])
 #WORKS
 def getAllUsers():
+
+    # request.headers.get('your-header-name')
     if request.method == 'GET':
         result = User.getAllUsers()
         return result
