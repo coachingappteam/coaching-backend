@@ -5,7 +5,7 @@ import psycopg2
 import datetime
 import hashlib
 
-from src.ORM.CoachingORM import Database, Coach
+from src.ORM.CoachingORM import Database, Coach, Team, Athlete
 
 
 class CoachDAO:
@@ -24,6 +24,13 @@ class CoachDAO:
                       email=email, phone=phone, prefersImperial=prefersImperial)
         session = self.conn.getNewSession()
         session.add(coach)
+        session.commit()
+        session.close()
+
+    def createAthlete(self, coachID, firstName, lastName, email, phone, weight, height, sex, birthdate):
+        athl = Athlete(coachID=coachID, firstName=firstName, lastName=lastName, email=email, phone=phone, weight=weight, height=height, sex=sex, birthdate = birthdate)
+        session = self.conn.getNewSession()
+        session.add(athl)
         session.commit()
         session.close()
 

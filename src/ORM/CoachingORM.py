@@ -71,11 +71,19 @@ class Security(Base):
     token = Column(String, nullable=False, unique=True)
     createDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
     lastAccess = Column(TIMESTAMP, nullable=False, default=datetime.today())
-    isActive = Column(Boolean, nullable=False, default=True)
 
     def __repr__(self):
-        return "<security(coachID='{}', createDate='{}', lastAccess={}, isActive={})>" \
-            .format(self.coachID, self.createDate, self.lastAccess, self.isActive)
+        return "<security(coachID='{}', createDate='{}', lastAccess={})>" \
+            .format(self.coachID, self.createDate, self.lastAccess)
+
+    def json(self):
+        return {
+            "securityID": self.securityID,
+            "coachID": self.coachID,
+            "token": self.token,
+            "createDate": self.createDate,
+            "lastAccess": self.lastAccess
+        }
 
 
 class Payment(Base):
