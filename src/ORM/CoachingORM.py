@@ -94,6 +94,7 @@ class Payment(Base):
     payTotal = Column(DOUBLE_PRECISION, nullable=False)
     paymentSource = Column(Text, nullable=False)
     sourceReceiptID = Column(Text, nullable=False)
+    membershipLength = Column(Integer, nullable=False)
 
     def __repr__(self):
         return "<payment(paymentSource='{}', sourceReceiptID='{}', payDate={}, payTotal={})>" \

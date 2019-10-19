@@ -64,6 +64,15 @@ class SecurityDAO:
 
         return result
 
+    def getTokenOwner(self, token):
+        session = self.conn.getNewSession()
+
+        result = session.query(Security).filter(Security.token == token).first()
+
+        session.close()
+
+        return result.coachID
+
     # ============================== Update Methods =========================== #
     def validateToken(self, token):
         session = self.conn.getNewSession()
