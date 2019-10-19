@@ -15,8 +15,6 @@ def mainPage():
 # ==================== Coach Methods ====================== #
 @app.route('/coach/login', methods=['POST'])
 def coachLogin():
-
-    # request.headers.get('your-header-name')
     if request.method == 'POST':
         result = Coach.loginCoach(request.json)
         return result
@@ -32,14 +30,26 @@ def coachSignup():
     else:
         return jsonify(Error="Method not allowed"), 404
 
+
+@app.route('/coach/signout', methods=['DELETE'])
+def coachSignout():
+    if request.method == 'DELETE':
+        result = Coach.signoutCoach(request.headers)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
 @app.route('/coach/athlete/create', methods=['POST'])
 def createAthlete():
-    # request.headers.get('your-header-name')
     if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.createAthlete(request.json, request.headers)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
+
 
 if __name__ == '__main__':
     app.run()

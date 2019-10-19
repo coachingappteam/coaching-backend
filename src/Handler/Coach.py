@@ -48,6 +48,14 @@ def signupCoach(json):
         return jsonify(Error="Required Parameter is missing"), 400
 
 
+def signoutCoach(header):
+    token = header['token']
+    securityDAO.deleteToken(token)
+    if securityDAO.validateToken(token):
+        return jsonify(Error="Log out unsuccessful"), 400
+    return jsonify(Success="Log out successful"), 200
+
+
 def checkToken(header):
     token = header['token']
     return securityDAO.validateToken(token)
