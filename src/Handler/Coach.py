@@ -16,7 +16,7 @@ def loginCoach(json):
         coach = dao.readCoach(email, password)
         if coach:
             token = securityDAO.createToken(coach.coachID)
-            if securityDAO.checkToken(token):
+            if not securityDAO.checkToken(token):
                 return jsonify(Error="Token was not created.")
             return jsonify(Coach=coach.json(), token=token), 200
         else:
@@ -36,6 +36,9 @@ def signupCoach(json):
     email = json['email']
     imperial = json['prefersImperial']
     if password and fname and lname and email and imperial is not None:
+        coach = dao.readCoach(email, password)
+        if coach is not None:
+            return jsonify(Error="Coach with given email exists."), 401
         dao.createCoach(password, fname, lname, phone, email, imperial)
         coach = dao.readCoach(email, password)
         if coach is None:
