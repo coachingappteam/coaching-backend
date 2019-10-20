@@ -2,6 +2,7 @@
 This Class contain DAO methods for the entity Security
 """
 import secrets
+import uuid
 from datetime import datetime
 from src.ORM.CoachingORM import Database, Security
 
@@ -18,7 +19,7 @@ class SecurityDAO:
         coachToken = self.getToken(coachID)
 
         if coachToken is not None:
-            return coachToken.token
+            self.deleteToken(coachToken.token)
 
         session = self.conn.getNewSession()
         token = None
@@ -49,7 +50,7 @@ class SecurityDAO:
     def getToken(self, coachID):
         session = self.conn.getNewSession()
 
-        result = session.query(Security).filter(Security.coachID == coachID).first()
+        result = session.query(Security).filter(Security.coachID == str(coachID)).first()
 
         session.close()
 
