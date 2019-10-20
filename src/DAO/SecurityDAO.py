@@ -29,7 +29,7 @@ class SecurityDAO:
             if self.checkToken(token):
                 token = None
 
-        security = Security(coachID=coachID, token=token)
+        security = Security(coachID=str(coachID), token=token)
 
         session.add(security)
         session.commit()

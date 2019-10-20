@@ -39,11 +39,8 @@ def signupCoach(json):
         dao.createCoach(password, fname, lname, phone, email, imperial)
         coach = dao.readCoach(email, password)
         if coach is None:
-            return jsonify(Error="Insert not successful"), 500
-        token = securityDAO.createToken(coach.coachID)
-        if securityDAO.checkToken(token):
-            return jsonify(Error="User created, but token was not created.")
-        return jsonify(Coach=coach.json(), token=token), 200
+            return jsonify(Error="Insert not successful"), 401
+        return jsonify(Coach=coach.json()), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
