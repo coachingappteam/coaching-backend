@@ -103,9 +103,7 @@ class SecurityDAO:
     def deleteToken(self, token):
         session = self.conn.getNewSession()
 
-        record = self.checkToken(token)
-
-        session.delete(record)
+        session.query(Security).filter(Security.token == token).delete()
         session.commit()
         session.close()
 
