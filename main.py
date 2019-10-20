@@ -1,17 +1,14 @@
-import flask
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from src.mainpage import mainpage
 from src.Handler import Coach
 
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder='./src/template')
 CORS(app)
 
 
 @app.route('/')
 def mainPage():
-    return flask.render_template('mainpage.html')
+    return render_template('mainpage.html')
 
 
 # ==================== Coach Methods ====================== #
