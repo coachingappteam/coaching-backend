@@ -127,6 +127,18 @@ class Team(Base):
             .format(self.teamName, self.creationDate, self.teamDescription, self.teamDescription)
 
 
+class Support(Base):
+    __tablename__ = 'support'
+    coachID = Column(UUID,  ForeignKey('coach.coachID'), nullable=False)
+    teamID = Column(Integer, ForeignKey('team.teamID'), nullable=False)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+    __table_args__ = (PrimaryKeyConstraint('coachID', 'teamID'), {},)
+
+    def __repr__(self):
+        return "<athlete(athleteID='{}', sessionID='{}')>" \
+            .format(self.coachID, self.teamID)
+
+
 class Athlete(Base):
     __tablename__ = 'athlete'
     athleteID = Column(Integer, primary_key=True, autoincrement=True)

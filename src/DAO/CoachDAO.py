@@ -76,6 +76,13 @@ class CoachDAO:
         return result
 
     '''
+    Read Teams
+    '''
+    def readTeams(self, coachID):
+        session = self.conn.getNewSession()
+        result = session.query(Team).filter()
+
+    '''
     Read Coach
     '''
     def readCoachByID(self, coachID):

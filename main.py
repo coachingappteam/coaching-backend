@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 CORS(app)
 
+
 @app.route('/')
 def mainPage():
     return mainpage
@@ -47,6 +48,13 @@ def createAthlete():
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.createAthlete(request.json, request.headers)
         return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+@app.route('/test', methods=['GET'])
+def testMethod():
+    if request.method == 'POST':
+        return jsonify(Success="Method allowed"), 200
     else:
         return jsonify(Error="Method not allowed"), 404
 
