@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coaching REST API</title>
+</head>
+<body>
+    <h1>Welcome!!!</h1>
+    <h2>URL Locations:</h2>
+    <h3>Main Page:</h3>
+    <ul><li>/</li></ul>
+    <h3>Coach Locations:</h3>
+    <ul>
+        <li>[POST] /coach/login</li>
+            <p> Body:
+                {
+	                "password": "lolo",
+                    "email" : "aa@bb.com"
+                }
+            </p>
+            <p>
+                Response:
+                {
+                "Coach": {
+                    "coachID": "28832024-f075-4c63-8d3a-4d931ccf13a6",
+                    "createDate": "Sun, 20 Oct 2019 14:57:56 GMT",
+                    "email": "aa@bb.com",
+                    "firstName": "Aly",
+                    "isActiveMember": false,
+                    "isActiveUser": true,
+                    "lastName": "Pachino",
+                    "phone": "7877877788",
+                    "prefersImperial": false
+                    },
+                "token": "4WJMKB2NMZ4HWuaUHXruTZPWsEa1y8vxl8IL3Zf-6H4"
+                }
+            </p>
+        <li>[POST] /coach/signup</li>
+            <p> Body:
+                {
+                    "firstName": "Aly",
+                    "lastName": "Pachino",
+                    "phone": "7877877788",
+	                "password": "lolo",
+                    "email" : "aa@bb.com"
+                    "prefersImperial": false
+                }
+            </p>
+            <p>
+                Response:
+                {
+                "Coach": {
+                    "coachID": "28832024-f075-4c63-8d3a-4d931ccf13a6",
+                    "createDate": "Sun, 20 Oct 2019 14:57:56 GMT",
+                    "email": "aa@bb.com",
+                    "firstName": "Aly",
+                    "isActiveMember": false,
+                    "isActiveUser": true,
+                    "lastName": "Pachino",
+                    "phone": "7877877788",
+                    "prefersImperial": false
+                    }
+                }
+            </p>
+        <li>[DELETE] /coach/signout</li>
+            <p> Header:
+                {
+                    "token": "4WJMKB2NMZ4HWuaUHXruTZPWsEa1y8vxl8IL3Zf-6H4"
+                }
+            </p>
+            <p>
+                Response:
+                {
+                    "Success": "Log out successful"
+                }
+            </p>
+        <li>[POST] /coach/create/athlete</li>
+    </ul>
+</body>
+</html>

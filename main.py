@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from src.mainpage import mainpage
@@ -10,7 +11,7 @@ CORS(app)
 
 @app.route('/')
 def mainPage():
-    return mainpage
+    return flask.render_template('mainpage.html')
 
 
 # ==================== Coach Methods ====================== #
