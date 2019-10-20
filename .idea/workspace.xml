@@ -4,8 +4,7 @@
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ORM/CoachingORM.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/CoachingORM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -166,7 +165,7 @@
       <workItem from="1570560214994" duration="2886000" />
       <workItem from="1570574804246" duration="53878000" />
       <workItem from="1571081042126" duration="36000" />
-      <workItem from="1571494858263" duration="23302000" />
+      <workItem from="1571494858263" duration="25543000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -210,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571523731345</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Uploading test method">
+      <created>1571578968525</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1571578968525</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,7 +242,8 @@
     <MESSAGE value="Added files for heroku integration and added new methods for DAO." />
     <MESSAGE value="Added a guide mainpage for REST API calls and a log out call." />
     <MESSAGE value="Added credentials for Heroku DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added credentials for Heroku DB" />
+    <MESSAGE value="Uploading test method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Uploading test method" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />

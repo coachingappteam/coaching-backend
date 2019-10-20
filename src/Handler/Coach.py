@@ -35,7 +35,7 @@ def signupCoach(json):
     phone = json['phone']
     email = json['email']
     imperial = json['prefersImperial']
-    if password and fname and lname and email and imperial:
+    if password and fname and lname and email and imperial is not None:
         dao.createCoach(password, fname, lname, phone, email, imperial)
         coach = dao.readCoach(email, password)
         if coach is None:

@@ -51,9 +51,10 @@ def createAthlete():
     else:
         return jsonify(Error="Method not allowed"), 404
 
+
 @app.route('/test', methods=['GET'])
 def testMethod():
-    if request.method == 'POST':
+    if request.method == 'GET':
         return jsonify(Success="Method allowed"), 200
     else:
         return jsonify(Error="Method not allowed"), 404
