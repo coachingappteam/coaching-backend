@@ -43,7 +43,6 @@ class Coach(Base):
     phone = Column(String)
     isActiveMember = Column(Boolean, nullable=False, default=False)
     isActiveUser = Column(Boolean, nullable=False, default=True)
-    prefersImperial = Column(Boolean, nullable=False)
     createDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
 
     def __repr__(self):
@@ -59,7 +58,6 @@ class Coach(Base):
             "phone": self.phone,
             "isActiveMember": self.isActiveMember,
             "isActiveUser": self.isActiveUser,
-            "prefersImperial": self.prefersImperial,
             "createDate": self.createDate
         }
 
@@ -147,8 +145,6 @@ class Athlete(Base):
     lastName = Column(String, nullable=False)
     email = Column(String, nullable=False)
     phone = Column(String)
-    weight = Column(DOUBLE_PRECISION, nullable=False)
-    height = Column(DOUBLE_PRECISION, nullable=False)
     sex = Column(Enum('M', 'F', 'X', name='Sex'), nullable=False)
     birthdate = Column(Date, nullable=False)
     isDeleted = Column(Boolean, nullable=False, default=False)
@@ -217,11 +213,25 @@ class TrainingPlan(Base):
             .format(self.title, self.planDescription, self.startDate, self.endDate)
 
 
+class Unit(Base):
+    __tablename__ = 'unit'
+    unitID = Column(Integer, primary_key=True, autoincrement=True)
+    unitName = Column(String, nullable=False)
+    unit = Column(String, nullable=False)
+
+    def __repr__(self):
+        return "<athlete(unitName='{}', unit='{}')>" \
+            .format(self.unitName, self.unit)
+
+
 class Exercise(Base):
     __tablename__ = 'exercise'
     exerciseID = Column(Integer, primary_key=True, autoincrement=True)
+    unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     exerciseName = Column(String, nullable=False)
     exerciseDescription = Column(Text)
+    style = Column(String, nullable=False)
+    measure = Column(DOUBLE_PRECISION, nullable=False)
     creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
     isDeleted = Column(Boolean, nullable=False, default=False)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
@@ -277,33 +287,11 @@ class Practice(Base):
     practiceID = Column(Integer, primary_key=True, autoincrement=True)
     exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
     sessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
+    repetitions = Column(Integer, nullable=False)
 
     def __repr__(self):
         return "<athlete(practiceID='{}', sessionID='{}')>" \
             .format(self.practiceID, self.sessionID)
-
-
-class Unit(Base):
-    __tablename__ = 'unit'
-    unitID = Column(Integer, primary_key=True, autoincrement=True)
-    unitName = Column(String, nullable=False)
-    unit = Column(String, nullable=False)
-
-    def __repr__(self):
-        return "<athlete(unitName='{}', unit='{}')>" \
-            .format(self.unitName, self.unit)
-
-
-class Conversion(Base):
-    __tablename__ = 'conversion'
-    conversionID = Column(Integer, primary_key=True, autoincrement=True)
-    fromID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
-    toID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
-    conversion = Column(Text, nullable=False)
-
-    def __repr__(self):
-        return "<athlete(fromID='{}', conversion='{}', toUnit='{}')>" \
-            .format(self.fromID, self.conversion, self.toID)
 
 
 class Result(Base):

@@ -35,7 +35,7 @@ def signupCoach(json):
     phone = json['phone']
     email = json['email']
     imperial = json['prefersImperial']
-    if password and fname and lname and email and imperial is not None:
+    if password and fname and lname and email:
         coach = dao.readCoach(email, password)
         if coach is not None:
             return jsonify(Error="Coach with given email exists."), 401
@@ -61,22 +61,33 @@ def checkToken(header):
     return securityDAO.validateToken(token)
 
 
-def createAthlete(header, json):
-    if not checkToken(header):
-        return jsonify(Error="Invalid Token"), 400
-    if json != 9:
-        coachID = json["coachID"]
+def createAthlete(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+
+    if json != 6:
         firstName = json["firstName"]
         lastName = json["lastName"]
         email = json["email"]
         phone = json["phone"]
-        weight = json["weight"]
-        height = json["height"]
         sex = json["sex"]
         birthdate = json["birthdate"]
 
-        if coachID and firstName and lastName and email and weight and height and sex and birthdate:
-            dao.createAthlete(coachID, firstName, lastName, email, phone, weight, height, sex, birthdate)
+        if coachID and firstName and lastName and email and sex and birthdate:
+            dao.createAthlete(coachID, firstName, lastName, email, phone, sex, birthdate)
             return  jsonify(Success="Athlete added"), 200
+        else:
+            return jsonify(Error="Required Parameter is missing"), 400
+
+
+def createTeam(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    if json != 3:
+        sportID = json['sportID']
+        teamName = json['teamName']
+        teamDescription = json['teamDescription']
+
+        if coachID and sportID and teamName:
+            dao.createTeam(coachID, sportID, teamName, teamDescription)
+            return  jsonify(Success="Team added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400

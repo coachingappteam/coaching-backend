@@ -44,7 +44,18 @@ def createAthlete():
     if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.createAthlete(request.json, request.headers)
+        result = Coach.createAthlete(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/coach/team/create', methods=['POST'])
+def createAthlete():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Coach.createTeam(request.headers, request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404

@@ -1,11 +1,10 @@
 """
-This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams, Member, Focus
+This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams, Member, Focus, Support
 """
-import psycopg2
 from datetime import datetime
 import hashlib
 
-from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member
+from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member, Support
 
 
 class CoachDAO:
@@ -19,16 +18,16 @@ class CoachDAO:
     '''
     Add a new Coach
     '''
-    def createCoach(self, password, firstName, lastName, phone, email, prefersImperial):
+    def createCoach(self, password, firstName, lastName, phone, email):
         coach = Coach(password=str(hashlib.md5(password.encode()).hexdigest()), firstName=firstName, lastName=lastName,
-                      email=email, phone=phone, prefersImperial=prefersImperial)
+                      email=email, phone=phone)
         session = self.conn.getNewSession()
         session.add(coach)
         session.commit()
         session.close()
 
-    def createAthlete(self, coachID, firstName, lastName, email, phone, weight, height, sex, birthdate):
-        athl = Athlete(coachID=coachID, firstName=firstName, lastName=lastName, email=email, phone=phone, weight=weight, height=height, sex=sex, birthdate = birthdate)
+    def createAthlete(self, coachID, firstName, lastName, email, phone, sex, birthdate):
+        athl = Athlete(coachID=coachID, firstName=firstName, lastName=lastName, email=email, phone=phone, sex=sex, birthdate = birthdate)
         session = self.conn.getNewSession()
         session.add(athl)
         session.commit()
@@ -62,6 +61,14 @@ class CoachDAO:
         session.commit()
         session.close()
 
+    def createSupport(self, coachID, teamID):
+        support = Support(coachID=coachID, teamID=teamID)
+        session = self.conn.getNewSession()
+        session.add(support)
+        session.commit()
+        session.close()
+
+
     # ============================== Read Methods =========================== #
 
     '''
@@ -78,9 +85,10 @@ class CoachDAO:
     '''
     Read Teams
     '''
-    def readTeams(self, coachID):
+    def readTeamsForCoach(self, coachID):
         session = self.conn.getNewSession()
-        result = session.query(Team).filter()
+        result = session.query(Team).filter(Team.coachID == coachID).all()
+        return result
 
     '''
     Read Coach
