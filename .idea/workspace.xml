@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Handler/Plan.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Handler/Sport.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/PlanDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/PlanDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/SportDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SportDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ORM/CoachingORM.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/CoachingORM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mainpage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/template/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/mainpage.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -175,7 +176,8 @@
       <workItem from="1570560214994" duration="2886000" />
       <workItem from="1570574804246" duration="53878000" />
       <workItem from="1571081042126" duration="36000" />
-      <workItem from="1571494858263" duration="51928000" />
+      <workItem from="1571494858263" duration="60690000" />
+      <workItem from="1572710378766" duration="9763000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -289,7 +291,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571596660535</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Created Add methods and Get methods for all Sport related tables and add methods for Plan related methods.">
+      <created>1572457725572</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1572457725572</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,7 +334,8 @@
     <MESSAGE value="Added html" />
     <MESSAGE value="Attempt 2 for template file." />
     <MESSAGE value="Removed template tags" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed template tags" />
+    <MESSAGE value="Created Add methods and Get methods for all Sport related tables and add methods for Plan related methods." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Add methods and Get methods for all Sport related tables and add methods for Plan related methods." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />

@@ -88,6 +88,48 @@ def createTeam(headers, json):
 
         if coachID and sportID and teamName:
             dao.createTeam(coachID, sportID, teamName, teamDescription)
-            return  jsonify(Success="Team added"), 200
+            return jsonify(Success="Team added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
+
+
+def addCoachToTeam(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    supportCoachID = json['supportCoachID']
+    teamID = json['teamID']
+    if coachID and supportCoachID and teamID:
+        if dao.readIfTeamFromCoach(coachID, teamID):
+            dao.createSupport(supportCoachID, teamID)
+        else:
+            return jsonify(Error="User doesnt have access to team"), 400
+        return jsonify(Success="Support added"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+def searchCoaches(json):
+    search = '%' + str(json['search']) + '%'
+    result = dao.searchCoach(search)
+    return jsonify(Coaches=result[:].json()), 200
+
+
+def addAthleteToTeam(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    teamID = json['teamID']
+    athleteID = json['athleteID']
+    if coachID and athleteID and teamID:
+        if dao.readIfTeamFromCoach(coachID, teamID) and dao.readIfAthleteFromCoach(coachID, athleteID):
+            dao.createMember(athleteID, teamID)
+        else:
+            return jsonify(Error="User doesnt have access to team"), 400
+        return jsonify(Success="Member added"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def readCoach(headers):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    if coachID:
+        result = dao.readCoachByID(coachID)
+        return jsonify(Coach=result.json()), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

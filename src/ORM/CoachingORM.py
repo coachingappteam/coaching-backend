@@ -1,3 +1,5 @@
+import enum
+
 from sqlalchemy.dialects.postgresql import UUID, DOUBLE_PRECISION
 from sqlalchemy.ext.declarative import declarative_base
 from uuid import uuid4
@@ -31,6 +33,18 @@ class Database:
 
     def getNewSession(self):
         return self.session()
+
+
+class Type(enum.Enum):
+    Individual = 'Individual'
+    Team = 'Team'
+    Mixed = 'Mixed'
+
+
+class Sex(enum.Enum):
+    M = 'M'
+    F = 'F'
+    X = 'X'
 
 
 class Coach(Base):
@@ -103,7 +117,7 @@ class Sport(Base):
     __tablename__ = 'sport'
     sportID = Column(Integer, primary_key=True)
     sportName = Column(String, nullable=False)
-    type = Column(Enum('Individual', 'Team', 'Mixed', name='Type'), nullable=False)
+    type = Column(Enum(Type), nullable=False)
 
     def __repr__(self):
         return "<sport(sportName='{}', type='{}')>" \
@@ -145,7 +159,7 @@ class Athlete(Base):
     lastName = Column(String, nullable=False)
     email = Column(String, nullable=False)
     phone = Column(String)
-    sex = Column(Enum('M', 'F', 'X', name='Sex'), nullable=False)
+    sex = Column(Enum(Sex), nullable=False)
     birthdate = Column(Date, nullable=False)
     isDeleted = Column(Boolean, nullable=False, default=False)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
@@ -256,6 +270,7 @@ class Session(Base):
     __tablename__ = 'session'
     sessionID = Column(Integer, primary_key=True, autoincrement=True)
     planID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=False)
+    parentSessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
     sessionTitle = Column(String, nullable=False)
     location = Column(Text)
     isCompetition = Column(Boolean, default=False)

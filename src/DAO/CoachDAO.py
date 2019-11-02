@@ -4,6 +4,8 @@ This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams
 from datetime import datetime
 import hashlib
 
+from sqlalchemy import or_
+
 from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member, Support
 
 
@@ -150,7 +152,7 @@ class CoachDAO:
 
 
 
-
+    # ============================== Delete Methods =========================== #
     '''
     Delete Coach
     '''
@@ -162,8 +164,23 @@ class CoachDAO:
         session.close()
         return result
 
-    # ============================== Delete Methods =========================== #
 
+
+
+    def readIfTeamFromCoach(self, coachID, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(Team).filter(Team.teamID == teamID, Team.coachID == coachID).first()
+        return result is not None
+
+    def searchCoach(self, search):
+        session = self.conn.getNewSession()
+        result = session.query(Coach).filter(or_(Coach.firstName.like(search), Coach.lastName.like(search), Coach.email.like(search))).all()
+        return result
+
+    def readIfAthleteFromCoach(self, coachID, athleteID):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete).filter(Athlete.athleteID == athleteID, Athlete.coachID == coachID).first()
+        return result is not None
 
 # DAO = CoachDAO()
 #

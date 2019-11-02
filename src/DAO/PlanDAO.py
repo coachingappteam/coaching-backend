@@ -2,7 +2,7 @@
 This Class contain DAO methods for the tables of Training Plan, Session, Practice, Results
 """
 
-from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result
+from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise
 
 
 class PlanDAO:
@@ -22,8 +22,8 @@ class PlanDAO:
         session.commit()
         session.close()
 
-    def createSession(self, planID, sessionTitle, location, isCompetition, sessionDate, sessionDescription):
-        planSession = Session(planID=planID, sessionTitle=sessionTitle, location=location, isCompetition=isCompetition,
+    def createSession(self, planID, parentSessionID, sessionTitle, location, isCompetition, sessionDate, sessionDescription):
+        planSession = Session(planID=planID, parentSessionID=parentSessionID, sessionTitle=sessionTitle, location=location, isCompetition=isCompetition,
                               sessionDate=sessionDate, sessionDescription=sessionDescription)
         session = self.conn.getNewSession()
         session.add(planSession)
@@ -43,3 +43,40 @@ class PlanDAO:
         session.add(result)
         session.commit()
         session.close()
+
+    # ============================== Read Methods =========================== #
+
+    def readTrainingPlansForTeam(self, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(TrainingPlan).filter(TrainingPlan.teamID == teamID, TrainingPlan.parentPlanID == None).all()
+        return result
+
+    def readSessionsForTrainingPlan(self, planID):
+        session = self.conn.getNewSession()
+        result = session.query(Session).filter(Session.planID == planID, Session.parentSessionID == None).all()
+        return result
+
+    def readSubTrainingPlansForTeam(self, teamID, parentPlanID):
+        session = self.conn.getNewSession()
+        result = session.query(TrainingPlan).filter(TrainingPlan.teamID == teamID, TrainingPlan.parentPlanID == parentPlanID).all()
+        return result
+
+    def readSubSessionsForTrainingPlan(self, planID, parentSessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Session).filter(Session.planID == planID, Session.parentSessionID == parentSessionID).all()
+        return result
+
+    def readPracticesInSession(self, sessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Practice).filter(Practice.sessionID == sessionID).all()
+        return result
+
+    def readExercisesInSession(self, sessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Practice, Exercise).filter(Practice.sessionID == sessionID).all()
+        return result
+
+    def readResultForSession(self, sessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Practice, Result).filter(Practice.sessionID == sessionID).all()
+        return result
