@@ -16,5 +16,9 @@ elif sys.argv[1] == 'drop':
     db = Database()
     db.dropTables()
 
+elif sys.argv[1] == 'populate':
+    db = Database()
+    db.loadTables()
+
 else:
     print('Program only accepts: create, refresh or destroy')

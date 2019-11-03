@@ -34,6 +34,9 @@ class Database:
     def getNewSession(self):
         return self.session()
 
+    def loadTables(self):
+        pass
+
 
 class Type(enum.Enum):
     Individual = 'Individual'
@@ -289,6 +292,7 @@ class Attendance(Base):
     __tablename__ = 'attendance'
     sessionID = Column(Integer,  ForeignKey('session.sessionID'), nullable=False)
     athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
+    isPresent = Column(Boolean, nullable=False, default=True)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
     __table_args__ = (PrimaryKeyConstraint('sessionID', 'athleteID'), {},)
 
@@ -303,6 +307,7 @@ class Practice(Base):
     exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
     sessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
     repetitions = Column(Integer, nullable=False)
+    isDeleted = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return "<athlete(practiceID='{}', sessionID='{}')>" \

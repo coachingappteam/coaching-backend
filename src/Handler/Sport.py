@@ -35,3 +35,43 @@ def createRole(json):
             return jsonify(Success="Sport added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
+
+
+def sportDetails(json):
+    return None
+
+
+def sportSearch(json):
+    return None
+
+
+def unitSearch(json):
+    return None
+
+
+def unitDetails(json):
+    return None
+
+
+def createUnit(json):
+    return None
+
+
+def roleDetails(json):
+    return None
+
+
+def roleSearch(json):
+    return None
+
+
+def createExercise(json):
+    return None
+
+
+def exerciseDetails(json):
+    return None
+
+
+def exerciseSearch(json):
+    return None

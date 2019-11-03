@@ -2,7 +2,7 @@
 
 
 pg_config = {
-    'user':'vuxrvlshpxdoza',
+    'user': 'vuxrvlshpxdoza',
     'passwd': '667bf971049b8ec4697c7061b6ef28df225c097c37d59f90316d609022decf80',
     'dbname': 'd54r2ffdijl58s',
     'host': 'ec2-54-221-217-204.compute-1.amazonaws.com',

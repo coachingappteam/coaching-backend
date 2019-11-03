@@ -133,3 +133,39 @@ def readCoach(headers):
         return jsonify(Coach=result.json()), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def updateCoach(headers):
+    return None
+
+
+def deleteCoach(headers):
+    return None
+
+
+def athleteDetails(headers, json):
+    return None
+
+
+def athleteSearch(headers, json):
+    return None
+
+
+def athleteUpdate(headers, json):
+    return None
+
+
+def teamDetails(headers, json):
+    return None
+
+
+def teamSearch(headers, json):
+    return None
+
+
+def teamUpdate(headers, json):
+    return None
+
+
+def teamDelete(headers, json):
+    return None

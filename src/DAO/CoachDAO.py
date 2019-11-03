@@ -1,12 +1,12 @@
 """
-This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams, Member, Focus, Support
+This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams, Member, Focus, Support, Attendance
 """
 from datetime import datetime
 import hashlib
 
 from sqlalchemy import or_
 
-from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member, Support
+from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member, Support, Attendance
 
 
 class CoachDAO:
@@ -70,6 +70,12 @@ class CoachDAO:
         session.commit()
         session.close()
 
+    def createAttendance(self, sessionID, athleteID):
+        attendance = Attendance(sessionID=sessionID, athleteID=athleteID)
+        session = self.conn.getNewSession()
+        session.add(attendance)
+        session.commit()
+        session.close()
 
     # ============================== Read Methods =========================== #
 
