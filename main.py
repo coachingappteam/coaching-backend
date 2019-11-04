@@ -75,7 +75,7 @@ def coachUpdate():
 
 
 @app.route('/coach/delete', methods=['DELETE'])
-def coachUpdate():
+def coachDelete():
     if request.method == 'DELETE':
         result = Coach.deleteCoach(request.headers)
         return result
