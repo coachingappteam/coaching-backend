@@ -129,10 +129,10 @@ class CoachDAO:
     '''
     Update Coach
     '''
-    def updatePassword(self, email, password):
+    def updatePassword(self, coachID, password):
         session = self.conn.getNewSession()
         hashed = str(hashlib.md5(password.encode()).hexdigest())
-        result = session.query(Coach).filter(Coach.email == email).update({Coach.password: hashed})
+        result = session.query(Coach).filter(Coach.coachID == coachID).update({Coach.password: hashed})
         session.commit()
         session.close()
         return result
@@ -155,8 +155,6 @@ class CoachDAO:
             session.query(Coach).filter(Coach.coachID == coachID).update({Coach.isActiveMember: True})
         else:
             session.query(Coach).filter(Coach.coachID == coachID).update({Coach.isActiveMember: False})
-
-
 
     # ============================== Delete Methods =========================== #
     '''
@@ -187,6 +185,22 @@ class CoachDAO:
         session = self.conn.getNewSession()
         result = session.query(Athlete).filter(Athlete.athleteID == athleteID, Athlete.coachID == coachID).first()
         return result is not None
+
+    def updateCoach(self, coachID, fname, lname, phone, email):
+        session = self.conn.getNewSession()
+        update = dict()
+        if fname is not None:
+            update[Coach.firstName] = fname
+        if lname is not None:
+            update[Coach.lastName] = lname
+        if phone is not None:
+            update[Coach.phone] = phone
+        if email is not None:
+            update[Coach.email] = email
+        result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
+        session.commit()
+        session.close()
+        return result
 
 # DAO = CoachDAO()
 #

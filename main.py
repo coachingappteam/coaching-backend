@@ -68,7 +68,7 @@ def coachSearch():
 @app.route('/coach/update', methods=['PATCH'])
 def coachUpdate():
     if request.method == 'PATCH':
-        result = Coach.updateCoach(request.headers)
+        result = Coach.updateCoach(request.headers, request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -438,6 +438,7 @@ def sessionDelete():
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
+
 
 if __name__ == '__main__':
     app.run()

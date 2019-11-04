@@ -27,19 +27,18 @@ def loginCoach(json):
 
 
 def signupCoach(json):
-    if len(json) != 6:
+    if len(json) != 5:
         return jsonify(Error="Missing Parameters"), 400
     password = json['password']
     fname = json['firstName']
     lname = json['lastName']
     phone = json['phone']
     email = json['email']
-    imperial = json['prefersImperial']
     if password and fname and lname and email:
         coach = dao.readCoach(email, password)
         if coach is not None:
             return jsonify(Error="Coach with given email exists."), 401
-        dao.createCoach(password, fname, lname, phone, email, imperial)
+        dao.createCoach(password, fname, lname, phone, email)
         coach = dao.readCoach(email, password)
         if coach is None:
             return jsonify(Error="Insert not successful"), 401
@@ -135,9 +134,19 @@ def readCoach(headers):
         return jsonify(Error="Required Parameter is missing"), 400
 
 
-def updateCoach(headers):
-    return None
-
+def updateCoach(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    password = json['password']
+    fname = json['firstName']
+    lname = json['lastName']
+    phone = json['phone']
+    email = json['email']
+    if coachID and (fname or lname or phone or email):
+        dao.updateCoach(coachID, fname, lname, phone, email)
+    if password:
+        dao.updatePassword(coachID, password)
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
 
 def deleteCoach(headers):
     return None
