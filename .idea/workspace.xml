@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -174,7 +170,7 @@
       <workItem from="1571081042126" duration="36000" />
       <workItem from="1571494858263" duration="60690000" />
       <workItem from="1572710378766" duration="22994000" />
-      <workItem from="1572903428549" duration="2277000" />
+      <workItem from="1572903428549" duration="2637000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -309,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572813819586</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Test for Heroku">
+      <created>1572908832429</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1572908832430</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -348,7 +351,8 @@
     <MESSAGE value="Created Add methods and Get methods for all Sport related tables and add methods for Plan related methods." />
     <MESSAGE value="Implemented more Coach, Team and Sport methods." />
     <MESSAGE value="Added attendance and wrote templates for all Strong entity tables." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added attendance and wrote templates for all Strong entity tables." />
+    <MESSAGE value="Test for Heroku" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test for Heroku" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
