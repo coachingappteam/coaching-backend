@@ -86,8 +86,6 @@ def coachDelete():
 @app.route('/coach/athlete/create', methods=['POST'])
 def createAthlete():
     if request.method == 'POST':
-        if not Coach.checkToken(request.headers):
-            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.createAthlete(request.headers, request.json)
         return result
     else:
@@ -97,8 +95,6 @@ def createAthlete():
 @app.route('/coach/athlete/details', methods=['GET'])
 def athleteDetails():
     if request.method == 'GET':
-        if not Coach.checkToken(request.headers):
-            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.athleteDetails(request.headers, request.json)
         return result
     else:
@@ -132,7 +128,7 @@ def athleteDelete():
     if request.method == 'DELETE':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.athleteUpdate(request.headers, request.json)
+        result = Coach.athleteDelete(request.headers, request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404

@@ -66,6 +66,9 @@ class SecurityDAO:
         return result
 
     def getTokenOwner(self, token):
+
+        self.validateToken(token)
+
         session = self.conn.getNewSession()
 
         result = session.query(Security).filter(Security.token == token).first()
@@ -97,7 +100,7 @@ class SecurityDAO:
         session.commit()
         session.close()
 
-        return days.days > 5
+        return days.days < 5
 
     # ============================== Delete Methods =========================== #
     def deleteToken(self, token):

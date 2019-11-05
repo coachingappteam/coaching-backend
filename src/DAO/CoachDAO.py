@@ -29,7 +29,8 @@ class CoachDAO:
         session.close()
 
     def createAthlete(self, coachID, firstName, lastName, email, phone, sex, birthdate):
-        athl = Athlete(coachID=coachID, firstName=firstName, lastName=lastName, email=email, phone=phone, sex=sex, birthdate = birthdate)
+        athl = Athlete(coachID=coachID, firstName=firstName, lastName=lastName, email=email, phone=phone, sex=sex,
+                       birthdate=birthdate)
         session = self.conn.getNewSession()
         session.add(athl)
         session.commit()
@@ -160,17 +161,13 @@ class CoachDAO:
     '''
     Delete Coach
     '''
-    def deleteCoach(self, email, password):
+    def deleteCoach(self, coachID):
         session = self.conn.getNewSession()
-        hashed = str(hashlib.md5(password.encode()).hexdigest())
-        result = session.query(Coach).filter(Coach.email == email,
-                                             Coach.password == hashed).update({Coach.isActiveUser: False})
+        result = session.query(Coach).filter(Coach.coachID == coachID).update({Coach.isActiveUser: False})
         session.close()
         return result
 
-
-
-
+    # ============================== Unsorted Methods =========================== #
     def readIfTeamFromCoach(self, coachID, teamID):
         session = self.conn.getNewSession()
         result = session.query(Team).filter(Team.teamID == teamID, Team.coachID == coachID).first()
@@ -178,7 +175,8 @@ class CoachDAO:
 
     def searchCoach(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Coach).filter(or_(Coach.firstName.like(search), Coach.lastName.like(search), Coach.email.like(search))).all()
+        result = session.query(Coach).filter(or_(Coach.firstName.like(search), Coach.lastName.like(search),
+                                                 Coach.email.like(search))).all()
         return result
 
     def readIfAthleteFromCoach(self, coachID, athleteID):
@@ -202,11 +200,43 @@ class CoachDAO:
         session.close()
         return result
 
-# DAO = CoachDAO()
-#
-# DAO.createCoach('HelloWorld1234', 'Al', 'Pachino', '7877877788', 'a@bc.com', True)
-#
-# r = DAO.readCoach('a@bc.com', 'HelloWorld1234')
-#
-# print('Done')
-# print(r)
+    def readAthleteByIDFromCoach(self, coachID, athleteID):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID).first()
+        session.close()
+        return result
+
+    def searchAthletes(self, coachID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete).filter(Athlete.coachID == coachID,
+            or_(Athlete.firstName.like(search), Athlete.lastName.like(search), Athlete.email.like(search))).all()
+        return result
+
+    def updateAthlete(self, coachID, athleteID, firstName, lastName, phone, email, birthdate, sex):
+        session = self.conn.getNewSession()
+        update = dict()
+        if firstName is not None and not firstName == '':
+            update[Athlete.firstName] = firstName
+        if lastName is not None and not lastName == '':
+            update[Athlete.lastName] = lastName
+        if phone is not None and not phone == '':
+            update[Athlete.phone] = phone
+        if email is not None and not email == '':
+            update[Athlete.email] = email
+        if birthdate is not None and not birthdate == '':
+            update[Athlete.birthdate] = email
+        if sex is not None and not sex == '':
+            update[Athlete.sex] = sex
+
+        result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID)\
+            .update(update)
+        session.commit()
+        session.close()
+        return result
+
+    def deleteAthlete(self, coachID, athleteID):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID)\
+            .update({Athlete.isDeleted: True})
+        session.close()
+        return result
