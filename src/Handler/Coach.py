@@ -140,11 +140,11 @@ def updateCoach(headers, json):
     fname = json['firstName']
     lname = json['lastName']
     phone = json['phone']
-    email = json['email']
-    if coachID and (fname or lname or phone or email):
-        if fname or lname or phone or email:
-            dao.updateCoach(coachID, fname, lname, phone, email)
-        if password:
+    isActiveMember = json['isActiveMember']
+    if coachID and (fname or lname or phone or isActiveMember):
+        if fname or lname or phone:
+            dao.updateCoach(coachID, fname, lname, phone, isActiveMember)
+        if password and not password == '':
             dao.updatePassword(coachID, password)
         return jsonify(Success="Coach Updated"), 200
     else:

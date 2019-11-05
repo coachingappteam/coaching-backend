@@ -186,17 +186,17 @@ class CoachDAO:
         result = session.query(Athlete).filter(Athlete.athleteID == athleteID, Athlete.coachID == coachID).first()
         return result is not None
 
-    def updateCoach(self, coachID, fname, lname, phone, email):
+    def updateCoach(self, coachID, fname, lname, phone, isActiveMember):
         session = self.conn.getNewSession()
         update = dict()
-        if fname is not None:
+        if fname is not None or fname == '':
             update[Coach.firstName] = fname
-        if lname is not None:
+        if lname is not None or lname == '':
             update[Coach.lastName] = lname
-        if phone is not None:
+        if phone is not None or phone == '':
             update[Coach.phone] = phone
-        if email is not None:
-            update[Coach.email] = email
+        if isActiveMember is not None or isActiveMember == '':
+            update[Coach.isActiveMember] = isActiveMember
         result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
         session.commit()
         session.close()
