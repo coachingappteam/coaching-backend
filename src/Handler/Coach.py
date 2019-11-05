@@ -140,7 +140,10 @@ def readCoach(headers):
     coachID = securityDAO.getTokenOwner(headers['token'])
     if coachID:
         result = dao.readCoachByID(coachID)
-        return jsonify(Coach=result.json()), 200
+        if result is not None:
+            return jsonify(Coach=result.json()), 200
+        else:
+            return jsonify(Athlete="Nothing Found"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -176,7 +179,10 @@ def athleteDetails(headers, json):
     athleteID = json['athleteID']
     if coachID and athleteID:
         result = dao.readAthleteByIDFromCoach(coachID, athleteID)
-        return jsonify(Athlete=result.json()), 200
+        if result is not None:
+            return jsonify(Athlete=result.json()), 200
+        else:
+            return jsonify(Athlete="Nothing Found"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -220,7 +226,7 @@ def athleteUpdate(headers, json):
 def athleteDelete(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     athleteID = json['athleteID']
-    if coachID:
+    if coachID and athleteID:
         dao.deleteAthlete(coachID, athleteID)
         return jsonify(Success="Athlete Deleted"), 200
     else:

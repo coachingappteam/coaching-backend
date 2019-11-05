@@ -175,7 +175,8 @@ class CoachDAO:
 
     def searchCoach(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Coach).filter(or_(Coach.firstName.like(search), Coach.lastName.like(search),
+        result = session.query(Coach).filter(Athlete.isDeleted is False,
+                                             or_(Coach.firstName.like(search), Coach.lastName.like(search),
                                                  Coach.email.like(search))).all()
         return result
 
@@ -208,7 +209,7 @@ class CoachDAO:
 
     def searchAthletes(self, coachID, search):
         session = self.conn.getNewSession()
-        result = session.query(Athlete).filter(Athlete.coachID == coachID,
+        result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.isDeleted is False,
             or_(Athlete.firstName.like(search), Athlete.lastName.like(search), Athlete.email.like(search))).all()
         return result
 
@@ -236,7 +237,7 @@ class CoachDAO:
 
     def deleteAthlete(self, coachID, athleteID):
         session = self.conn.getNewSession()
-        result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID)\
-            .update({Athlete.isDeleted: True})
+        result = session.query(Athlete).\
+            filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID).update({Athlete.isDeleted: True})
         session.close()
         return result

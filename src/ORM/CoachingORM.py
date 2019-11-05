@@ -115,6 +115,17 @@ class Payment(Base):
         return "<payment(paymentSource='{}', sourceReceiptID='{}', payDate={}, payTotal={})>" \
             .format(self.paymentSource, self.sourceReceiptID, self.payDate, self.payTotal)
 
+    def json(self):
+        return {
+            "paymentID": self.paymentID,
+            "coachID": self.coachID,
+            "payDate": self.payDate,
+            "payTotal": self.payTotal,
+            "paymentSource": self.paymentSource,
+            "sourceReceiptID": self.sourceReceiptID,
+            "membershipLength": self.membershipLength
+        }
+
 
 class Sport(Base):
     __tablename__ = 'sport'
@@ -125,6 +136,13 @@ class Sport(Base):
     def __repr__(self):
         return "<sport(sportName='{}', type='{}')>" \
             .format(self.sportName, self.type)
+
+    def json(self):
+        return {
+            "sportID": self.sportID,
+            "sportName": self.sportName,
+            "type": self.type
+        }
 
 
 class Team(Base):
@@ -141,6 +159,17 @@ class Team(Base):
         return "<team(teamName='{}', creationDate='{}', teamDescription={}, teamDescription={})>" \
             .format(self.teamName, self.creationDate, self.teamDescription, self.teamDescription)
 
+    def json(self):
+        return {
+            "teamID": self.teamID,
+            "coachID": self.coachID,
+            "sportID": self.sportID,
+            "teamName": self.teamName,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate,
+            "teamDescription": self.teamDescription
+        }
+
 
 class Support(Base):
     __tablename__ = 'support'
@@ -152,6 +181,13 @@ class Support(Base):
     def __repr__(self):
         return "<athlete(athleteID='{}', sessionID='{}')>" \
             .format(self.coachID, self.teamID)
+
+    def json(self):
+        return {
+            "coachID": self.coachID,
+            "teamID": self.teamID,
+            "creationDate": self.creationDate
+        }
 
 
 class Athlete(Base):
@@ -171,6 +207,20 @@ class Athlete(Base):
         return "<athlete(firstName='{}', lastName='{}', email={}, birthdate={})>" \
             .format(self.firstName, self.lastName, self.email, self.birthdate)
 
+    def json(self):
+        return {
+            "athleteID": self.athleteID,
+            "coachID": self.coachID,
+            "firstName": self.firstName,
+            "lastName": self.lastName,
+            "email": self.email,
+            "phone": self.phone,
+            "birthdate": self.birthdate,
+            "sex": self.sex,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate
+        }
+
 
 class Member(Base):
     __tablename__ = 'member'
@@ -182,6 +232,13 @@ class Member(Base):
     def __repr__(self):
         return "<athlete(athleteID='{}', teamID='{}', isActive={})>" \
             .format(self.athleteID, self.teamID, self.isActive)
+
+    def json(self):
+        return {
+            "athleteID": self.athleteID,
+            "teamID": self.teamID,
+            "isActive": self.isActive
+        }
 
 
 class Role(Base):
@@ -198,6 +255,17 @@ class Role(Base):
         return "<athlete(roleName='{}', roleDescription='{}')>" \
             .format(self.roleName, self.roleDescription)
 
+    def json(self):
+        return {
+            "roleID": self.roleID,
+            "sportID": self.sportID,
+            "roleName": self.roleName,
+            "roleDescription": self.roleDescription,
+            "creatorID": self.creatorID,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate
+        }
+
 
 class Focus(Base):
     __tablename__ = 'focus'
@@ -210,6 +278,14 @@ class Focus(Base):
     def __repr__(self):
         return "<athlete(athleteID='{}', roleID='{}', isPrimaryFocus='{}')>" \
             .format(self.athleteID, self.roleID, self.isPrimaryFocus)
+
+    def json(self):
+        return {
+            "athleteID": self.athleteID,
+            "roleID": self.roleID,
+            "isPrimaryFocus": self.isPrimaryFocus,
+            "isDeleted": self.isDeleted
+        }
 
 
 class TrainingPlan(Base):
@@ -229,6 +305,20 @@ class TrainingPlan(Base):
         return "<athlete(title='{}', planDescription='{}', startDate={}, endDate={})>" \
             .format(self.title, self.planDescription, self.startDate, self.endDate)
 
+    def json(self):
+        return {
+            "planID": self.planID,
+            "teamID": self.teamID,
+            "parentPlanID": self.parentPlanID,
+            "title": self.title,
+            "isParentPlan": self.isParentPlan,
+            "endDate": self.startDate,
+            "birthdate": self.endDate,
+            "planDescription": self.planDescription,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate,
+        }
+
 
 class Unit(Base):
     __tablename__ = 'unit'
@@ -239,6 +329,13 @@ class Unit(Base):
     def __repr__(self):
         return "<athlete(unitName='{}', unit='{}')>" \
             .format(self.unitName, self.unit)
+
+    def json(self):
+        return {
+            "unitID": self.unitID,
+            "unitName": self.unitName,
+            "unit": self.unit
+        }
 
 
 class Exercise(Base):
@@ -257,6 +354,19 @@ class Exercise(Base):
         return "<athlete(exerciseName='{}', exerciseDescription='{}')>" \
             .format(self.exerciseName, self.exerciseDescription)
 
+    def json(self):
+        return {
+            "exerciseID": self.exerciseID,
+            "unitID": self.unitID,
+            "exerciseName": self.exerciseName,
+            "exerciseDescription": self.exerciseDescription,
+            "style": self.style,
+            "measure": self.measure,
+            "creatorID": self.creatorID,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate
+        }
+
 
 class Improves(Base):
     __tablename__ = 'improves'
@@ -267,6 +377,12 @@ class Improves(Base):
     def __repr__(self):
         return "<athlete(exerciseID='{}', roleID='{}')>" \
             .format(self.exerciseID, self.roleID)
+
+    def json(self):
+        return {
+            "exerciseID": self.exerciseID,
+            "roleID": self.roleID
+        }
 
 
 class Session(Base):
@@ -287,6 +403,21 @@ class Session(Base):
         return "<athlete(sessionTitle='{}', sessionDescription='{}', startDsessionDateate={}, location={})>" \
             .format(self.sessionTitle, self.sessionDescription, self.sessionDate, self.location)
 
+    def json(self):
+        return {
+            "sessionID": self.sessionID,
+            "planID": self.planID,
+            "parentSessionID": self.parentSessionID,
+            "sessionTitle": self.sessionTitle,
+            "location": self.location,
+            "isCompetition": self.isCompetition,
+            "isCompleted": self.isCompleted,
+            "sessionDate": self.sessionDate,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate,
+            "sessionDescription": self.sessionDescription
+        }
+
 
 class Attendance(Base):
     __tablename__ = 'attendance'
@@ -300,6 +431,14 @@ class Attendance(Base):
         return "<athlete(athleteID='{}', sessionID='{}')>" \
             .format(self.athleteID, self.sessionID)
 
+    def json(self):
+        return {
+            "sessionID": self.sessionID,
+            "athleteID": self.athleteID,
+            "isPresent": self.isPresent,
+            "creationDate": self.creationDate
+        }
+
 
 class Practice(Base):
     __tablename__ = 'practice'
@@ -310,8 +449,17 @@ class Practice(Base):
     isDeleted = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
-        return "<athlete(practiceID='{}', sessionID='{}')>" \
+        return "<practice(practiceID='{}', sessionID='{}')>" \
             .format(self.practiceID, self.sessionID)
+
+    def json(self):
+        return {
+            "practiceID": self.practiceID,
+            "exerciseID": self.exerciseID,
+            "sessionID": self.sessionID,
+            "repetitions": self.repetitions,
+            "isDeleted": self.isDeleted
+        }
 
 
 class Result(Base):
@@ -320,6 +468,25 @@ class Result(Base):
     practiceID = Column(Integer, ForeignKey('practice.practiceID'), nullable=False)
     athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
     unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
+    result = Column(DOUBLE_PRECISION, nullable=False)
     resultDate = Column(Date, nullable=False, default=datetime.today())
     resultDescription = Column(Text)
+    isDeleted = Column(Boolean, nullable=False, default=False)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+
+    def __repr__(self):
+        return "<result(resultID='{}', resultDescription='{}')>" \
+            .format(self.resultID, self.resultDescription)
+
+    def json(self):
+        return {
+            "resultID": self.resultID,
+            "practiceID": self.practiceID,
+            "athleteID": self.athleteID,
+            "unitID": self.unitID,
+            "result": self.result,
+            "resultDate": self.resultDate,
+            "resultDescription": self.resultDescription,
+            "isDeleted": self.isDeleted,
+            "creationDate": self.creationDate
+        }
