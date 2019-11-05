@@ -163,7 +163,9 @@ class CoachDAO:
     '''
     def deleteCoach(self, coachID):
         session = self.conn.getNewSession()
-        result = session.query(Coach).filter(Coach.coachID == coachID).update({Coach.isActiveUser: False})
+        update = dict()
+        update[Coach.isActiveUser] = False
+        result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
         session.close()
         return result
 
@@ -237,7 +239,9 @@ class CoachDAO:
 
     def deleteAthlete(self, coachID, athleteID):
         session = self.conn.getNewSession()
-        result = session.query(Athlete).\
-            filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID).update({Athlete.isDeleted: True})
+        update = dict()
+        update[Athlete.isDeleted] = False
+        result = session.query(Athlete).filter(Athlete.coachID == coachID,
+                                               Athlete.athleteID == athleteID).update(update)
         session.close()
         return result
