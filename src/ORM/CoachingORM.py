@@ -141,7 +141,7 @@ class Sport(Base):
         return {
             "sportID": self.sportID,
             "sportName": self.sportName,
-            "type": self.type
+            "type": self.type.value
         }
 
 
@@ -216,7 +216,7 @@ class Athlete(Base):
             "email": self.email,
             "phone": self.phone,
             "birthdate": self.birthdate,
-            "sex": self.sex,
+            "sex": self.sex.value,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate
         }
