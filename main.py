@@ -74,9 +74,9 @@ def coachUpdate():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/delete', methods=['DELETE'])
+@app.route('/coach/delete', methods=['PATCH'])
 def coachDelete():
-    if request.method == 'DELETE':
+    if request.method == 'PATCH':
         result = Coach.deleteCoach(request.headers)
         return result
     else:
@@ -123,9 +123,9 @@ def athleteUpdate():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/athlete/delete', methods=['DELETE'])
+@app.route('/coach/athlete/delete', methods=['PATCH'])
 def athleteDelete():
-    if request.method == 'DELETE':
+    if request.method == 'PATCH':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.athleteDelete(request.headers, request.json)

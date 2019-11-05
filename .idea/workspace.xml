@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ORM/CoachingORM.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/CoachingORM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SecurityDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SecurityDAO.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,7 +173,7 @@
       <workItem from="1571081042126" duration="36000" />
       <workItem from="1571494858263" duration="60690000" />
       <workItem from="1572710378766" duration="22994000" />
-      <workItem from="1572903428549" duration="19827000" />
+      <workItem from="1572903428549" duration="21959000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -355,7 +357,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572968091306</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Making enums json serializable">
+      <created>1572969334404</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1572969334404</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,7 +384,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added access methods for security and coach, added json for objects." />
     <MESSAGE value="Added base classes for handler, DAO and REST Methods, added methods for login, signup and athlete creation" />
     <MESSAGE value="Added files for heroku integration and added new methods for DAO." />
     <MESSAGE value="Added a guide mainpage for REST API calls and a log out call." />
@@ -400,7 +408,8 @@
     <MESSAGE value="Improved search methods" />
     <MESSAGE value="Testing for Athlete methods" />
     <MESSAGE value="Added json for all tables." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added json for all tables." />
+    <MESSAGE value="Making enums json serializable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Making enums json serializable" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />

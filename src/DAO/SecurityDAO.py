@@ -74,7 +74,8 @@ class SecurityDAO:
         result = session.query(Security).filter(Security.token == token).first()
 
         session.close()
-
+        if result is None:
+            return None
         return result.coachID
 
     # ============================== Update Methods =========================== #
