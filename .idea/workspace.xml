@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
     </list>
@@ -172,7 +173,7 @@
       <workItem from="1571081042126" duration="36000" />
       <workItem from="1571494858263" duration="60690000" />
       <workItem from="1572710378766" duration="22994000" />
-      <workItem from="1572903428549" duration="5383000" />
+      <workItem from="1572903428549" duration="6817000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -328,7 +329,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572910234947</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Made update more flexible.">
+      <created>1572912621763</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1572912621763</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -370,7 +378,8 @@
     <MESSAGE value="Test for Heroku" />
     <MESSAGE value="Fixed small update error." />
     <MESSAGE value="Fixed method errors in API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed method errors in API" />
+    <MESSAGE value="Made update more flexible." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made update more flexible." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />

@@ -189,13 +189,13 @@ class CoachDAO:
     def updateCoach(self, coachID, fname, lname, phone, isActiveMember):
         session = self.conn.getNewSession()
         update = dict()
-        if fname is not None or fname == '':
+        if fname is not None and not fname == '':
             update[Coach.firstName] = fname
-        if lname is not None or lname == '':
+        if lname is not None and not lname == '':
             update[Coach.lastName] = lname
-        if phone is not None or phone == '':
+        if phone is not None and not phone == '':
             update[Coach.phone] = phone
-        if isActiveMember is not None or isActiveMember == '':
+        if isActiveMember is not None and not isActiveMember == '':
             update[Coach.isActiveMember] = isActiveMember
         result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
         session.commit()

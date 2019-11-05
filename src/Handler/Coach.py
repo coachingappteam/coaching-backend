@@ -105,10 +105,14 @@ def addCoachToTeam(headers, json):
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
+
 def searchCoaches(json):
     search = '%' + str(json['search']) + '%'
     result = dao.searchCoach(search)
-    return jsonify(Coaches=result[:].json()), 200
+    coaches = list()
+    for coach in result:
+        coaches.append(coach.json())
+    return jsonify(Coaches=coaches), 200
 
 
 def addAthleteToTeam(headers, json):

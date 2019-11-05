@@ -56,9 +56,9 @@ def coachDetails():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/search', methods=['POST'])
+@app.route('/coach/search', methods=['GET'])
 def coachSearch():
-    if request.method == 'POST':
+    if request.method == 'GET':
         result = Coach.searchCoaches(request.json)
         return result
     else:
