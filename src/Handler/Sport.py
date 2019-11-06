@@ -38,40 +38,142 @@ def createRole(json):
 
 
 def sportDetails(json):
-    return None
+    sportID = json['sportID']
+    if sportID:
+        result = dao.readSportDetails(sportID)
+        if result is not None:
+            return jsonify(Sport=result.json()), 200
+        else:
+            return jsonify(Sport="Nothing Found"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
 
 
 def sportSearch(json):
-    return None
+    search = '%' + str(json['search']) + '%'
+    result = dao.searchSport(search)
+    sports = list()
+    for sport in result:
+        sports.append(sport.json())
+    return jsonify(Sports=sports), 200
 
 
 def unitSearch(json):
-    return None
+    search = '%' + str(json['search']) + '%'
+    result = dao.searchUnit(search)
+    units = list()
+    for unit in result:
+        units.append(unit.json())
+    return jsonify(Units=units), 200
 
 
 def unitDetails(json):
-    return None
+    unitID = json['unitID']
+    if unitID:
+        result = dao.readUnitDetails(unitID)
+        if result is not None:
+            return jsonify(Sport=result.json()), 200
+        else:
+            return jsonify(Sport="Nothing Found"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
 
 
 def createUnit(json):
-    return None
+    if json != 2:
+        unitName = json["unitName"]
+        unit = json["unit"]
+        if unitName and unit:
+            dao.createUnit(unitName, unit)
+            return jsonify(Success="Unit added"), 200
+        else:
+            return jsonify(Error="Required Parameter is missing"), 400
 
 
 def roleDetails(json):
-    return None
+    roleID = json['roleID']
+    if roleID:
+        result = dao.readRoleDetails(roleID)
+        if result is not None:
+            return jsonify(Role=result.json()), 200
+        else:
+            return jsonify(Role="Nothing Found"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
 
 
 def roleSearch(json):
-    return None
+    search = '%' + str(json['search']) + '%'
+    result = dao.searchRole(search)
+    roles = list()
+    for role in result:
+        roles.append(role.json())
+    return jsonify(Roles=roles), 200
 
 
 def createExercise(json):
-    return None
+    if json != 2:
+        exerciseName = json["exerciseName"]
+        exerciseDescription = json["exerciseDescription"]
+        if exerciseName:
+            dao.createExercise(exerciseName, exerciseDescription)
+            return jsonify(Success="Exercise added"), 200
+        else:
+            return jsonify(Error="Required Parameter is missing"), 400
 
 
 def exerciseDetails(json):
-    return None
+    exerciseID = json['exerciseID']
+    if exerciseID:
+        result = dao.readExerciseDetails(exerciseID)
+        if result is not None:
+            return jsonify(Exercise=result.json()), 200
+        else:
+            return jsonify(Exercise="Nothing Found"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
 
 
 def exerciseSearch(json):
-    return None
+    search = '%' + str(json['search']) + '%'
+    result = dao.searchExercise(search)
+    exercises = list()
+    for exercise in result:
+        exercises.append(exercise.json())
+    return jsonify(Exercise=exercises), 200
+
+
+def deleteSport(json):
+    sportID = json['sportID']
+    if sportID:
+        dao.deleteSport(sportID)
+        return jsonify(Success="Sport was deleted"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def deleteUnit(json):
+    unitID = json['unitID']
+    if unitID:
+        dao.deleteUnit(unitID)
+        return jsonify(Success="Unit was deleted"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def deleteRole(json):
+    roleID = json['roleID']
+    if roleID:
+        dao.deleteRole(roleID)
+        return jsonify(Success="Role was deleted"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def deleteExercise(json):
+    exerciseID = json['exerciseID']
+    if exerciseID:
+        dao.deleteExercise(exerciseID)
+        return jsonify(Success="Exercise was deleted"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

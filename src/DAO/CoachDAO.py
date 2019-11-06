@@ -6,7 +6,7 @@ import hashlib
 
 from sqlalchemy import or_
 
-from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member, Support, Attendance
+from src.ORM.CoachingORM import Database, Coach, Team, Athlete, Payment, Focus, Member, Support, Attendance, Role
 
 
 class CoachDAO:
@@ -240,8 +240,100 @@ class CoachDAO:
     def deleteAthlete(self, coachID, athleteID):
         session = self.conn.getNewSession()
         update = dict()
-        update[Athlete.isDeleted] = False
+        update[Athlete.isDeleted] = True
         result = session.query(Athlete).filter(Athlete.coachID == coachID,
                                                Athlete.athleteID == athleteID).update(update)
         session.close()
         return result
+
+    def readTeamByIDFromCoach(self, coachID, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(Team).filter(Team.coachID == coachID, Team.teamID == teamID).first()
+        session.close()
+        return result
+
+    def searchTeams(self, coachID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Team).filter(Team.coachID == coachID, Team.isDeleted == False,
+            or_(Team.teamName.like(search), Team.teamDescription.like(search))).all()
+        return result
+
+    def updateTeam(self, coachID, teamID, teamName, teamDescription):
+        session = self.conn.getNewSession()
+        update = dict()
+        if teamName is not None and not teamName == '':
+            update[Team.teamName] = teamName
+        if teamDescription is not None and not teamDescription == '':
+            update[Team.teamDescription] = teamDescription
+
+        result = session.query(Team).filter(Team.coachID == coachID, Team.teamID == teamID) \
+            .update(update)
+        session.commit()
+        session.close()
+        return result
+
+    def deleteTeam(self, coachID, teamID):
+        session = self.conn.getNewSession()
+        update = dict()
+        update[Team.isDeleted] = True
+        result = session.query(Athlete).filter(Team.coachID == coachID,
+                                               Team.teamID == teamID).update(update)
+        session.close()
+        return result
+
+    def getCoachesByTeamID(self, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(Coach, Support).filter(Support.teamID == teamID).all()
+        session.close()
+        return result
+
+    def getTeamByCoachID(self, coachID):
+        session = self.conn.getNewSession()
+        result = session.query(Team, Support).filter(Support.coachID == coachID).all()
+        session.close()
+        return result
+
+    def deleteSupport(self, supportCoachID, teamID):
+        session = self.conn.getNewSession()
+
+        session.query(Support).filter(Support.coachID == supportCoachID, Support.teamID == teamID).delete()
+        session.commit()
+        session.close()
+
+    def getAthletesByTeamID(self, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete, Member).filter(Member.teamID == teamID).all()
+        session.close()
+        return result
+
+    def getTeamsByAthleteID(self, athleteID):
+        session = self.conn.getNewSession()
+        result = session.query(Team, Member).filter(Member.athleteID == athleteID).all()
+        session.close()
+        return result
+
+    def deleteMember(self, athleteID, teamID):
+        session = self.conn.getNewSession()
+
+        session.query(Member).filter(Member.athleteID == athleteID, Member.teamID == teamID).delete()
+        session.commit()
+        session.close()
+
+    def getAthletesByRoleID(self, coachID, roleID):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete, Focus).filter(Focus.roleID == roleID, Athlete.coachID == coachID).all()
+        session.close()
+        return result
+
+    def getRolesByAthleteID(self, athleteID):
+        session = self.conn.getNewSession()
+        result = session.query(Role, Focus).filter(Focus.athleteID == athleteID).all()
+        session.close()
+        return result
+
+    def deleteFocus(self, athleteID, roleID):
+        session = self.conn.getNewSession()
+
+        session.query(Focus).filter(Focus.athleteID == athleteID, Focus.roleID == roleID).delete()
+        session.commit()
+        session.close()
