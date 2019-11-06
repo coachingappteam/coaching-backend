@@ -141,7 +141,7 @@ class CoachDAO:
     '''
     Update membership
     '''
-    def updateMemebership(self, coachID):
+    def updateMembership(self, coachID):
 
         lastPayment = self.readLatestsPayment(coachID)
 
@@ -203,9 +203,9 @@ class CoachDAO:
         session.close()
         return result
 
-    def readAthleteByIDFromCoach(self, coachID, athleteID):
+    def readAthleteByID(self, athleteID):
         session = self.conn.getNewSession()
-        result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID).first()
+        result = session.query(Athlete).filter(Athlete.athleteID == athleteID).first()
         session.close()
         return result
 
@@ -246,9 +246,9 @@ class CoachDAO:
         session.close()
         return result
 
-    def readTeamByIDFromCoach(self, coachID, teamID):
+    def readTeamByID(self, teamID):
         session = self.conn.getNewSession()
-        result = session.query(Team).filter(Team.coachID == coachID, Team.teamID == teamID).first()
+        result = session.query(Team).filter(Team.teamID == teamID).first()
         session.close()
         return result
 
@@ -283,13 +283,13 @@ class CoachDAO:
 
     def getCoachesByTeamID(self, teamID):
         session = self.conn.getNewSession()
-        result = session.query(Coach, Support).filter(Support.teamID == teamID).all()
+        result = session.query(Coach, Support).filter(Support.teamID == teamID, Coach.coachID == Support.coachID).all()
         session.close()
         return result
 
     def getTeamByCoachID(self, coachID):
         session = self.conn.getNewSession()
-        result = session.query(Team, Support).filter(Support.coachID == coachID).all()
+        result = session.query(Team, Support).filter(Support.coachID == coachID, Team.teamID == Support.teamID).all()
         session.close()
         return result
 
@@ -302,13 +302,14 @@ class CoachDAO:
 
     def getAthletesByTeamID(self, teamID):
         session = self.conn.getNewSession()
-        result = session.query(Athlete, Member).filter(Member.teamID == teamID).all()
+        result = session.query(Athlete, Member).filter(Member.teamID == teamID,
+                                                       Athlete.athleteID == Member.athleteID).all()
         session.close()
         return result
 
     def getTeamsByAthleteID(self, athleteID):
         session = self.conn.getNewSession()
-        result = session.query(Team, Member).filter(Member.athleteID == athleteID).all()
+        result = session.query(Team, Member).filter(Member.athleteID == athleteID, Team.teamID == Member.teamID).all()
         session.close()
         return result
 
@@ -321,13 +322,14 @@ class CoachDAO:
 
     def getAthletesByRoleID(self, coachID, roleID):
         session = self.conn.getNewSession()
-        result = session.query(Athlete, Focus).filter(Focus.roleID == roleID, Athlete.coachID == coachID).all()
+        result = session.query(Athlete, Focus).filter(Focus.roleID == roleID, Athlete.coachID == coachID,
+                                                      Athlete.athleteID == Focus.athleteID).all()
         session.close()
         return result
 
     def getRolesByAthleteID(self, athleteID):
         session = self.conn.getNewSession()
-        result = session.query(Role, Focus).filter(Focus.athleteID == athleteID).all()
+        result = session.query(Role, Focus).filter(Focus.athleteID == athleteID, Role.roleID == Focus.roleID).all()
         session.close()
         return result
 
@@ -337,3 +339,17 @@ class CoachDAO:
         session.query(Focus).filter(Focus.athleteID == athleteID, Focus.roleID == roleID).delete()
         session.commit()
         session.close()
+
+    def readIfCoachIsSupport(self, coachID, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(Support).filter(Support.coachID == coachID, Support.teamID == teamID).first()
+        session.close()
+        return result is not None
+
+    def readIfAthleteInTeamFromSupport(self, coachID, athleteID):
+        session = self.conn.getNewSession()
+        result = session.query(Support, Team, Member).filter(Support.coachID == coachID, Support.teamID == Team.teamID,
+                                                             Member.athleteID == athleteID,
+                                                             Team.teamID == Member.teamID).first()
+        session.close()
+        return result is not None
