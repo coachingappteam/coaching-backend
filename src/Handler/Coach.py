@@ -174,7 +174,7 @@ def updateCoach(headers, json):
 def deleteCoach(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     isActiveUser = json['isActiveUser']
-    if coachID and isActiveUser:
+    if coachID and isActiveUser is not None:
         dao.deleteCoach(coachID, isActiveUser)
         return jsonify(Success="Coach Deleted"), 200
     else:
@@ -240,7 +240,7 @@ def athleteDelete(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     athleteID = json['athleteID']
     isDeleted = json['isDeleted']
-    if coachID and athleteID and isDeleted:
+    if coachID and athleteID and isDeleted is not None:
         if dao.readIfAthleteFromCoach(coachID, athleteID):
             dao.deleteAthlete(coachID, athleteID, isDeleted)
             return jsonify(Success="Athlete Delete Status changed."), 200
