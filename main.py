@@ -57,7 +57,7 @@ def coachDetails():
 
 
 @app.route('/coach/details', methods=['GET'])
-def coachDetails():
+def coachDetailsByID():
     if request.method == 'GET':
         result = Coach.readCoachByID(request.json)
         return result
