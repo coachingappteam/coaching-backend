@@ -287,9 +287,11 @@ class CoachDAO:
         session.close()
         return result
 
-    def getTeamByCoachID(self, coachID):
+    def getTeamsByCoachID(self, coachID, search):
         session = self.conn.getNewSession()
-        result = session.query(Team, Support).filter(Support.coachID == coachID, Team.teamID == Support.teamID).all()
+        result = session.query(Team, Support).filter(Support.coachID == coachID, Team.teamID == Support.teamID,
+                                                     or_(Team.teamName.like(search),
+                                                         Team.teamDescription.like(search))).all()
         session.close()
         return result
 
@@ -353,3 +355,9 @@ class CoachDAO:
                                                              Team.teamID == Member.teamID).first()
         session.close()
         return result is not None
+
+    def getTeamCreator(self, teamID):
+        session = self.conn.getNewSession()
+        result = session.query(Coach, Team).filter(Coach.coachID == Team.coachID, Team.teamID == teamID).first()
+
+        return result

@@ -5,13 +5,13 @@
     <title>Coaching REST API</title>
 </head>
 <body>
-    <h1>Welcome!!!</h1>
-    <h2>URL Locations:</h2>
+    <h2> * means that the field can be empty.</h2>
     <h3>Main Page:</h3>
     <ul><li>/</li></ul>
     <h3>Coach Locations:</h3>
     <ul>
         <li>[POST] /coach/login</li>
+        <p>Description: Lets the user get a valid security token and their account details.</p>
             <p> Body:
                 {
 	                "password": "lolo",
@@ -30,20 +30,19 @@
                     "isActiveUser": true,
                     "lastName": "Pachino",
                     "phone": "7877877788",
-                    "prefersImperial": false
                     },
                 "token": "4WJMKB2NMZ4HWuaUHXruTZPWsEa1y8vxl8IL3Zf-6H4"
                 }
             </p>
         <li>[POST] /coach/signup</li>
+        <p>Description: Lets the user get create a coach account.</p>
             <p> Body:
                 {
                     "firstName": "Aly",
                     "lastName": "Pachino",
-                    "phone": "7877877788",
+                    "phone": "7877877788", *
 	                "password": "lolo",
                     "email" : "aa@bb.com"
-                    "prefersImperial": false
                 }
             </p>
             <p>
@@ -58,11 +57,11 @@
                     "isActiveUser": true,
                     "lastName": "Pachino",
                     "phone": "7877877788",
-                    "prefersImperial": false
                     }
                 }
             </p>
         <li>[DELETE] /coach/signout</li>
+        <p>Description: Lets the user invalidate the security token.</p>
             <p> Header:
                 {
                     "token": "4WJMKB2NMZ4HWuaUHXruTZPWsEa1y8vxl8IL3Zf-6H4"
@@ -74,9 +73,119 @@
                     "Success": "Log out successful"
                 }
             </p>
-        <li>[POST] /coach/create/athlete</li>
+        <li>[GET] /coach</li>
+        <p>Description: Lets the user get their account details.</p>
+        <li>[GET] /coach/details</li>
+        <p>Description: Lets the user get the account details of any coach.</p>
+        <li>[GET] /coach/search</li>
+        <p>Description: Lets the user search for the details of other coaches.</p>
+        <li>[PATCH] /coach/update</li>
+        <p>Description: Lets the user update their account details.</p>
+        <li>[PATCH] /coach/delete</li>
+        <p>Description: Lets the user invalidate their account and their security token.</p>
     </ul>
-    <h3>Sport Locations:</h3>
-
+    <h3>Athlete Locations:</h3>
+    <ul>
+        <li>[POST] /coach/athlete/create</li>
+        <p>Description: Lets the user create an athlete.</p>
+        <li>[GET] /coach/athlete/details</li>
+        <p>Description: Lets the user view the details of an athlete they created or manage through a team.</p>
+        <li>[GET] /coach/athlete/search</li>
+        <p>Description: Lets the user search and view the details of athletes they created.</p>
+        <li>[PATCH] /coach/athlete/update</li>
+        <p>Description: Lets the user update the details of an athlete they created.</p>
+        <li>[PATCH] /coach/athlete/delete</li>
+        <p>Description: Lets the user invalidate the details of an athlete they created.</p>
+    </ul>
+        <h3>Team Locations:</h3>
+    <ul>
+        <li>[POST] /coach/team/create</li>
+        <p>Description: Lets the user create a team.</p>
+        <li>[GET] /coach/team/details</li>
+        <p>Description: Lets the user view the details of a team they created or manage.</p>
+        <li>[GET] /coach/team/search</li>
+        <p>Description: Lets the user search and view the details of teams they created or manage.</p>
+        <li>[PATCH] /coach/team/update</li>
+        <p>Description: Lets the user update the details of a team they created.</p>
+        <li>[PATCH] /coach/team/delete</li>
+        <p>Description: Lets the user invalidate the details of a team they created.</p>
+    </ul>
+        <h3>Support Locations:</h3>
+    <ul>
+        <li>[POST] /coach/team/support/create</li>
+        <p>Description: Lets the user add another coach as support for a team.</p>
+        <li>[GET] /coach/team/support/teams</li>
+        <p>Description: Lets the user view all the teams that they give support to.</p>
+        <li>[GET] /coach/team/support/coaches</li>
+        <p>Description: Lets the user view all the coaches that give support to their team.</p>
+        <li>[DELETE] /coach/team/support/delete</li>
+        <p>Description: Lets the user delete access of a coach to a team they created.</p>
+    </ul>
+        <h3>Member Locations:</h3>
+    <ul>
+        <li>[POST] /coach/team/member/create</li>
+        <p>Description: Lets the user an athlete they created as a member for a team.</p>
+        <li>[GET] /coach/team/member/teams</li>
+        <p>Description: Lets the user view all the teams that an athlete they created is a member of.</p>
+        <li>[GET] /coach/team/support/athletes</li>
+        <p>Description: Lets the user view all the athletes that are member of a team they manage or created.</p>
+        <li>[DELETE] /coach/team/support/delete</li>
+        <p>Description: Lets the user delete access of a coach to a team they created.</p>
+    </ul>
+        <h3>Focus Locations:</h3>
+    <ul>
+        <li>[POST] /coach/athlete/focus/create</li>
+        <p>Description: Lets the user add a role to and athlete they created.</p>
+        <li>[GET] /coach/athlete/focus/roles</li>
+        <p>Description: Lets the user view all the roles that an athlete they created or manage has.</p>
+        <li>[GET] /coach/athlete/focus/athletes</li>
+        <p>Description: Lets the user view all the athletes they created that have a specific role.</p>
+        <li>[DELETE] /coach/athlete/focus/delete</li>
+        <p>Description: Lets the user delete a role for an athlete they created.</p>
+    </ul>
+        <h3>Sport Locations:</h3>
+    <ul>
+        <li>[POST] /sport/create</li>
+        <p>Description: Lets an admin create a sport.</p>
+        <li>[GET] /sport/details</li>
+        <p>Description: Lets the user view the details of a sport.</p>
+        <li>[GET] /sport/search</li>
+        <p>Description: Lets the user search and view the details of a sport.</p>
+        <li>[DELETE] /sport/delete</li>
+        <p>Description: Lets the admin delete a sport they created.</p>
+    </ul>
+        <h3>Unit Locations:</h3>
+    <ul>
+        <li>[POST] /unit/create</li>
+        <p>Description: Lets an admin create an unit.</p>
+        <li>[GET] /unit/details</li>
+        <p>Description: Lets the user view the details of an unit.</p>
+        <li>[GET] /unit/search</li>
+        <p>Description: Lets the user search and view the details of an unit.</p>
+        <li>[DELETE] /unit/delete</li>
+        <p>Description: Lets the admin delete an unit they created.</p>
+    </ul>
+        <h3>Role Locations:</h3>
+    <ul>
+        <li>[POST] /sport/role/create</li>
+        <p>Description: Lets an admin create a role.</p>
+        <li>[GET] /sport/role/details</li>
+        <p>Description: Lets the user view the details of a role.</p>
+        <li>[GET] /sport/role/search</li>
+        <p>Description: Lets the user search and view the details of a role.</p>
+        <li>[DELETE] /sport/role/delete</li>
+        <p>Description: Lets the admin delete a role they created.</p>
+    </ul>
+        <h3>Exercise Locations:</h3>
+    <ul>
+        <li>[POST] /sport/exercise/create</li>
+        <p>Description: Lets an admin create an exercise.</p>
+        <li>[GET] /sport/exercise/details</li>
+        <p>Description: Lets the user view the details of an exercise.</p>
+        <li>[GET] /sport/exercise/search</li>
+        <p>Description: Lets the user search and view the details of an exercise.</p>
+        <li>[DELETE] /sport/exercise/delete</li>
+        <p>Description: Lets the admin delete an exercise they created.</p>
+    </ul>
 </body>
 </html>

@@ -78,6 +78,12 @@ class SecurityDAO:
             return None
         return result.coachID
 
+    def getIfAdmin(self, token):
+
+        coachID = self.getTokenOwner(token)
+
+        return coachID == '517bfcbb-5e5c-4c32-9a8e-3135ffa107e6'
+
     # ============================== Update Methods =========================== #
     def validateToken(self, token):
         session = self.conn.getNewSession()

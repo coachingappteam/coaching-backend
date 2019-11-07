@@ -47,10 +47,19 @@ def coachSignout():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/details', methods=['GET'])
+@app.route('/coach', methods=['GET'])
 def coachDetails():
     if request.method == 'GET':
         result = Coach.readCoach(request.headers)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/coach/details', methods=['GET'])
+def coachDetails():
+    if request.method == 'GET':
+        result = Coach.readCoachByID(request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
