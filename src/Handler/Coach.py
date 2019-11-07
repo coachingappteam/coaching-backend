@@ -132,10 +132,11 @@ def addAthleteToTeam(headers, json):
     teamID = json['teamID']
     athleteID = json['athleteID']
     if coachID and athleteID and teamID:
-        if dao.readIfTeamFromCoach(coachID, teamID) and dao.readIfAthleteFromCoach(coachID, athleteID):
+        if (dao.readIfTeamFromCoach(coachID, teamID) or dao.readIfCoachIsSupport(coachID, teamID))\
+                and dao.readIfAthleteFromCoach(coachID, athleteID):
             dao.createMember(athleteID, teamID)
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team or athlete"), 400
         return jsonify(Success="Member added"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -170,9 +171,10 @@ def updateCoach(headers, json):
         return jsonify(Error="Required Parameter is missing"), 400
 
 
-def deleteCoach(headers):
+def deleteCoach(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
-    if coachID:
+    isDeleted = json['isDeleted']
+    if coachID and isDeleted:
         dao.deleteCoach(coachID)
         return jsonify(Success="Coach Deleted"), 200
     else:
@@ -237,10 +239,11 @@ def athleteUpdate(headers, json):
 def athleteDelete(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     athleteID = json['athleteID']
-    if coachID and athleteID:
+    isDeleted = json['isDeleted']
+    if coachID and athleteID and isDeleted:
         if dao.readIfAthleteFromCoach(coachID, athleteID):
-            dao.deleteAthlete(coachID, athleteID)
-            return jsonify(Success="Athlete Deleted"), 200
+            dao.deleteAthlete(coachID, athleteID, isDeleted)
+            return jsonify(Success="Athlete Delete Status changed."), 200
         else:
             return jsonify(Error="User cant access this athlete"), 400
     else:
@@ -298,10 +301,11 @@ def teamUpdate(headers, json):
 def teamDelete(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     teamID = json['teamID']
-    if coachID and teamID:
+    isDeleted = json['isDeleted']
+    if coachID and teamID and isDeleted:
         if dao.readIfTeamFromCoach(coachID, teamID):
-            dao.deleteTeam(coachID, teamID)
-            return jsonify(Success="Team Deleted"), 200
+            dao.deleteTeam(coachID, teamID, isDeleted)
+            return jsonify(Success="Team Delete status changed"), 200
         else:
             return jsonify(Error="User cant access this team"), 400
     else:

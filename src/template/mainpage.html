@@ -5,7 +5,6 @@
     <title>Coaching REST API</title>
 </head>
 <body>
-    <h2> * means that the field can be empty.</h2>
     <h3>Main Page:</h3>
     <ul><li>/</li></ul>
     <h3>Coach Locations:</h3>
@@ -40,7 +39,7 @@
                 {
                     "firstName": "Aly",
                     "lastName": "Pachino",
-                    "phone": "7877877788", *
+                    "phone": "7877877788",
 	                "password": "lolo",
                     "email" : "aa@bb.com"
                 }
@@ -81,6 +80,28 @@
         <p>Description: Lets the user search for the details of other coaches.</p>
         <li>[PATCH] /coach/update</li>
         <p>Description: Lets the user update their account details.</p>
+        <p>
+            Header:
+            {
+                "token":"dkjfnsdjvblksjdbvlkjsdblvkjsdkjbsdkj-sdjjsdbsdfsd"
+            }
+        </p>
+        <p>
+            Body:
+            {
+                "password": "kdjsnvds",
+                "lastName" : "Martin",
+                "firstName": "lolo",
+                "phone": "978687687",
+                "isActiveMember": true
+            }
+        </p>
+        <p>
+            Response:
+            {
+                "Success":"Coach was updated"
+            }
+        </p>
         <li>[PATCH] /coach/delete</li>
         <p>Description: Lets the user invalidate their account and their security token.</p>
     </ul>

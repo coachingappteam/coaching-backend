@@ -86,7 +86,7 @@ def coachUpdate():
 @app.route('/coach/delete', methods=['PATCH'])
 def coachDelete():
     if request.method == 'PATCH':
-        result = Coach.deleteCoach(request.headers)
+        result = Coach.deleteCoach(request.headers, request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
