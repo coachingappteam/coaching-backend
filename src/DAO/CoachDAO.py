@@ -161,10 +161,10 @@ class CoachDAO:
     '''
     Delete Coach
     '''
-    def deleteCoach(self, coachID, isDeleted):
+    def deleteCoach(self, coachID, isActiveUser):
         session = self.conn.getNewSession()
         update = dict()
-        update[Coach.isActiveUser] = isDeleted
+        update[Coach.isActiveUser] = isActiveUser
         result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
         session.close()
         return result

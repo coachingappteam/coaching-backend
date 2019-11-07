@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/template/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/mainpage.html" afterDir="false" />
@@ -175,7 +173,7 @@
       <workItem from="1571494858263" duration="60690000" />
       <workItem from="1572710378766" duration="22994000" />
       <workItem from="1572903428549" duration="65149000" />
-      <workItem from="1573152489752" duration="1939000" />
+      <workItem from="1573152489752" duration="2300000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -408,7 +406,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573143897382</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Updated how the delete methods work">
+      <created>1573154733099</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1573154733099</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -428,7 +433,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix for token generator" />
     <MESSAGE value="Removed automatic log in from sign up." />
     <MESSAGE value="Fixed log in" />
     <MESSAGE value="Fixed remove token" />
@@ -453,7 +457,8 @@
     <MESSAGE value="Improved Coach related methods to have tigheter restricting access." />
     <MESSAGE value="Uploaded an updated list of available CRUD methods" />
     <MESSAGE value="Fixing heroku setup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing heroku setup" />
+    <MESSAGE value="Updated how the delete methods work" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated how the delete methods work" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />

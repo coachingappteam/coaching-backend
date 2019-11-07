@@ -173,9 +173,9 @@ def updateCoach(headers, json):
 
 def deleteCoach(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
-    isDeleted = json['isDeleted']
-    if coachID and isDeleted:
-        dao.deleteCoach(coachID)
+    isActiveUser = json['isActiveUser']
+    if coachID and isActiveUser:
+        dao.deleteCoach(coachID, isActiveUser)
         return jsonify(Success="Coach Deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
