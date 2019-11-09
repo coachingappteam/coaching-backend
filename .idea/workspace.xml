@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SportDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SportDAO.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -171,7 +173,8 @@
       <workItem from="1571494858263" duration="60690000" />
       <workItem from="1572710378766" duration="22994000" />
       <workItem from="1572903428549" duration="65149000" />
-      <workItem from="1573152489752" duration="2561000" />
+      <workItem from="1573152489752" duration="8635000" />
+      <workItem from="1573309228128" duration="654000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -418,7 +421,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573155101760</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Fixed bug with delete methods">
+      <created>1573155345355</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1573155345355</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

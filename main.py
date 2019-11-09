@@ -23,6 +23,7 @@ def testMethod():
 @app.route('/coach/login', methods=['POST'])
 def coachLogin():
     if request.method == 'POST':
+        print(str(request))
         result = Coach.loginCoach(request.json)
         return result
     else:

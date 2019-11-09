@@ -108,7 +108,7 @@ class SportDAO:
 
     def searchSport(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Sport).filter(or_(Sport.sportName.like(search), Sport.type.like(search))).all()
+        result = session.query(Sport).filter(or_(Sport.sportName.like(search))).all()
         return result
 
     def deleteSport(self, sportID):
