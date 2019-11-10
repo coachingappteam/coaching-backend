@@ -2,9 +2,8 @@
 This Class contain DAO methods for the entity Security
 """
 import secrets
-import uuid
 from datetime import datetime
-from src.ORM.CoachingORM import Database, Security
+from src.ORM.CoachingORM import Database, Security, Coach
 
 
 class SecurityDAO:
@@ -82,7 +81,14 @@ class SecurityDAO:
 
         coachID = self.getTokenOwner(token)
 
-        return coachID == '517bfcbb-5e5c-4c32-9a8e-3135ffa107e6'
+        session = self.conn.getNewSession()
+
+        coach = session.query(Coach).filter(Coach.coachID == coachID).first()
+        session.close()
+
+        if coach is None:
+            return False
+        return coach.isAdmin
 
     # ============================== Update Methods =========================== #
     def validateToken(self, token):
@@ -117,17 +123,6 @@ class SecurityDAO:
         session.commit()
         session.close()
 
-
-# DAO = SecurityDAO()
-#
-# token = DAO.createToken('3e3ca73a-6f67-4142-ae39-3fd4d5fc897b')
-# print(token)
-#
-# print(DAO.validateToken(token))
-#
-# DAO.deleteToken(token)
-#
-# print(DAO.validateToken(token))
 
 
 

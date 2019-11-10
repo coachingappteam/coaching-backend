@@ -51,6 +51,8 @@ def coachSignout():
 @app.route('/coach', methods=['GET'])
 def coachDetails():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.readCoach(request.headers)
         return result
     else:
@@ -60,6 +62,8 @@ def coachDetails():
 @app.route('/coach/details', methods=['GET'])
 def coachDetailsByID():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.readCoachByID(request.json)
         return result
     else:
@@ -69,6 +73,8 @@ def coachDetailsByID():
 @app.route('/coach/search', methods=['GET'])
 def coachSearch():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.searchCoaches(request.json)
         return result
     else:
@@ -78,6 +84,8 @@ def coachSearch():
 @app.route('/coach/update', methods=['PATCH'])
 def coachUpdate():
     if request.method == 'PATCH':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.updateCoach(request.headers, request.json)
         return result
     else:
@@ -87,6 +95,8 @@ def coachUpdate():
 @app.route('/coach/delete', methods=['PATCH'])
 def coachDelete():
     if request.method == 'PATCH':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.deleteCoach(request.headers, request.json)
         return result
     else:
@@ -96,6 +106,8 @@ def coachDelete():
 @app.route('/coach/athlete/create', methods=['POST'])
 def createAthlete():
     if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.createAthlete(request.headers, request.json)
         return result
     else:
@@ -105,6 +117,8 @@ def createAthlete():
 @app.route('/coach/athlete/details', methods=['GET'])
 def athleteDetails():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.athleteDetails(request.headers, request.json)
         return result
     else:
@@ -338,6 +352,8 @@ def deleteAthleteFocus():
 @app.route('/sport/create', methods=['POST'])
 def createSport():
     if request.method == 'POST':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.createSport(request.json)
         return result
     else:
@@ -347,6 +363,8 @@ def createSport():
 @app.route('/sport/details', methods=['GET'])
 def sportDetails():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.sportDetails(request.json)
         return result
     else:
@@ -356,6 +374,8 @@ def sportDetails():
 @app.route('/sport/search', methods=['GET'])
 def sportSearch():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.sportSearch(request.json)
         return result
     else:
@@ -365,6 +385,8 @@ def sportSearch():
 @app.route('/sport/delete', methods=['DELETE'])
 def deleteSport():
     if request.method == 'DELETE':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.deleteSport(request.json)
         return result
     else:
@@ -375,6 +397,8 @@ def deleteSport():
 @app.route('/unit/create', methods=['POST'])
 def createUnit():
     if request.method == 'POST':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.createUnit(request.json)
         return result
     else:
@@ -384,6 +408,8 @@ def createUnit():
 @app.route('/unit/details', methods=['GET'])
 def unitDetails():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.unitDetails(request.json)
         return result
     else:
@@ -393,6 +419,8 @@ def unitDetails():
 @app.route('/unit/search', methods=['GET'])
 def unitSearch():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.unitSearch(request.json)
         return result
     else:
@@ -402,6 +430,8 @@ def unitSearch():
 @app.route('/unit/delete', methods=['DELETE'])
 def deleteUnit():
     if request.method == 'DELETE':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.deleteUnit(request.json)
         return result
     else:
@@ -412,6 +442,8 @@ def deleteUnit():
 @app.route('/sport/role/create', methods=['POST'])
 def createRole():
     if request.method == 'POST':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.createRole(request.json)
         return result
     else:
@@ -421,6 +453,8 @@ def createRole():
 @app.route('/sport/role/details', methods=['GET'])
 def roleDetails():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.roleDetails(request.json)
         return result
     else:
@@ -430,6 +464,8 @@ def roleDetails():
 @app.route('/sport/role/search', methods=['GET'])
 def roleSearch():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.roleSearch(request.json)
         return result
     else:
@@ -439,6 +475,8 @@ def roleSearch():
 @app.route('/sport/role/delete', methods=['DELETE'])
 def deleteRole():
     if request.method == 'DELETE':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.deleteRole(request.json)
         return result
     else:
@@ -449,6 +487,8 @@ def deleteRole():
 @app.route('/sport/exercise/create', methods=['POST'])
 def createExercise():
     if request.method == 'POST':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.createExercise(request.json)
         return result
     else:
@@ -458,6 +498,8 @@ def createExercise():
 @app.route('/sport/exercise/details', methods=['GET'])
 def exerciseDetails():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.exerciseDetails(request.json)
         return result
     else:
@@ -467,6 +509,8 @@ def exerciseDetails():
 @app.route('/sport/exercise/search', methods=['GET'])
 def exerciseSearch():
     if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.exerciseSearch(request.json)
         return result
     else:
@@ -476,6 +520,8 @@ def exerciseSearch():
 @app.route('/sport/exercise/delete', methods=['DELETE'])
 def deleteExercise():
     if request.method == 'DELETE':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.deleteExercise(request.json)
         return result
     else:

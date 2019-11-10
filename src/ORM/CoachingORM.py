@@ -60,6 +60,7 @@ class Coach(Base):
     phone = Column(String)
     isActiveMember = Column(Boolean, nullable=False, default=False)
     isActiveUser = Column(Boolean, nullable=False, default=True)
+    isAdmin = Column(Boolean, nullable=False, default=False)
     createDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
 
     def __repr__(self):
