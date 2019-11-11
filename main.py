@@ -59,20 +59,20 @@ def coachDetails():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/details', methods=['GET'])
-def coachDetailsByID():
+@app.route('/coach/details/<string:coachID>', methods=['GET'])
+def coachDetailsByID(coachID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.readCoachByID(request.json)
+        result = Coach.readCoachByID({"coachID": coachID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/search', methods=['GET'])
+@app.route('/coach/search', methods=['POST'])
 def coachSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.searchCoaches(request.json)
@@ -114,20 +114,20 @@ def createAthlete():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/athlete/details', methods=['GET'])
-def athleteDetails():
+@app.route('/coach/athlete/details/<int:athleteID>', methods=['GET'])
+def athleteDetails(athleteID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.athleteDetails(request.headers, request.json)
+        result = Coach.athleteDetails(request.headers, {"athleteID":athleteID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/athlete/search', methods=['GET'])
+@app.route('/coach/athlete/search', methods=['POST'])
 def athleteSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.athleteSearch(request.headers, request.json)
@@ -169,20 +169,20 @@ def createTeam():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/team/details', methods=['GET'])
-def teamDetails():
+@app.route('/coach/team/details/<int:teamID>', methods=['GET'])
+def teamDetails(teamID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.teamDetails(request.headers, request.json)
+        result = Coach.teamDetails(request.headers, {"teamID":teamID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/team/search', methods=['GET'])
+@app.route('/coach/team/search', methods=['POST'])
 def teamSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.teamSearch(request.headers, request.json)
@@ -225,12 +225,12 @@ def createTeamSupport():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/team/support/coaches', methods=['GET'])
-def readTeamCoaches():
+@app.route('/coach/team/support/coaches/<int:teamID>', methods=['GET'])
+def readTeamCoaches(teamID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.readCoachesInCharge(request.headers, request.json)
+        result = Coach.readCoachesInCharge(request.headers, {"teamID": teamID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -270,23 +270,23 @@ def createTeamMember():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/team/member/athletes', methods=['GET'])
-def readTeamAthletes():
+@app.route('/coach/team/member/athletes/<int:teamID>', methods=['GET'])
+def readTeamAthletes(teamID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.readAthletesInTeam(request.headers, request.json)
+        result = Coach.readAthletesInTeam(request.headers, {"teamID": teamID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/team/member/teams', methods=['GET'])
-def readAthleteTeams():
+@app.route('/coach/team/member/teams/<int:athleteID>', methods=['GET'])
+def readAthleteTeams(athleteID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.readTeamsOfAthlete(request.headers, request.json)
+        result = Coach.readTeamsOfAthlete(request.headers, {"athleteID": athleteID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -315,23 +315,23 @@ def createAthleteFocus():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/athlete/focus/athletes', methods=['GET'])
-def readAthletesForRole():
+@app.route('/coach/athlete/focus/athletes/<int:roleID>', methods=['GET'])
+def readAthletesForRole(roleID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.readAthletesInRole(request.headers, request.json)
+        result = Coach.readAthletesInRole(request.headers, {"roleID": roleID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/coach/athlete/focus/roles', methods=['GET'])
-def readRolesForAthlete():
+@app.route('/coach/athlete/focus/roles/<int:athleteID>', methods=['GET'])
+def readRolesForAthlete(athleteID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.readRolesOfAthlete(request.headers, request.json)
+        result = Coach.readRolesOfAthlete(request.headers, {"athleteID": athleteID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -360,20 +360,20 @@ def createSport():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/sport/details', methods=['GET'])
-def sportDetails():
+@app.route('/sport/details/<int:sportID>', methods=['GET'])
+def sportDetails(sportID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Sport.sportDetails(request.json)
+        result = Sport.sportDetails({"sportID": sportID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/sport/search', methods=['GET'])
+@app.route('/sport/search', methods=['POST'])
 def sportSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.sportSearch(request.json)
@@ -405,20 +405,20 @@ def createUnit():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/unit/details', methods=['GET'])
-def unitDetails():
+@app.route('/unit/details/<int:unitID>', methods=['GET'])
+def unitDetails(unitID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Sport.unitDetails(request.json)
+        result = Sport.unitDetails({"unitID": unitID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/unit/search', methods=['GET'])
+@app.route('/unit/search', methods=['POST'])
 def unitSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.unitSearch(request.json)
@@ -450,20 +450,20 @@ def createRole():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/sport/role/details', methods=['GET'])
-def roleDetails():
+@app.route('/sport/role/details/<int:roleID>', methods=['GET'])
+def roleDetails(roleID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Sport.roleDetails(request.json)
+        result = Sport.roleDetails({"roleID": roleID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/sport/role/search', methods=['GET'])
+@app.route('/sport/role/search', methods=['POST'])
 def roleSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.roleSearch(request.json)
@@ -495,20 +495,20 @@ def createExercise():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/sport/exercise/details', methods=['GET'])
-def exerciseDetails():
+@app.route('/sport/exercise/details/<int:exerciseID>', methods=['GET'])
+def exerciseDetails(exerciseID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Sport.exerciseDetails(request.json)
+        result = Sport.exerciseDetails({"exerciseID": exerciseID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/sport/exercise/search', methods=['GET'])
+@app.route('/sport/exercise/search', methods=['POST'])
 def exerciseSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Sport.exerciseSearch(request.json)
@@ -540,20 +540,20 @@ def createPlan():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/plan/details', methods=['GET'])
-def planDetails():
+@app.route('/plan/details/<int:planID>', methods=['GET'])
+def planDetails(planID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Plan.planDetails(request.headers, request.json)
+        result = Plan.planDetails(request.headers, {"planID": planID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/plan/search', methods=['GET'])
+@app.route('/plan/search', methods=['POST'])
 def planSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Plan.planSearch(request.headers, request.json)
@@ -596,20 +596,20 @@ def createSession():
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/plan/session/details', methods=['GET'])
-def sessionDetails():
+@app.route('/plan/session/details/<int:sessionID>', methods=['GET'])
+def sessionDetails(sessionID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Plan.sessionDetails(request.headers, request.json)
+        result = Plan.sessionDetails(request.headers, {"sessionID": sessionID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
 
 
-@app.route('/plan/session/search', methods=['GET'])
+@app.route('/plan/session/search', methods=['POST'])
 def sessionSearch():
-    if request.method == 'GET':
+    if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Plan.sessionSearch(request.headers, request.json)

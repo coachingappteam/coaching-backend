@@ -74,9 +74,9 @@
             </p>
         <li>[GET] /coach</li>
         <p>Description: Lets the user get their account details.</p>
-        <li>[GET] /coach/details</li>
+        <li>[GET] /coach/details/[coachID]</li>
         <p>Description: Lets the user get the account details of any coach.</p>
-        <li>[GET] /coach/search</li>
+        <li>[POST] /coach/search</li>
         <p>Description: Lets the user search for the details of other coaches.</p>
         <li>[PATCH] /coach/update</li>
         <p>Description: Lets the user update their account details.</p>
@@ -109,9 +109,9 @@
     <ul>
         <li>[POST] /coach/athlete/create</li>
         <p>Description: Lets the user create an athlete.</p>
-        <li>[GET] /coach/athlete/details</li>
+        <li>[GET] /coach/athlete/details/[athleteID]</li>
         <p>Description: Lets the user view the details of an athlete they created or manage through a team.</p>
-        <li>[GET] /coach/athlete/search</li>
+        <li>[POST] /coach/athlete/search</li>
         <p>Description: Lets the user search and view the details of athletes they created.</p>
         <li>[PATCH] /coach/athlete/update</li>
         <p>Description: Lets the user update the details of an athlete they created.</p>
@@ -122,9 +122,9 @@
     <ul>
         <li>[POST] /coach/team/create</li>
         <p>Description: Lets the user create a team.</p>
-        <li>[GET] /coach/team/details</li>
+        <li>[GET] /coach/team/details/[teamID]</li>
         <p>Description: Lets the user view the details of a team they created or manage.</p>
-        <li>[GET] /coach/team/search</li>
+        <li>[POST] /coach/team/search</li>
         <p>Description: Lets the user search and view the details of teams they created or manage.</p>
         <li>[PATCH] /coach/team/update</li>
         <p>Description: Lets the user update the details of a team they created.</p>
@@ -137,7 +137,7 @@
         <p>Description: Lets the user add another coach as support for a team.</p>
         <li>[GET] /coach/team/support/teams</li>
         <p>Description: Lets the user view all the teams that they give support to.</p>
-        <li>[GET] /coach/team/support/coaches</li>
+        <li>[GET] /coach/team/support/coaches/[teamID]</li>
         <p>Description: Lets the user view all the coaches that give support to their team.</p>
         <li>[DELETE] /coach/team/support/delete</li>
         <p>Description: Lets the user delete access of a coach to a team they created.</p>
@@ -146,9 +146,9 @@
     <ul>
         <li>[POST] /coach/team/member/create</li>
         <p>Description: Lets the user an athlete they created or as a member for a team they created or manager.</p>
-        <li>[GET] /coach/team/member/teams</li>
+        <li>[GET] /coach/team/member/teams/[athleteID]</li>
         <p>Description: Lets the user view all the teams that an athlete they created is a member of.</p>
-        <li>[GET] /coach/team/support/athletes</li>
+        <li>[GET] /coach/team/support/athletes/[teamID]</li>
         <p>Description: Lets the user view all the athletes that are member of a team they manage or created.</p>
         <li>[DELETE] /coach/team/support/delete</li>
         <p>Description: Lets the user delete access of a coach to a team they created.</p>
@@ -157,9 +157,9 @@
     <ul>
         <li>[POST] /coach/athlete/focus/create</li>
         <p>Description: Lets the user add a role to and athlete they created.</p>
-        <li>[GET] /coach/athlete/focus/roles</li>
+        <li>[GET] /coach/athlete/focus/roles/[athleteID]</li>
         <p>Description: Lets the user view all the roles that an athlete they created or manage has.</p>
-        <li>[GET] /coach/athlete/focus/athletes</li>
+        <li>[GET] /coach/athlete/focus/athletes/[roleID]</li>
         <p>Description: Lets the user view all the athletes they created that have a specific role.</p>
         <li>[DELETE] /coach/athlete/focus/delete</li>
         <p>Description: Lets the user delete a role for an athlete they created.</p>
@@ -168,9 +168,9 @@
     <ul>
         <li>[POST] /sport/create</li>
         <p>Description: Lets an admin create a sport.</p>
-        <li>[GET] /sport/details</li>
+        <li>[GET] /sport/details/[sportID]</li>
         <p>Description: Lets the user view the details of a sport.</p>
-        <li>[GET] /sport/search</li>
+        <li>[POST] /sport/search</li>
         <p>Description: Lets the user search and view the details of a sport.</p>
         <li>[DELETE] /sport/delete</li>
         <p>Description: Lets the admin delete a sport they created.</p>
@@ -179,9 +179,9 @@
     <ul>
         <li>[POST] /unit/create</li>
         <p>Description: Lets an admin create an unit.</p>
-        <li>[GET] /unit/details</li>
+        <li>[GET] /unit/details/[unitID]</li>
         <p>Description: Lets the user view the details of an unit.</p>
-        <li>[GET] /unit/search</li>
+        <li>[POST] /unit/search</li>
         <p>Description: Lets the user search and view the details of an unit.</p>
         <li>[DELETE] /unit/delete</li>
         <p>Description: Lets the admin delete an unit they created.</p>
@@ -190,9 +190,9 @@
     <ul>
         <li>[POST] /sport/role/create</li>
         <p>Description: Lets an admin create a role.</p>
-        <li>[GET] /sport/role/details</li>
+        <li>[GET] /sport/role/details/[roleID]</li>
         <p>Description: Lets the user view the details of a role.</p>
-        <li>[GET] /sport/role/search</li>
+        <li>[POST] /sport/role/search</li>
         <p>Description: Lets the user search and view the details of a role.</p>
         <li>[DELETE] /sport/role/delete</li>
         <p>Description: Lets the admin delete a role they created.</p>
@@ -201,9 +201,9 @@
     <ul>
         <li>[POST] /sport/exercise/create</li>
         <p>Description: Lets an admin create an exercise.</p>
-        <li>[GET] /sport/exercise/details</li>
+        <li>[GET] /sport/exercise/details/[exerciseID]</li>
         <p>Description: Lets the user view the details of an exercise.</p>
-        <li>[GET] /sport/exercise/search</li>
+        <li>[POST] /sport/exercise/search</li>
         <p>Description: Lets the user search and view the details of an exercise.</p>
         <li>[DELETE] /sport/exercise/delete</li>
         <p>Description: Lets the admin delete an exercise they created.</p>
