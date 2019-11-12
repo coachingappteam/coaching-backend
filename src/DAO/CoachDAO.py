@@ -177,7 +177,7 @@ class CoachDAO:
 
     def searchCoach(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Coach).filter(Athlete.isDeleted == False,
+        result = session.query(Coach).filter(Coach.isActiveUser == True,
                                              or_(Coach.firstName.like(search), Coach.lastName.like(search),
                                                  Coach.email.like(search))).all()
         return result
