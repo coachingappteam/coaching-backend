@@ -813,7 +813,7 @@ def practiceDelete():
     if request.method == 'DELETE':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Plan.sessionDelete(request.headers, request.json)
+        result = Plan.practiceDelete(request.headers, request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404

@@ -284,3 +284,17 @@ def practiceUpdate(headers, json):
             return jsonify(Error="User cant access this Practice"), 400
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def practiceDelete(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    practiceID = json['practiceID']
+    isDeleted = json['isDeleted']
+    if coachID and practiceID and isDeleted is not None:
+        if dao.readIfCoachManagePractice(coachID, practiceID):
+            dao.deletePractice(practiceID, isDeleted)
+            return jsonify(Success="Practice Delete Status changed."), 200
+        else:
+            return jsonify(Error="User cant access this practice"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

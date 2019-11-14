@@ -238,3 +238,12 @@ class PlanDAO:
         session.commit()
         session.close()
         return result
+
+    def deletePractice(self, practiceID, isDeleted):
+        session = self.conn.getNewSession()
+        update = dict()
+        update[Practice.isDeleted] = isDeleted
+        result = session.query(Practice).filter(Practice.practiceID == practiceID).update(update)
+        session.commit()
+        session.close()
+        return result

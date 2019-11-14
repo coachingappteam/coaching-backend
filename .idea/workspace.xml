@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="Added methods for Training plan and sessions">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/PlanDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/PlanDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/SportDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SportDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Handler/Plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Handler/Sport.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Sport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ORM/CoachingORM.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/CoachingORM.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -181,7 +175,7 @@
       <workItem from="1572903428549" duration="65149000" />
       <workItem from="1573152489752" duration="8635000" />
       <workItem from="1573309228128" duration="9553000" />
-      <workItem from="1573742622050" duration="25002000" />
+      <workItem from="1573742622050" duration="25277000" />
     </task>
     <task id="LOCAL-00001" summary="Created classes for all the tables">
       <created>1570645314256</created>
@@ -491,7 +485,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573759259617</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Added methods for practice table and fixed delete for exercise and role">
+      <created>1573775411184</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1573775411184</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -511,7 +512,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added attendance and wrote templates for all Strong entity tables." />
     <MESSAGE value="Test for Heroku" />
     <MESSAGE value="Fixed small update error." />
     <MESSAGE value="Fixed method errors in API" />
@@ -536,7 +536,8 @@
     <MESSAGE value="Finished adding calls for Coach and Sport modules" />
     <MESSAGE value="Fixed method name conflicts in api." />
     <MESSAGE value="Fixed method name conflicts in api try 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed method name conflicts in api try 2" />
+    <MESSAGE value="Added methods for practice table and fixed delete for exercise and role" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added methods for practice table and fixed delete for exercise and role" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
