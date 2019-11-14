@@ -619,7 +619,7 @@ def readSessionsForRole(roleID):
 
 
 @app.route('/sport/role/improve/delete', methods=['DELETE'])
-def deleteAthleteAttendance():
+def deleteRoleImprove():
     if request.method == 'DELETE':
         if not Coach.checkAdminToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
