@@ -383,7 +383,7 @@ def readSessionsForAthlete(athleteID):
 
 
 @app.route('/coach/athlete/attendance/update', methods=['PATCH'])
-def deleteAthleteAttendance():
+def updateAthleteAttendance():
     if request.method == 'DELETE':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
@@ -608,7 +608,7 @@ def readRolesForExercise(exerciseID):
 
 
 @app.route('/sport/role/improve/exercises/<int:roleID>', methods=['GET'])
-def readSessionsForAthlete(roleID):
+def readSessionsForRole(roleID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
