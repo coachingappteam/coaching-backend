@@ -173,3 +173,24 @@ class SportDAO:
         result = session.query(Exercise).filter(Exercise.exerciseID == exerciseID).first()
         session.close()
         return result
+
+    def getRolesByExerciseID(self, exerciseID):
+        session = self.conn.getNewSession()
+        result = session.query(Role, Improves).filter(Improves.exerciseID == exerciseID,
+                                                      Improves.roleID == Role.roleID).all()
+        session.close()
+        return result
+
+    def getExerciseByRoleID(self, roleID):
+        session = self.conn.getNewSession()
+        result = session.query(Exercise, Improves).filter(Improves.roleID == roleID,
+                                                      Improves.exerciseID == Exercise.exerciseID).all()
+        session.close()
+        return result
+
+    def deleteImproves(self, roleID, exerciseID):
+        session = self.conn.getNewSession()
+
+        session.query(Improves).filter(Improves.exerciseID == exerciseID, Improves.roleID == roleID).delete()
+        session.commit()
+        session.close()

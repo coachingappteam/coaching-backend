@@ -361,3 +361,29 @@ class CoachDAO:
         result = session.query(Coach, Team).filter(Coach.coachID == Team.coachID, Team.teamID == teamID).first()
 
         return result
+
+    def getAthletesBySessionID(self, sessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Athlete, Attendance).filter(Attendance.sessionID == sessionID,
+                                                           Attendance.athleteID == Athlete.athleteID).all()
+        session.close()
+        return result
+
+    def updateAttendance(self, sessionID, athleteID, isPresent):
+        session = self.conn.getNewSession()
+        update = dict()
+        if isPresent is not None and not isPresent == '':
+            update[Attendance.isPresent] = isPresent
+
+        result = session.query(Attendance).filter(Attendance.athleteID == athleteID,
+                                                  Attendance.sessionID == sessionID).update(update)
+        session.commit()
+        session.close()
+        return result
+
+    def deleteAttendance(self, athleteID, sessionID):
+        session = self.conn.getNewSession()
+
+        session.query(Attendance).filter(Attendance.athleteID == athleteID, Attendance.sessionID == sessionID).delete()
+        session.commit()
+        session.close()

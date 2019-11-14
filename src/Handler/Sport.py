@@ -177,3 +177,47 @@ def deleteExercise(json):
         return jsonify(Success="Exercise was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def addExerciseToRole(json):
+    exerciseID = json['exerciseID']
+    roleID = json['roleID']
+    if exerciseID and roleID:
+        dao.createImproves(exerciseID, roleID)
+        return jsonify(Success="Member added"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def readRolesForExercise(json):
+    exerciseID = json['exerciseID']
+    if exerciseID:
+        result = dao.getRolesByExerciseID(exerciseID)
+        roles = list()
+        for role in result:
+            roles.append(role[0].json())
+        return jsonify(Roles=roles), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def readExercisesOfRole(json):
+    roleID = json['roleID']
+    if roleID:
+        result = dao.getExerciseByRoleID(roleID)
+        exercises = list()
+        for exercise in result:
+            exercises.append(exercise[0].json())
+        return jsonify(Exercises=exercises), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def deleteImprovement(json):
+    roleID = json['roleID']
+    exerciseID = json['exerciseID']
+    if roleID and exerciseID:
+        dao.deleteImproves(roleID, exerciseID)
+        return jsonify(Success="Improve was deleted"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

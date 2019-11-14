@@ -467,3 +467,73 @@ def readCoachByID(json):
             return jsonify(Coach="Nothing Found"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def addAttendanceToAthlete(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    sessionID = json['sessionID']
+    athleteID = json['athleteID']
+    if coachID and athleteID and sessionID:
+        if dao.readIfAthleteFromCoach(coachID, athleteID):
+            dao.createAttendance(sessionID, athleteID)
+        else:
+            return jsonify(Error="User doesnt have access to team"), 400
+        return jsonify(Success="Member added"), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def readAthletesInSession(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    sessionID = json['sessionID']
+    if coachID and sessionID:
+        result = dao.getAthletesBySessionID(sessionID)
+        athletes = list()
+        for athlete in result:
+            athletes.append(athlete[0].json())
+        return jsonify(Athletes=athletes), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def readSessionsOfAthlete(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    athleteID = json['athleteID']
+    if coachID and athleteID:
+        result = dao.getAthletesBySessionID(athleteID)
+        sessions = list()
+        for session in result:
+            sessions.append(session[0].json())
+        return jsonify(Session=sessions), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def updateAttendance(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    athleteID = json['athleteID']
+    sessionID = json['sessionID']
+    isPresent = json["isPresent"]
+
+    if coachID and athleteID and isPresent is not None:
+        if dao.readIfAthleteFromCoach(coachID, athleteID):
+            dao.updateAttendance(sessionID, athleteID, isPresent)
+            return jsonify(Success="Attendance Updated"), 200
+        else:
+            return jsonify(Error="User cant access this athlete"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def deleteAttendance(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    athleteID = json['athleteID']
+    sessionID = json['sessionID']
+    if coachID and athleteID and sessionID:
+        if dao.readIfAthleteFromCoach(coachID, athleteID):
+            dao.deleteAttendance(athleteID, sessionID)
+            return jsonify(Success="Session was removed from athlete"), 200
+        else:
+            return jsonify(Error="User doesnt have access to athlete"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

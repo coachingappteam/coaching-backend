@@ -119,7 +119,7 @@ def athleteDetails(athleteID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.athleteDetails(request.headers, {"athleteID":athleteID})
+        result = Coach.athleteDetails(request.headers, {"athleteID": athleteID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -174,7 +174,7 @@ def teamDetails(teamID):
     if request.method == 'GET':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
-        result = Coach.teamDetails(request.headers, {"teamID":teamID})
+        result = Coach.teamDetails(request.headers, {"teamID": teamID})
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -343,6 +343,62 @@ def deleteAthleteFocus():
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
         result = Coach.deleteFocus(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+# ==================== Attendance Methods ====================== #
+@app.route('/coach/athlete/attendance/create', methods=['POST'])
+def createAthleteAttendance():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Coach.addAttendanceToAthlete(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/coach/athlete/attendance/athletes/<int:sessionID>', methods=['GET'])
+def readAthletesForSession(sessionID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Coach.readAthletesInSession(request.headers, {"sessionID": sessionID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/coach/athlete/attendance/sessions/<int:athleteID>', methods=['GET'])
+def readSessionsForAthlete(athleteID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Coach.readSessionsOfAthlete(request.headers, {"athleteID": athleteID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/coach/athlete/attendance/update', methods=['PATCH'])
+def deleteAthleteAttendance():
+    if request.method == 'DELETE':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Coach.updateAttendance(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/coach/athlete/attendance/delete', methods=['DELETE'])
+def deleteAthleteAttendance():
+    if request.method == 'DELETE':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Coach.deleteAttendance(request.headers, request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
@@ -523,6 +579,51 @@ def deleteExercise():
         if not Coach.checkAdminToken(request.headers):
             return jsonify(Error="Invalid or Missing Admin Security Token"), 404
         result = Sport.deleteExercise(request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+# ==================== Improve Methods ====================== #
+@app.route('/sport/role/improve/create', methods=['POST'])
+def createRoleImprove():
+    if request.method == 'POST':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Sport.addExerciseToRole(request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/sport/role/improve/roles/<int:exerciseID>', methods=['GET'])
+def readRolesForExercise(exerciseID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Sport.readRolesForExercise({"exerciseID": exerciseID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/sport/role/improve/exercises/<int:roleID>', methods=['GET'])
+def readSessionsForAthlete(roleID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Sport.readExercisesOfRole({"roleID": roleID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/sport/role/improve/delete', methods=['DELETE'])
+def deleteAthleteAttendance():
+    if request.method == 'DELETE':
+        if not Coach.checkAdminToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Sport.deleteImprovement(request.json)
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
