@@ -128,6 +128,7 @@ class Payment(Base):
         }
 
 
+# TODO: Add isDeleted and CreatorID Field
 class Sport(Base):
     __tablename__ = 'sport'
     sportID = Column(Integer, primary_key=True)
@@ -321,6 +322,7 @@ class TrainingPlan(Base):
         }
 
 
+# TODO: Add isDeleted and CreatorID Field
 class Unit(Base):
     __tablename__ = 'unit'
     unitID = Column(Integer, primary_key=True, autoincrement=True)

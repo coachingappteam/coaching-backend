@@ -157,6 +157,9 @@ class CoachDAO:
         else:
             session.query(Coach).filter(Coach.coachID == coachID).update({Coach.isActiveMember: False})
 
+        session.commit()
+        session.close()
+
     # ============================== Delete Methods =========================== #
     '''
     Delete Coach
@@ -166,6 +169,7 @@ class CoachDAO:
         update = dict()
         update[Coach.isActiveUser] = isActiveUser
         result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
+        session.commit()
         session.close()
         return result
 
@@ -243,6 +247,7 @@ class CoachDAO:
         update[Athlete.isDeleted] = isDeleted
         result = session.query(Athlete).filter(Athlete.coachID == coachID,
                                                Athlete.athleteID == athleteID).update(update)
+        session.commit()
         session.close()
         return result
 
@@ -278,6 +283,7 @@ class CoachDAO:
         update[Team.isDeleted] = isDeleted
         result = session.query(Athlete).filter(Team.coachID == coachID,
                                                Team.teamID == teamID).update(update)
+        session.commit()
         session.close()
         return result
 

@@ -652,6 +652,17 @@ def planDetails(planID):
         return jsonify(Error="Method not allowed"), 404
 
 
+@app.route('/plan/search/sub', methods=['POST'])
+def getPlanSubPlans():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.readPlanSubPlans(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
 @app.route('/plan/search', methods=['POST'])
 def planSearch():
     if request.method == 'POST':
@@ -719,6 +730,17 @@ def sessionSearch():
         return jsonify(Error="Method not allowed"), 404
 
 
+@app.route('/plan/session/search/sub', methods=['POST'])
+def getSessionSubSessions():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.readSessionSubSessions(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
 @app.route('/plan/session/update', methods=['PATCH'])
 def sessionUpdate():
     if request.method == 'PATCH':
@@ -732,6 +754,62 @@ def sessionUpdate():
 
 @app.route('/plan/session/delete', methods=['DELETE'])
 def sessionDelete():
+    if request.method == 'DELETE':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.sessionDelete(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+# ==================== Practice Methods ====================== #
+@app.route('/plan/session/practice/create', methods=['POST'])
+def createPractice():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.createPractice(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/details/<int:practiceID>', methods=['GET'])
+def practiceDetails(practiceID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.practiceDetails(request.headers, {"practiceID": practiceID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/search', methods=['POST'])
+def practiceSearch():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.practiceSearch(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/update', methods=['PATCH'])
+def practiceUpdate():
+    if request.method == 'PATCH':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.practiceUpdate(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/delete', methods=['DELETE'])
+def practiceDelete():
     if request.method == 'DELETE':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404

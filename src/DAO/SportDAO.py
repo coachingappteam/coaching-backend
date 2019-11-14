@@ -136,24 +136,28 @@ class SportDAO:
         session.commit()
         session.close()
 
-    def deleteRole(self, roleID):
+    def deleteRole(self, roleID, isDeleted):
         session = self.conn.getNewSession()
-
-        session.query(Role).filter(Role.roleID == roleID).delete()
+        update = dict()
+        update[Role.isDeleted] = isDeleted
+        result = session.query(Role).filter(Role.roleID == roleID).update(update)
         session.commit()
         session.close()
+        return result
 
     def searchRole(self, search):
         session = self.conn.getNewSession()
         result = session.query(Role).filter(or_(Role.roleName.like(search), Role.roleDescription.like(search))).all()
         return result
 
-    def deleteExercise(self, exerciseID):
+    def deleteExercise(self, exerciseID, isDeleted):
         session = self.conn.getNewSession()
-
-        session.query(Exercise).filter(Exercise.exerciseID == exerciseID).delete()
+        update = dict()
+        update[Exercise.isDeleted] = isDeleted
+        result = session.query(Exercise).filter(Exercise.exerciseID == exerciseID).update(update)
         session.commit()
         session.close()
+        return result
 
     def searchExercise(self, search):
         session = self.conn.getNewSession()

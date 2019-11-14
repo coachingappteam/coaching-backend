@@ -163,8 +163,9 @@ def deleteUnit(json):
 
 def deleteRole(json):
     roleID = json['roleID']
-    if roleID:
-        dao.deleteRole(roleID)
+    isDeleted = json['isDeleted']
+    if roleID and isDeleted is not None:
+        dao.deleteRole(roleID, isDeleted)
         return jsonify(Success="Role was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -172,8 +173,9 @@ def deleteRole(json):
 
 def deleteExercise(json):
     exerciseID = json['exerciseID']
-    if exerciseID:
-        dao.deleteExercise(exerciseID)
+    isDeleted = json['isDeleted']
+    if exerciseID and isDeleted is not None:
+        dao.deleteExercise(exerciseID, isDeleted)
         return jsonify(Success="Exercise was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
