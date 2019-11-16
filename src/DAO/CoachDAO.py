@@ -33,8 +33,12 @@ class CoachDAO:
                        birthdate=birthdate)
         session = self.conn.getNewSession()
         session.add(athl)
+        session.flush()
+        session.refresh(athl)
         session.commit()
         session.close()
+        return athl
+
 
     def createPayment(self, coachID, recieptID, payTotal, paySource):
         payment = Payment(coachID=coachID, sourceReceiptID=recieptID, payTotal=payTotal, paymentSource=paySource)
