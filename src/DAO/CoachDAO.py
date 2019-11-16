@@ -45,15 +45,23 @@ class CoachDAO:
         payment = Payment(coachID=coachID, sourceReceiptID=recieptID, payTotal=payTotal, paymentSource=paySource)
         session = self.conn.getNewSession()
         session.add(payment)
+        session.flush()
+        session.refresh(payment)
+        id = payment.paymentID
         session.commit()
         session.close()
+        return id
 
     def createTeam(self, coachID, sportID, teamName, teamDescription):
         team = Team(coachID=coachID, sportID=sportID, teamName=teamName, teamDescription=teamDescription)
         session = self.conn.getNewSession()
         session.add(team)
+        session.flush()
+        session.refresh(team)
+        id = team.teamID
         session.commit()
         session.close()
+        return id
 
     def createMember(self, athleteID, teamID):
         member = Member(athleteID=athleteID, teamID=teamID)

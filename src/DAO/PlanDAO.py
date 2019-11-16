@@ -20,30 +20,46 @@ class PlanDAO:
                                     planDescription=planDescription)
         session = self.conn.getNewSession()
         session.add(trainingPlan)
+        session.flush()
+        session.refresh(trainingPlan)
+        id = trainingPlan.planID
         session.commit()
         session.close()
+        return id
 
     def createSession(self, planID, parentSessionID, sessionTitle, location, isCompetition, sessionDate, sessionDescription):
         planSession = Session(planID=planID, parentSessionID=parentSessionID, sessionTitle=sessionTitle, location=location, isCompetition=isCompetition,
                               sessionDate=sessionDate, sessionDescription=sessionDescription)
         session = self.conn.getNewSession()
         session.add(planSession)
+        session.flush()
+        session.refresh(planSession)
+        id = planSession.sessionID
         session.commit()
         session.close()
+        return id
 
     def createPractice(self, exerciseID, sessionID, repetitions):
         practice = Practice(exerciseID=exerciseID, sessionID=sessionID, repetitions=repetitions)
         session = self.conn.getNewSession()
         session.add(practice)
+        session.flush()
+        session.refresh(practice)
+        id = practice.practiceID
         session.commit()
         session.close()
+        return id
 
     def createResult(self, practiceID, athleteID, unitID, result, resultDate, resultDescription):
         result = Result(practiceID=practiceID, athleteID=athleteID, unitID=unitID, result=result, resultDate=resultDate, resultDescription=resultDescription)
         session = self.conn.getNewSession()
         session.add(result)
+        session.flush()
+        session.refresh(result)
+        id = result.resultID
         session.commit()
         session.close()
+        return id
 
     # ============================== Read Methods =========================== #
 

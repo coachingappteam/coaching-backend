@@ -21,7 +21,9 @@ def createPlan(headers, json):
 
         if coachID and teamID and title and startDate and endDate:
             if coachDAO.readIfTeamFromCoach(coachID, teamID) or coachDAO.readIfCoachIsSupport(coachID, teamID):
-                dao.createTrainingPlan(teamID, parentPlanID, title, startDate, endDate, planDescription)
+                id = dao.createTrainingPlan(teamID, parentPlanID, title, startDate, endDate, planDescription)
+                if id:
+                    return jsonify(planID=id)
                 return jsonify(Success="Plan added"), 200
             else:
                 return jsonify(Error="User can't access team")
@@ -107,8 +109,10 @@ def createSession(headers, json):
 
         if coachID and planID and sessionTitle and sessionDate and isCompetition is not None:
             if dao.readIfCoachManagePlan(coachID, planID) or dao.readIfCoachSupportPlan(coachID, planID):
-                dao.createSession(planID, parentSessionID, sessionTitle, location, isCompetition,
+                id = dao.createSession(planID, parentSessionID, sessionTitle, location, isCompetition,
                                   sessionDate, sessionDescription)
+                if id:
+                    return jsonify(sessionID=id)
                 return jsonify(Success="Session added"), 200
             else:
                 return jsonify(Error="User can't access plan")
@@ -226,7 +230,9 @@ def createPractice(headers, json):
 
         if coachID and sessionID and exerciseID and repetitions:
             if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID):
-                dao.createPractice(exerciseID, sessionID, repetitions)
+                id = dao.createPractice(exerciseID, sessionID, repetitions)
+                if id:
+                    return jsonify(practiceID=id)
                 return jsonify(Success="Practice added"), 200
             else:
                 return jsonify(Error="User can't access practice")
@@ -312,7 +318,9 @@ def createResult(headers, json):
 
         if coachID and practiceID and athleteID and unitID and result:
             if dao.readIfCoachManagePractice(coachID, practiceID) or dao.readIfCoachSupportPractice(coachID, practiceID):
-                dao.createResult(practiceID, athleteID, unitID, result, resultDate, resultDescription)
+                id = dao.createResult(practiceID, athleteID, unitID, result, resultDate, resultDescription)
+                if id:
+                    return jsonify(resultID=id)
                 return jsonify(Success="Result added"), 200
             else:
                 return jsonify(Error="User can't access practice")

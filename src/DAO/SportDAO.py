@@ -17,22 +17,34 @@ class SportDAO:
         sport = Sport(sportName=sportName, type=type)
         session = self.conn.getNewSession()
         session.add(sport)
+        session.flush()
+        session.refresh(sport)
+        id = sport.sportID
         session.commit()
         session.close()
+        return id
 
     def createRole(self, sportID, roleName, roleDescription):
-        sport = Role(sportID=sportID, roleName=roleName, roleDescription=roleDescription)
+        role = Role(sportID=sportID, roleName=roleName, roleDescription=roleDescription)
         session = self.conn.getNewSession()
-        session.add(sport)
+        session.add(role)
+        session.flush()
+        session.refresh(role)
+        id = role.roleID
         session.commit()
         session.close()
+        return id
 
     def createExercise(self, exerciseName, exerciseDescription):
         exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription)
         session = self.conn.getNewSession()
         session.add(exercise)
+        session.flush()
+        session.refresh(exercise)
+        id = exercise.exerciseID
         session.commit()
         session.close()
+        return id
 
     def createImproves(self, exerciseID, roleID):
         improves = Improves(exerciseID=exerciseID, roleID=roleID)
@@ -45,8 +57,12 @@ class SportDAO:
         unit = Unit(unitName=unitName, unit=unit)
         session = self.conn.getNewSession()
         session.add(unit)
+        session.flush()
+        session.refresh(unit)
+        id = unit.unitID
         session.commit()
         session.close()
+        return id
 
     # ============================== Read Methods =========================== #
     def readAllSports(self):

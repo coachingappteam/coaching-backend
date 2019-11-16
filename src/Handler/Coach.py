@@ -85,7 +85,7 @@ def createAthlete(headers, json):
         if coachID and firstName and lastName and email and sex and birthdate:
             id = dao.createAthlete(coachID, firstName, lastName, email, phone, sex, birthdate)
             if id:
-                return jsonify(Athlete=id)
+                return jsonify(athleteID=id)
             return jsonify(Success="Athlete added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -99,7 +99,9 @@ def createTeam(headers, json):
         teamDescription = json['teamDescription']
 
         if coachID and sportID and teamName:
-            dao.createTeam(coachID, sportID, teamName, teamDescription)
+            id = dao.createTeam(coachID, sportID, teamName, teamDescription)
+            if id:
+                return jsonify(teamID=id)
             return jsonify(Success="Team added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400

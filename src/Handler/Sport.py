@@ -12,14 +12,17 @@ def createSport(json):
         sportName = json["sportName"]
         type = json["type"]
         if sportName and type:
+            id = None
             if type == 'Individual':
-                dao.createSport(sportName, Type.Individual)
+                id = dao.createSport(sportName, Type.Individual)
             elif type == 'Team':
-                dao.createSport(sportName, Type.Team)
+                id = dao.createSport(sportName, Type.Team)
             elif type == 'Mixed':
-                dao.createSport(sportName, Type.Mixed)
+                id = dao.createSport(sportName, Type.Mixed)
             else:
                 return jsonify(Error="Type does not exist"), 400
+            if id:
+                return jsonify(sportID=id)
             return jsonify(Success="Sport added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -31,8 +34,10 @@ def createRole(json):
         roleName = json["roleName"]
         roleDescription = json["roleDescription"]
         if sportID and roleName:
-            dao.createRole(sportID=sportID, roleName=roleName, roleDescription=roleDescription)
-            return jsonify(Success="Sport added"), 200
+            id = dao.createRole(sportID=sportID, roleName=roleName, roleDescription=roleDescription)
+            if id:
+                return jsonify(roleID=id)
+            return jsonify(Success="Role added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
 
@@ -84,7 +89,9 @@ def createUnit(json):
         unitName = json["unitName"]
         unit = json["unit"]
         if unitName and unit:
-            dao.createUnit(unitName, unit)
+            id = dao.createUnit(unitName, unit)
+            if id:
+                return jsonify(unitID=id)
             return jsonify(Success="Unit added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -116,7 +123,9 @@ def createExercise(json):
         exerciseName = json["exerciseName"]
         exerciseDescription = json["exerciseDescription"]
         if exerciseName:
-            dao.createExercise(exerciseName, exerciseDescription)
+            id = dao.createExercise(exerciseName, exerciseDescription)
+            if id:
+                return jsonify(exerciseID=id)
             return jsonify(Success="Exercise added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
