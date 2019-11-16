@@ -78,6 +78,11 @@
         <p>Description: Lets the user get the account details of any coach.</p>
         <li>[POST] /coach/search</li>
         <p>Description: Lets the user search for the details of other coaches.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[PATCH] /coach/update</li>
         <p>Description: Lets the user update their account details.</p>
         <p>
@@ -123,6 +128,11 @@
         <p>Description: Lets the user view the details of an athlete they created or manage through a team.</p>
         <li>[POST] /coach/athlete/search</li>
         <p>Description: Lets the user search and view the details of athletes they created.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[PATCH] /coach/athlete/update</li>
         <p>Description: Lets the user update the details of an athlete they created.</p>
         <li>[PATCH] /coach/athlete/delete</li>
@@ -143,6 +153,11 @@
         <p>Description: Lets the user view the details of a team they created or manage.</p>
         <li>[POST] /coach/team/search</li>
         <p>Description: Lets the user search and view the details of teams they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[PATCH] /coach/team/update</li>
         <p>Description: Lets the user update the details of a team they created.</p>
         <li>[PATCH] /coach/team/delete</li>
@@ -230,6 +245,11 @@
         <p>Description: Lets the user view the details of a sport.</p>
         <li>[POST] /sport/search</li>
         <p>Description: Lets the user search and view the details of a sport.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[DELETE] /sport/delete</li>
         <p>Description: Lets the admin delete a sport they created.</p>
     </ul>
@@ -247,6 +267,11 @@
         <p>Description: Lets the user view the details of an unit.</p>
         <li>[POST] /unit/search</li>
         <p>Description: Lets the user search and view the details of an unit.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[DELETE] /unit/delete</li>
         <p>Description: Lets the admin delete an unit they created.</p>
     </ul>
@@ -265,6 +290,11 @@
         <p>Description: Lets the user view the details of a role.</p>
         <li>[POST] /sport/role/search</li>
         <p>Description: Lets the user search and view the details of a role.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[DELETE] /sport/role/delete</li>
         <p>Description: Lets the admin delete a role they created.</p>
     </ul>
@@ -282,6 +312,11 @@
         <p>Description: Lets the user view the details of an exercise.</p>
         <li>[POST] /sport/exercise/search</li>
         <p>Description: Lets the user search and view the details of an exercise.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf"
+                }
+            </p>
         <li>[DELETE] /sport/exercise/delete</li>
         <p>Description: Lets the admin delete an exercise they created.</p>
     </ul>
@@ -320,8 +355,20 @@
         <p>Description: Lets the user view the details of a training plan they created or manage.</p>
         <li>[POST] /plan/search</li>
         <p>Description: Lets the user search and view the details of training plans for a team they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf",
+                    "planID" : 2
+                }
+            </p>
         <li>[POST] /plan/search/sub</li>
         <p>Description: Lets the user search and view the details of nested training plans for a training plan they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf",
+                    "parentPlanID" : 2
+                }
+            </p>
         <li>[PATCH] /plan/update</li>
         <p>Description: Lets the admin update information of a training plan they created.</p>
         <li>[DELETE] /plan/delete</li>
@@ -346,8 +393,20 @@
         <p>Description: Lets the user view the details of a session they created or manage.</p>
         <li>[POST] /plan/session/search</li>
         <p>Description: Lets the user search and view the details of a session for training plan they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf",
+                    "sessionID" : 2
+                }
+            </p>
         <li>[POST] /plan/session/search/sub</li>
         <p>Description: Lets the user search and view the details of nested session for a session they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf",
+                    "parentSessionID" : 2
+                }
+            </p>
         <li>[PATCH] /plan/session/update</li>
         <p>Description: Lets the admin update information of a session they created.</p>
         <li>[DELETE] /plan/session/delete</li>
@@ -399,6 +458,12 @@
         <p>Description: Lets the user view the details of a result they created or manage.</p>
         <li>[POST] /plan/session/practice/result/search</li>
         <p>Description: Lets the user search and view the details of a practice from a practice and/or athlete they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf",
+                    "teamID" : 2
+                }
+            </p>
         <li>[DELETE] /plan/session/practice/result/delete</li>
         <p>Description: Lets the admin delete a result they created.</p>
     </ul>
