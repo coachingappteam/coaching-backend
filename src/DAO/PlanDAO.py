@@ -38,8 +38,8 @@ class PlanDAO:
         session.commit()
         session.close()
 
-    def createResult(self, practiceID, athleteID, unitID, resultDate, resultDescription):
-        result = Result(practiceID=practiceID, athleteID=athleteID, unitID=unitID, resultDate=resultDate, resultDescription=resultDescription)
+    def createResult(self, practiceID, athleteID, unitID, result, resultDate, resultDescription):
+        result = Result(practiceID=practiceID, athleteID=athleteID, unitID=unitID, result=result, resultDate=resultDate, resultDescription=resultDescription)
         session = self.conn.getNewSession()
         session.add(result)
         session.commit()
@@ -246,4 +246,76 @@ class PlanDAO:
         result = session.query(Practice).filter(Practice.practiceID == practiceID).update(update)
         session.commit()
         session.close()
+        return result
+
+    def readIfCoachManageResult(self, coachID, resultID):
+        session = self.conn.getNewSession()
+        result = session.query(Result, Practice, Session, TrainingPlan, Team).filter(TrainingPlan.teamID == Team.teamID,
+                                                          Practice.sessionID == Session.sessionID,
+                                                          Result.practiceID == Practice.practiceID,
+                                                          TrainingPlan.planID == Session.planID,
+                                                          Result.resultID == resultID,
+                                                          Team.coachID == coachID).first()
+        return result is not None
+
+    def readIfCoachSupportResult(self, coachID, resultID):
+        session = self.conn.getNewSession()
+        result = session.query(Result, Practice, Session, TrainingPlan, Team, Support).filter(
+                                                          TrainingPlan.teamID == Team.teamID,
+                                                          Practice.sessionID == Session.sessionID,
+                                                          Result.practiceID == Practice.practiceID,
+                                                          TrainingPlan.planID == Session.planID,
+                                                          Result.resultID == resultID,
+                                                          Team.teamID == Support.teamID,
+                                                          Support.coachID == coachID).first()
+        return result is not None
+
+    def updateResult(self, resultID, unitID, result, resultDate, resultDescription):
+        session = self.conn.getNewSession()
+        update = dict()
+        if unitID is not None and not unitID == '':
+            update[Result.unitID] = unitID
+        if result is not None and not result == '':
+            update[Result.result] = result
+        if resultDate is not None and not resultDate == '':
+            update[Result.resultDate] = resultDate
+        if resultDescription is not None and not resultDescription == '':
+            update[Result.resultDescription] = resultDescription
+        result = session.query(Result).filter(Result.resultID == resultID).update(update)
+        session.commit()
+        session.close()
+        return result
+
+    def deleteResult(self, resultID):
+        session = self.conn.getNewSession()
+
+        session.query(Result).filter(Result.resultID == resultID).delete()
+        session.commit()
+        session.close()
+
+    def readResultByID(self, resultID):
+        session = self.conn.getNewSession()
+        result = session.query(Result).filter(Result.resultID == resultID).first()
+
+        return result
+
+    def searchResultsForAthleteInPractice(self, practiceID, athleteID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Result).filter(Result.practiceID == practiceID, Result.athleteID == athleteID,
+            or_(Result.resultDescription.like(search), Result.result.like(search),
+                Result.resultDate.like(search))).all()
+        return result
+
+    def searchResultsInPractice(self, practiceID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Result).filter(Result.practiceID == practiceID,
+            or_(Result.resultDescription.like(search), Result.result.like(search),
+                Result.resultDate.like(search))).all()
+        return result
+
+    def searchResultsForAthlete(self, athleteID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Result).filter(Result.athleteID == athleteID,
+                                              or_(Result.resultDescription.like(search), Result.result.like(search),
+                                                  Result.resultDate.like(search))).all()
         return result

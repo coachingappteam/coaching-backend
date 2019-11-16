@@ -298,3 +298,111 @@ def practiceDelete(headers, json):
             return jsonify(Error="User cant access this practice"), 400
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def createResult(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    if json != 6:
+        practiceID = json['practiceID']
+        athleteID = json['athleteID']
+        unitID = json['unitID']
+        result = json['result']
+        resultDate = json['resultDate']
+        resultDescription = json['resultDescription']
+
+        if coachID and practiceID and athleteID and unitID and result:
+            if dao.readIfCoachManagePractice(coachID, practiceID) or dao.readIfCoachSupportPractice(coachID, practiceID):
+                dao.createResult(practiceID, athleteID, unitID, result, resultDate, resultDescription)
+                return jsonify(Success="Result added"), 200
+            else:
+                return jsonify(Error="User can't access practice")
+        else:
+            return jsonify(Error="Required Parameter is missing"), 400
+
+
+def resultUpdate(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    resultID = json['resultID']
+    unitID = json['unitID']
+    result = json['result']
+    resultDate = json['resultDate']
+    resultDescription = json['resultDescription']
+
+    if coachID and resultID and (unitID or result or resultDate or resultDescription):
+        if dao.readIfCoachManageResult(coachID, resultID):
+            dao.updateResult(resultID, unitID, result, resultDate, resultDescription)
+            return jsonify(Success="Result Updated"), 200
+        else:
+            return jsonify(Error="User cant access this result"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def resultDelete(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    resultID = json['resultID']
+    if coachID and resultID:
+        if dao.readIfCoachManageResult(coachID, resultID):
+            dao.deleteResult(resultID)
+            return jsonify(Success="Result Deleted."), 200
+        else:
+            return jsonify(Error="User cant access this result"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def resultDetails(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    resultID = json['resultID']
+    if coachID and resultID:
+        if dao.readIfCoachManageResult(coachID, resultID) or dao.readIfCoachSupportResult(coachID, resultID):
+            result = dao.readResultByID(resultID)
+            if result is not None:
+                return jsonify(Result=result.json()), 200
+            else:
+                return jsonify(Practice="Nothing Found"), 200
+        else:
+            return jsonify(Error="User doesnt have access to result"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def resultSearch(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    practiceID = json['practiceID']
+    athleteID = json['athleteID']
+    if coachID and practiceID and athleteID:
+        if (dao.readIfCoachManagePractice(coachID, practiceID) or dao.readIfCoachSupportPractice(coachID, practiceID))\
+                and (coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) or
+                     coachDAO.readIfAthleteFromCoach(coachID, athleteID)):
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchResultsForAthleteInPractice(practiceID, athleteID, search)
+            results = list()
+            for row in result:
+                results.append(row.json())
+            return jsonify(Results=results), 200
+        else:
+            return jsonify(Error="User doesnt have access to athlete or practice"), 400
+    elif coachID and practiceID:
+        if dao.readIfCoachManagePractice(coachID, practiceID) or dao.readIfCoachSupportPractice(coachID, practiceID):
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchResultsInPractice(practiceID, search)
+            results = list()
+            for row in result:
+                results.append(row.json())
+            return jsonify(Results=results), 200
+        else:
+            return jsonify(Error="User doesnt have access to practice"), 400
+    elif coachID and athleteID:
+        if coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) or \
+                coachDAO.readIfAthleteFromCoach(coachID, athleteID):
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchResultsForAthlete(athleteID, search)
+            results = list()
+            for row in result:
+                results.append(row.json())
+            return jsonify(Results=results), 200
+        else:
+            return jsonify(Error="User doesnt have access to athlete"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

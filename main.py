@@ -819,5 +819,61 @@ def practiceDelete():
         return jsonify(Error="Method not allowed"), 404
 
 
+# ==================== Result Methods ====================== #
+@app.route('/plan/session/practice/result/create', methods=['POST'])
+def createResult():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.createResult(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/result/details/<int:resultID>', methods=['GET'])
+def resultDetails(resultID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.resultDetails(request.headers, {"resultID": resultID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/result/search', methods=['POST'])
+def resultSearch():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.resultSearch(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/result/update', methods=['PATCH'])
+def resultUpdate():
+    if request.method == 'PATCH':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.resultUpdate(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
+@app.route('/plan/session/practice/result/delete', methods=['DELETE'])
+def resultDelete():
+    if request.method == 'DELETE':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.resultDelete(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
 if __name__ == '__main__':
     app.run()

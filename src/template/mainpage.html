@@ -164,6 +164,17 @@
         <li>[DELETE] /coach/athlete/focus/delete</li>
         <p>Description: Lets the user delete a role for an athlete they created.</p>
     </ul>
+        <h3>Attendance Locations:</h3>
+    <ul>
+        <li>[POST] /coach/athlete/attendance/create</li>
+        <p>Description: Lets the user add a session to and athlete they created or manage.</p>
+        <li>[GET] /coach/athlete/attendance/sessions/[athleteID]</li>
+        <p>Description: Lets the user view all the attendance of an athlete they created or manage has.</p>
+        <li>[GET] /coach/athlete/attendance/athletes/[sessionID]</li>
+        <p>Description: Lets the user view all the athletes they created that attended a specific session.</p>
+        <li>[DELETE] /coach/athlete/attendance/delete</li>
+        <p>Description: Lets the user delete a session for an athlete they created.</p>
+    </ul>
         <h3>Sport Locations:</h3>
     <ul>
         <li>[POST] /sport/create</li>
@@ -208,5 +219,73 @@
         <li>[DELETE] /sport/exercise/delete</li>
         <p>Description: Lets the admin delete an exercise they created.</p>
     </ul>
+        <h3>Improve Locations:</h3>
+    <ul>
+        <li>[POST] /sport/role/improve/create</li>
+        <p>Description: Lets the admin add an exercise to a role they created.</p>
+        <li>[GET] /sport/role/improve/roles/[exerciseID]</li>
+        <p>Description: Lets the user view all the roles of an exercise.</p>
+        <li>[GET] /sport/role/improve/exercises/[roleID]</li>
+        <p>Description: Lets the user view all the exercises for a role.</p>
+        <li>[DELETE] /sport/role/improve/delete</li>
+        <p>Description: Lets the admin delete an exercise for a role they created.</p>
+    </ul>
+        <h3>Training Plan Locations:</h3>
+    <ul>
+        <li>[POST] /plan/create</li>
+        <p>Description: Lets an user create a training plan for a team they created or manage.</p>
+        <li>[GET] /plan/details/[planID]</li>
+        <p>Description: Lets the user view the details of a training plan they created or manage.</p>
+        <li>[POST] /plan/search</li>
+        <p>Description: Lets the user search and view the details of training plans for a team they created or manage.</p>
+        <li>[POST] /plan/search/sub</li>
+        <p>Description: Lets the user search and view the details of nested training plans for a training plan they created or manage.</p>
+        <li>[PATCH] /plan/update</li>
+        <p>Description: Lets the admin update information of a training plan they created.</p>
+        <li>[DELETE] /plan/delete</li>
+        <p>Description: Lets the admin delete a training plan they created.</p>
+    </ul>
+        <h3>Session Locations:</h3>
+    <ul>
+        <li>[POST] /plan/session/create</li>
+        <p>Description: Lets an user create a session for a training plan they created or manage.</p>
+        <li>[GET] /plan/session/details/[sessionID]</li>
+        <p>Description: Lets the user view the details of a session they created or manage.</p>
+        <li>[POST] /plan/session/search</li>
+        <p>Description: Lets the user search and view the details of a session for training plan they created or manage.</p>
+        <li>[POST] /plan/session/search/sub</li>
+        <p>Description: Lets the user search and view the details of nested session for a session they created or manage.</p>
+        <li>[PATCH] /plan/session/update</li>
+        <p>Description: Lets the admin update information of a session they created.</p>
+        <li>[DELETE] /plan/session/delete</li>
+        <p>Description: Lets the admin delete a session they created.</p>
+    </ul>
+        <h3>Practice Locations:</h3>
+    <ul>
+        <li>[POST] /plan/session/practice/create</li>
+        <p>Description: Lets an user create a practice for a session they created or manage.</p>
+        <li>[GET] /plan/session/practice/details/[practiceID]</li>
+        <p>Description: Lets the user view the details of a practice they created or manage.</p>
+        <li>[POST] /plan/session/practice/search</li>
+        <p>Description: Lets the user search and view the details of a practice from a session they created or manage.</p>
+        <li>[PATCH] /plan/session/practice/update</li>
+        <p>Description: Lets the admin update information of a practice they created.</p>
+        <li>[DELETE] /plan/session/practice/delete</li>
+        <p>Description: Lets the admin delete a practice they created.</p>
+    </ul>
+        <h3>Result Locations:</h3>
+    <ul>
+        <li>[POST] /plan/session/practice/result/create</li>
+        <p>Description: Lets an user create a result for a practice they created or manage.</p>
+        <li>[PATCH] /plan/session/practice/result/update</li>
+        <p>Description: Lets the admin update information of a result they created.</p>
+        <li>[GET] /plan/session/practice/result/details/[practiceID]</li>
+        <p>Description: Lets the user view the details of a result they created or manage.</p>
+        <li>[POST] /plan/session/practice/result/search</li>
+        <p>Description: Lets the user search and view the details of a practice from a practice and/or athlete they created or manage.</p>
+        <li>[DELETE] /plan/session/practice/result/delete</li>
+        <p>Description: Lets the admin delete a result they created.</p>
+    </ul>
+
 </body>
 </html>
