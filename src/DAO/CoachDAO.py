@@ -35,7 +35,6 @@ class CoachDAO:
         session.add(athl)
         session.flush()
         session.refresh(athl)
-        session.commit()
         session.close()
         return athl
 
