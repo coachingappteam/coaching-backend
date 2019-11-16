@@ -108,7 +108,17 @@
         <h3>Athlete Locations:</h3>
     <ul>
         <li>[POST] /coach/athlete/create</li>
-        <p>Description: Lets the user create an athlete.</p>
+        <p>Description: Lets the user create an athlete with sex of ['M', 'F', 'X'].</p>
+            <p> Body:
+                {
+	                "firstName": 1,
+                    "lastName" : "Name",
+                    "email" : "Desc",
+                    "phone" : "8798798757",
+                    "sex" : "M",
+                    "birthdate" : "2018-11-05 23:32:51.11334"
+                }
+            </p>
         <li>[GET] /coach/athlete/details/[athleteID]</li>
         <p>Description: Lets the user view the details of an athlete they created or manage through a team.</p>
         <li>[POST] /coach/athlete/search</li>
@@ -122,6 +132,13 @@
     <ul>
         <li>[POST] /coach/team/create</li>
         <p>Description: Lets the user create a team.</p>
+            <p> Body:
+                {
+	                "sportID": 1,
+                    "teamName" : "Name",
+                    "teamDescription" : "Desc"
+                }
+            </p>
         <li>[GET] /coach/team/details/[teamID]</li>
         <p>Description: Lets the user view the details of a team they created or manage.</p>
         <li>[POST] /coach/team/search</li>
@@ -135,6 +152,12 @@
     <ul>
         <li>[POST] /coach/team/support/create</li>
         <p>Description: Lets the user add another coach as support for a team.</p>
+            <p> Body:
+                {
+	                "teamID": 1,
+                    "supportCoachID" : 2
+                }
+            </p>
         <li>[GET] /coach/team/support/teams</li>
         <p>Description: Lets the user view all the teams that they give support to.</p>
         <li>[GET] /coach/team/support/coaches/[teamID]</li>
@@ -146,6 +169,12 @@
     <ul>
         <li>[POST] /coach/team/member/create</li>
         <p>Description: Lets the user an athlete they created or as a member for a team they created or manager.</p>
+            <p> Body:
+                {
+	                "teamID": 1,
+                    "athleteID" : 2
+                }
+            </p>
         <li>[GET] /coach/team/member/teams/[athleteID]</li>
         <p>Description: Lets the user view all the teams that an athlete they created is a member of.</p>
         <li>[GET] /coach/team/member/athletes/[teamID]</li>
@@ -157,6 +186,12 @@
     <ul>
         <li>[POST] /coach/athlete/focus/create</li>
         <p>Description: Lets the user add a role to and athlete they created.</p>
+            <p> Body:
+                {
+	                "roleID": 1,
+                    "athleteID" : 2
+                }
+            </p>
         <li>[GET] /coach/athlete/focus/roles/[athleteID]</li>
         <p>Description: Lets the user view all the roles that an athlete they created or manage has.</p>
         <li>[GET] /coach/athlete/focus/athletes/[roleID]</li>
@@ -168,6 +203,12 @@
     <ul>
         <li>[POST] /coach/athlete/attendance/create</li>
         <p>Description: Lets the user add a session to and athlete they created or manage.</p>
+            <p> Body:
+                {
+	                "sessionID": 1,
+                    "athleteID" : 2
+                }
+            </p>
         <li>[GET] /coach/athlete/attendance/sessions/[athleteID]</li>
         <p>Description: Lets the user view all the attendance of an athlete they created or manage has.</p>
         <li>[GET] /coach/athlete/attendance/athletes/[sessionID]</li>
@@ -178,7 +219,13 @@
         <h3>Sport Locations:</h3>
     <ul>
         <li>[POST] /sport/create</li>
-        <p>Description: Lets an admin create a sport.</p>
+        <p>Description: Lets an admin create a sport of type ['Mixed', 'Individual', 'Team'].</p>
+            <p> Body:
+                {
+	                "sportName": "Swimming",
+                    "type" : "Mixed"
+                }
+            </p>
         <li>[GET] /sport/details/[sportID]</li>
         <p>Description: Lets the user view the details of a sport.</p>
         <li>[POST] /sport/search</li>
@@ -190,6 +237,12 @@
     <ul>
         <li>[POST] /unit/create</li>
         <p>Description: Lets an admin create an unit.</p>
+            <p> Body:
+                {
+	                "unitName": "Distance",
+                    "unit" : "m"
+                }
+            </p>
         <li>[GET] /unit/details/[unitID]</li>
         <p>Description: Lets the user view the details of an unit.</p>
         <li>[POST] /unit/search</li>
@@ -201,6 +254,13 @@
     <ul>
         <li>[POST] /sport/role/create</li>
         <p>Description: Lets an admin create a role.</p>
+            <p> Body:
+                {
+                    "sportID" : 4,
+	                "roleName": "Name",
+                    "roleDescription" : "Desc"
+                }
+            </p>
         <li>[GET] /sport/role/details/[roleID]</li>
         <p>Description: Lets the user view the details of a role.</p>
         <li>[POST] /sport/role/search</li>
@@ -211,7 +271,13 @@
         <h3>Exercise Locations:</h3>
     <ul>
         <li>[POST] /sport/exercise/create</li>
-        <p>Description: Lets an admin create an exercise.</p>
+        <p>Description: Lets an admin create an exercise.</p>\
+            <p> Body:
+                {
+	                "exerciseName": "Name",
+                    "exerciseDescription" : "Desc"
+                }
+            </p>
         <li>[GET] /sport/exercise/details/[exerciseID]</li>
         <p>Description: Lets the user view the details of an exercise.</p>
         <li>[POST] /sport/exercise/search</li>
