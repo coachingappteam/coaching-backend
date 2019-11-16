@@ -148,7 +148,7 @@
         <p>Description: Lets the user an athlete they created or as a member for a team they created or manager.</p>
         <li>[GET] /coach/team/member/teams/[athleteID]</li>
         <p>Description: Lets the user view all the teams that an athlete they created is a member of.</p>
-        <li>[GET] /coach/team/support/athletes/[teamID]</li>
+        <li>[GET] /coach/team/member/athletes/[teamID]</li>
         <p>Description: Lets the user view all the athletes that are member of a team they manage or created.</p>
         <li>[DELETE] /coach/team/support/delete</li>
         <p>Description: Lets the user delete access of a coach to a team they created.</p>
@@ -223,6 +223,12 @@
     <ul>
         <li>[POST] /sport/role/improve/create</li>
         <p>Description: Lets the admin add an exercise to a role they created.</p>
+            <p> Body:
+                {
+	                "exerciseID": 4,
+                    "roleID" : 2
+                }
+            </p>
         <li>[GET] /sport/role/improve/roles/[exerciseID]</li>
         <p>Description: Lets the user view all the roles of an exercise.</p>
         <li>[GET] /sport/role/improve/exercises/[roleID]</li>
@@ -234,6 +240,16 @@
     <ul>
         <li>[POST] /plan/create</li>
         <p>Description: Lets an user create a training plan for a team they created or manage.</p>
+              <p> Body:
+                {
+	                "teamID": 1,
+                    "parentPlanID" : Null,
+                    "title" : "Title",
+                    "startDate" : "2018-11-05 23:32:51.11334",
+                    "endDate" : "2018-11-15 23:32:51.11334",
+                    "planDescription": "Desc"
+                }
+            </p>
         <li>[GET] /plan/details/[planID]</li>
         <p>Description: Lets the user view the details of a training plan they created or manage.</p>
         <li>[POST] /plan/search</li>
@@ -249,6 +265,17 @@
     <ul>
         <li>[POST] /plan/session/create</li>
         <p>Description: Lets an user create a session for a training plan they created or manage.</p>
+            <p> Body:
+                {
+	                "planID": 1,
+                    "parentSessionID" : Null,
+                    "sessionTitle" : "Title",
+                    "location" : "Desc",
+                    "sessionDate" : "2018-11-06 23:32:51.11334",
+                    "sessionDescription": "Desc",
+                    "isCompetition" : True
+                }
+            </p>
         <li>[GET] /plan/session/details/[sessionID]</li>
         <p>Description: Lets the user view the details of a session they created or manage.</p>
         <li>[POST] /plan/session/search</li>
@@ -264,10 +291,23 @@
     <ul>
         <li>[POST] /plan/session/practice/create</li>
         <p>Description: Lets an user create a practice for a session they created or manage.</p>
+            <p> Body:
+                {
+	                "sessionID": 4,
+                    "exerciseID" : 2,
+                    "repetitions" : 3
+                }
+            </p>
         <li>[GET] /plan/session/practice/details/[practiceID]</li>
         <p>Description: Lets the user view the details of a practice they created or manage.</p>
         <li>[POST] /plan/session/practice/search</li>
         <p>Description: Lets the user search and view the details of a practice from a session they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "fdkgf",
+                    "teamID" : 2
+                }
+            </p>
         <li>[PATCH] /plan/session/practice/update</li>
         <p>Description: Lets the admin update information of a practice they created.</p>
         <li>[DELETE] /plan/session/practice/delete</li>
@@ -277,6 +317,16 @@
     <ul>
         <li>[POST] /plan/session/practice/result/create</li>
         <p>Description: Lets an user create a result for a practice they created or manage.</p>
+            <p> Body:
+                {
+	                "practiceID": 4,
+                    "athleteID" : 2,
+                    "unitID" : 3,
+                    "result" : 6.483748,
+                    "resultDate" : "2018-11-06 23:32:51.11334",
+                    "resultDescription" : ""
+                }
+            </p>
         <li>[PATCH] /plan/session/practice/result/update</li>
         <p>Description: Lets the admin update information of a result they created.</p>
         <li>[GET] /plan/session/practice/result/details/[practiceID]</li>

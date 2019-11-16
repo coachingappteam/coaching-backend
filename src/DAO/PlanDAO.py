@@ -103,8 +103,7 @@ class PlanDAO:
         result = session.query(TrainingPlan).filter(TrainingPlan.teamID == teamID,
                                                           TrainingPlan.isDeleted == False, 
                                                           TrainingPlan.parentPlanID == None,
-            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search), 
-                TrainingPlan.startDate.like(search), TrainingPlan.endDate.like(search))).all()
+            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search))).all()
         return result
 
     def updatePlan(self, planID, title, startDate, endDate, planDescription):
@@ -162,8 +161,7 @@ class PlanDAO:
         result = session.query(Session).filter(Session.planID == planID,
                                                           Session.isDeleted == False,
                                                           Session.parentSessionID == None,
-            or_(Session.sessionDescription.like(search), Session.sessionDate.like(search),
-                Session.sessionTitle.like(search))).all()
+            or_(Session.sessionDescription.like(search), Session.sessionTitle.like(search))).all()
         return result
 
     def updateSession(self, sessionID, sessionTitle, location, sessionDate, sessionDescription, isCompetition):
@@ -197,15 +195,13 @@ class PlanDAO:
         session = self.conn.getNewSession()
         result = session.query(TrainingPlan).filter(TrainingPlan.isDeleted == False,
                                                           TrainingPlan.parentPlanID == parentPlanID,
-            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search),
-                TrainingPlan.startDate.like(search), TrainingPlan.endDate.like(search))).all()
+            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search))).all()
         return result
 
     def searchSubSessions(self, parentSessionID, search):
         session = self.conn.getNewSession()
         result = session.query(Session).filter(Session.isDeleted == False, Session.parentSessionID == parentSessionID,
                                                or_(Session.sessionDescription.like(search),
-                                                   Session.sessionDate.like(search),
                                                    Session.sessionTitle.like(search))).all()
         return result
 
@@ -318,20 +314,18 @@ class PlanDAO:
     def searchResultsForAthleteInPractice(self, practiceID, athleteID, search):
         session = self.conn.getNewSession()
         result = session.query(Result).filter(Result.practiceID == practiceID, Result.athleteID == athleteID,
-            or_(Result.resultDescription.like(search), Result.result.like(search),
-                Result.resultDate.like(search))).all()
+            or_(Result.resultDescription.like(search), Result.result.like(search))).all()
         return result
 
     def searchResultsInPractice(self, practiceID, search):
         session = self.conn.getNewSession()
         result = session.query(Result).filter(Result.practiceID == practiceID,
-            or_(Result.resultDescription.like(search), Result.result.like(search),
-                Result.resultDate.like(search))).all()
+            or_(Result.resultDescription.like(search), Result.result.like(search))).all()
         return result
 
     def searchResultsForAthlete(self, athleteID, search):
         session = self.conn.getNewSession()
         result = session.query(Result).filter(Result.athleteID == athleteID,
-                                              or_(Result.resultDescription.like(search), Result.result.like(search),
-                                                  Result.resultDate.like(search))).all()
+                                              or_(Result.resultDescription.like(search),
+                                                  Result.result.like(search))).all()
         return result

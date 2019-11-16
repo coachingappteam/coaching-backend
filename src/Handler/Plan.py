@@ -223,7 +223,7 @@ def readSessionSubSessions(headers, json):
 
 def createPractice(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
-    if json != 6:
+    if json != 3:
         sessionID = json['sessionID']
         exerciseID = json['exerciseID']
         repetitions = json['repetitions']
