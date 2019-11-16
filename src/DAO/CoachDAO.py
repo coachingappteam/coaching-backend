@@ -35,8 +35,10 @@ class CoachDAO:
         session.add(athl)
         session.flush()
         session.refresh(athl)
+        id = athl.athleteID
+        session.commit()
         session.close()
-        return athl
+        return id
 
 
     def createPayment(self, coachID, recieptID, payTotal, paySource):
