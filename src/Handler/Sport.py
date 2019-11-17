@@ -154,8 +154,9 @@ def exerciseSearch(json):
 
 def deleteSport(json):
     sportID = json['sportID']
+    isDeleted = json['isDeleted']
     if sportID:
-        dao.deleteSport(sportID)
+        dao.deleteSport(sportID, isDeleted)
         return jsonify(Success="Sport was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -163,8 +164,9 @@ def deleteSport(json):
 
 def deleteUnit(json):
     unitID = json['unitID']
+    isDeleted = json['isDeleted']
     if unitID:
-        dao.deleteUnit(unitID)
+        dao.deleteUnit(unitID, isDeleted)
         return jsonify(Success="Unit was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400

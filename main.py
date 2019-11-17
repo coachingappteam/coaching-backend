@@ -877,7 +877,7 @@ def resultDelete():
 
 # ==================== Machine Learning Methods ====================== #
 @app.route('/ml/analyze', methods=['POST'])
-def mlanalyze():
+def mlAnalyze():
     if request.method == 'POST':
         if not Coach.checkToken(request.headers):
             return jsonify(Error="Invalid or Missing Security Token"), 404
@@ -885,7 +885,6 @@ def mlanalyze():
         return result
     else:
         return jsonify(Error="Method not allowed"), 404
-
 
 
 if __name__ == '__main__':
