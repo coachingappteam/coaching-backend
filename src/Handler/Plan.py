@@ -414,3 +414,7 @@ def resultSearch(headers, json):
             return jsonify(Error="User doesnt have access to athlete"), 400
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def mlAnalyze(headers, json):
+    return None

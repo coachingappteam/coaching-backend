@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Handler/Plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Plan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ORM/CoachingORM.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/CoachingORM.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -176,14 +178,7 @@
       <workItem from="1573309228128" duration="9553000" />
       <workItem from="1573742622050" duration="30082000" />
       <workItem from="1573823727167" duration="53000" />
-      <workItem from="1573838821022" duration="21515000" />
-    </task>
-    <task id="LOCAL-00006" summary="Added credentials for Heroku DB">
-      <created>1571523731345</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1571523731345</updated>
+      <workItem from="1573838821022" duration="24880000" />
     </task>
     <task id="LOCAL-00007" summary="Uploading test method">
       <created>1571578968525</created>
@@ -521,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573941044567</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Updated ORM with new design">
+      <created>1573952480960</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1573952480960</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,7 +543,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed search and delete methods" />
     <MESSAGE value="Experimenting with delete methods" />
     <MESSAGE value="Added CRUD calls for Sport, Support, Focus, Member, Exercise, Unit and Role" />
     <MESSAGE value="Improved Coach related methods to have tigheter restricting access." />
@@ -566,7 +567,8 @@
     <MESSAGE value="Removed dates from search," />
     <MESSAGE value="Added documentation for create methods." />
     <MESSAGE value="Added documentation for search methods." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added documentation for search methods." />
+    <MESSAGE value="Updated ORM with new design" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated ORM with new design" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
