@@ -128,12 +128,13 @@ class Payment(Base):
         }
 
 
-# TODO: Add isDeleted and CreatorID Field
 class Sport(Base):
     __tablename__ = 'sport'
     sportID = Column(Integer, primary_key=True)
     sportName = Column(String, nullable=False)
     type = Column(Enum(Type), nullable=False)
+    creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
+    isDeleted = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return "<sport(sportName='{}', type='{}')>" \
@@ -143,7 +144,9 @@ class Sport(Base):
         return {
             "sportID": self.sportID,
             "sportName": self.sportName,
-            "type": self.type.value
+            "type": self.type.value,
+            "creatorID": self.creatorID,
+            "isDeleted": self.isDeleted
         }
 
 
@@ -314,20 +317,21 @@ class TrainingPlan(Base):
             "parentPlanID": self.parentPlanID,
             "title": self.title,
             "isParentPlan": self.isParentPlan,
-            "endDate": self.startDate,
-            "birthdate": self.endDate,
+            "startDate": self.startDate,
+            "endDate": self.endDate,
             "planDescription": self.planDescription,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate,
         }
 
 
-# TODO: Add isDeleted and CreatorID Field
 class Unit(Base):
     __tablename__ = 'unit'
     unitID = Column(Integer, primary_key=True, autoincrement=True)
     unitName = Column(String, nullable=False)
     unit = Column(String, nullable=False)
+    isDeleted = Column(String, nullable=False, default=False)
+    creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
 
     def __repr__(self):
         return "<athlete(unitName='{}', unit='{}')>" \
@@ -337,7 +341,9 @@ class Unit(Base):
         return {
             "unitID": self.unitID,
             "unitName": self.unitName,
-            "unit": self.unit
+            "unit": self.unit,
+            "creatorID": self.creatorID,
+            "isDeleted": self.isDeleted
         }
 
 
@@ -398,6 +404,7 @@ class Session(Base):
     isCompetition = Column(Boolean, default=False)
     isCompleted = Column(Boolean, nullable=False, default=False)
     isDeleted = Column(Boolean, nullable=False, default=False)
+    isMain = Column(Boolean, nullable=False, default=False)
     sessionDate = Column(Date, nullable=False)
     sessionDescription = Column(Text)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
@@ -415,6 +422,7 @@ class Session(Base):
             "location": self.location,
             "isCompetition": self.isCompetition,
             "isCompleted": self.isCompleted,
+            "isMain": self.isMain,
             "sessionDate": self.sessionDate,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate,
@@ -439,6 +447,27 @@ class Attendance(Base):
             "sessionID": self.sessionID,
             "athleteID": self.athleteID,
             "isPresent": self.isPresent,
+            "creationDate": self.creationDate
+        }
+
+
+class Analyzed(Base):
+    __tablename__ = 'analyzed'
+    sessionID = Column(Integer,  ForeignKey('session.sessionID'), nullable=False)
+    athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
+    result = Column(Integer, nullable=False, default=0)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+    __table_args__ = (PrimaryKeyConstraint('sessionID', 'athleteID'), {},)
+
+    def __repr__(self):
+        return "<analyzed(athleteID='{}', sessionID='{}')>" \
+            .format(self.athleteID, self.sessionID)
+
+    def json(self):
+        return {
+            "sessionID": self.sessionID,
+            "athleteID": self.athleteID,
+            "result": self.result,
             "creationDate": self.creationDate
         }
 
