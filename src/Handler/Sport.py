@@ -119,11 +119,14 @@ def roleSearch(json):
 
 
 def createExercise(json):
-    if json != 2:
+    if json != 5:
         exerciseName = json["exerciseName"]
         exerciseDescription = json["exerciseDescription"]
-        if exerciseName:
-            id = dao.createExercise(exerciseName, exerciseDescription)
+        unitID = json['unitID']
+        style = json['style']
+        measure = json['measure']
+        if exerciseName and unitID and style and measure:
+            id = dao.createExercise(exerciseName, exerciseDescription, unitID, style, measure)
             if id:
                 return jsonify(exerciseID=id)
             return jsonify(Success="Exercise added"), 200

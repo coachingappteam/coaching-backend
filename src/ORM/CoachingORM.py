@@ -1,5 +1,4 @@
 import enum
-
 from sqlalchemy.dialects.postgresql import UUID, DOUBLE_PRECISION
 from sqlalchemy.ext.declarative import declarative_base
 from uuid import uuid4

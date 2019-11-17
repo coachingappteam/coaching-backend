@@ -35,8 +35,8 @@ class SportDAO:
         session.close()
         return id
 
-    def createExercise(self, exerciseName, exerciseDescription):
-        exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription)
+    def createExercise(self, exerciseName, exerciseDescription, unitID, style, measure):
+        exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription, unitID=unitID, style=style, measure=measure)
         session = self.conn.getNewSession()
         session.add(exercise)
         session.flush()
