@@ -220,10 +220,10 @@ class Athlete(Base):
             "lastName": self.lastName,
             "email": self.email,
             "phone": self.phone,
-            "birthdate": self.birthdate.timetuple(),
+            "birthdate": self.birthdate,
             "sex": self.sex.value,
             "isDeleted": self.isDeleted,
-            "creationDate": self.creationDate.replace(tzinfo=None)
+            "creationDate": self.creationDate
         }
 
 
