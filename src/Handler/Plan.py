@@ -106,10 +106,11 @@ def createSession(headers, json):
         sessionDate = json['sessionDate']
         sessionDescription = json['sessionDescription']
         isCompetition = json['isCompetition']
+        isMain = json['isMain']
 
-        if coachID and planID and sessionTitle and sessionDate and isCompetition is not None:
+        if coachID and planID and sessionTitle and sessionDate and isCompetition is not None and isMain is not None:
             if dao.readIfCoachManagePlan(coachID, planID) or dao.readIfCoachSupportPlan(coachID, planID):
-                id = dao.createSession(planID, parentSessionID, sessionTitle, location, isCompetition,
+                id = dao.createSession(planID, parentSessionID, sessionTitle, location, isCompetition, isMain,
                                   sessionDate, sessionDescription)
                 if id:
                     return jsonify(sessionID=id)

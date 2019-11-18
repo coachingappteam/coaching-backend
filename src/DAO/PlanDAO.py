@@ -27,9 +27,9 @@ class PlanDAO:
         session.close()
         return id
 
-    def createSession(self, planID, parentSessionID, sessionTitle, location, isCompetition, sessionDate, sessionDescription):
+    def createSession(self, planID, parentSessionID, sessionTitle, location, isCompetition, isMain, sessionDate, sessionDescription):
         planSession = Session(planID=planID, parentSessionID=parentSessionID, sessionTitle=sessionTitle, location=location, isCompetition=isCompetition,
-                              sessionDate=sessionDate, sessionDescription=sessionDescription)
+                              sessionDate=sessionDate, sessionDescription=sessionDescription, isMain=isMain)
         session = self.conn.getNewSession()
         session.add(planSession)
         session.flush()

@@ -397,7 +397,7 @@ class Session(Base):
     __tablename__ = 'session'
     sessionID = Column(Integer, primary_key=True, autoincrement=True)
     planID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=False)
-    parentSessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
+    parentSessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=True)
     sessionTitle = Column(String, nullable=False)
     location = Column(Text)
     isCompetition = Column(Boolean, default=False)
