@@ -300,7 +300,7 @@ def teamSearch(headers, json):
         for team in result:
             teams.append(team.json())
         for team in result2:
-            teams.append(team.json())
+            teams.append(team[0].json())
         return jsonify(Teams=teams), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400

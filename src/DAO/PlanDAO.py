@@ -1,7 +1,7 @@
 """
 This Class contain DAO methods for the tables of Training Plan, Session, Practice, Results
 """
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 
 from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise, Team, Support
 
@@ -328,4 +328,12 @@ class PlanDAO:
         result = session.query(Result).filter(Result.athleteID == athleteID,
                                               or_(Result.resultDescription.like(search),
                                                   Result.result.like(search))).all()
+        return result
+
+    def readResultsForAthleteIInSession(self, athleteID, sessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Practice.repetitions, Exercise.measure, func.avg(Result.result).label('avg_result')).\
+            filter(Practice.practiceID == Result.practiceID, Practice.exerciseID == Exercise.exerciseID,
+                   Practice.sessionID == sessionID, Result.athleteID == athleteID).\
+            group_by(Exercise.measure, Practice.repetitions).all()
         return result

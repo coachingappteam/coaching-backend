@@ -418,4 +418,15 @@ def resultSearch(headers, json):
 
 
 def mlAnalyze(headers, json):
-    return None
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    athletes = json['athletes']
+    sessions = json['sessions']
+    competition_week = json['cw']
+    if len(athletes) <= 0 or len(sessions) <= 0:
+        return jsonify(Error="Insufficient Data for analysis"), 400
+    requestjson = [competition_week]
+    for athleteID in athletes:
+        for sessionID in sessions:
+            record = dao.readResultsForAthleteIInSession(athleteID, sessionID)
+            requestjson.append(record)
+    return jsonify(Results=requestjson)
