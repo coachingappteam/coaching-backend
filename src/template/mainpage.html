@@ -510,6 +510,41 @@
                     "planID" : 2
                 }
             </p>
+        <li>[POST] /plan/session/timeline/search</li>
+        <p>Description: Lets the user search and view the details of a session for training plan they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "param",
+                }
+            </p>
+            <p> Response:
+                { [ {
+                    "coachID": "9fad5a45-e12b-49d6-8314-a3052c6b880d",
+                    "creationDate": "Mon, 18 Nov 2019 11:24:45 GMT",
+                    "endDate": "Tue, 21 May 2019 00:00:00 GMT",
+                    "isCompetition": false,
+                    "isCompleted": false,
+                    "isDeleted": false,
+                    "isMain": false,
+                    "isParentPlan": true,
+                    "location": "Gym",
+                    "parentPlanID": null,
+                    "parentSessionID": null,
+                    "planDescription": "LAI Swimming Competition Training Plan.",
+                    "planID": 1,
+                    "sessionDate": "Sat, 02 Feb 2019 00:00:00 GMT",
+                    "sessionDescription": "Practice #1.",
+                    "sessionID": 1,
+                    "sessionTitle": "Practice #1",
+                    "sportID": 1,
+                    "startDate": "Fri, 01 Feb 2019 00:00:00 GMT",
+                    "teamDescription": "The UPRM's 2019 swimming athletes.",
+                    "teamID": 1,
+                    "teamName": "UPRM Swimming 2019 Team",
+                    "title": "LAI Swimming Competition"
+                    }, ... ]
+                }
+            </p>
         <li>[POST] /plan/session/search/sub</li>
         <p>Description: Lets the user search and view the details of nested session for a session they created or manage.</p>
             <p> Body:

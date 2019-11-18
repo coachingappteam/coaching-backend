@@ -417,6 +417,30 @@ def resultSearch(headers, json):
         return jsonify(Error="Required Parameter is missing"), 400
 
 
+def timelineSearch(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    if coachID:
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchTimeline(coachID, search)
+            result2 = dao.searchSupportTimeline(coachID, search)
+            sessions = list()
+            for session in result:
+                team = session[0].json()
+                team.update(session[1].json())
+                team.update(session[2].json())
+                sessions.append(team)
+            for session in result2:
+                team = session[0].json()
+                team.update(session[1].json())
+                team.update(session[2].json())
+                team.update(session[3].json())
+                sessions.append(team)
+            return jsonify(Sessions=sessions), 200
+
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
 def mlAnalyze(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     athletes = json['athletes']

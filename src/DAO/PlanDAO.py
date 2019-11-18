@@ -337,3 +337,26 @@ class PlanDAO:
                    Practice.sessionID == sessionID, Result.athleteID == athleteID).\
             group_by(Exercise.measure, Practice.repetitions).all()
         return result
+
+    def searchTimeline(self, coachID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Team, TrainingPlan, Session).filter(Team.coachID == coachID,
+                                                                   Team.teamID == TrainingPlan.teamID,
+                                                                   TrainingPlan.planID == Session.planID,
+                                                                   Session.parentSessionID == None,
+                                                                   Session.sessionTitle.like(search),
+                                                                   Session.sessionDescription.like(search)).all()
+        return result
+
+    def searchSupportTimeline(self, coachID, search):
+        session = self.conn.getNewSession()
+        result = session.query(Support, Team, TrainingPlan, Session).filter(Support.coachID == coachID,
+                                                                            Support.teamID == Team.teamID,
+                                                                            Team.teamID == TrainingPlan.teamID,
+                                                                            TrainingPlan.planID == Session.planID,
+                                                                            Session.parentSessionID == None,
+                                                                            Session.sessionTitle.like(search),
+                                                                            Session.sessionDescription.like(search))\
+            .all()
+        return result
+
