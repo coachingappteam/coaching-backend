@@ -586,7 +586,7 @@ class Factory:
                                 team['teamDescription'])
 
         for team in self.supportTeams:
-            coachDAO.createTeam(coachID, team['sportID'], team['teamName'],
+            coachDAO.createTeam(supportID, team['sportID'], team['teamName'],
                                 team['teamDescription'])
 
         # Create Support
@@ -630,6 +630,12 @@ class Factory:
             sessionID = planDAO.createSession(session['planID'], session['parentSessionID'], session['sessionTitle'],
                                               session['location'], session['isCompetition'], session['isMain'],
                                               session['sessionDate'], session['sessionDescription'])
+
+            coachDAO.createAttendance(sessionID, 1)
+            coachDAO.createAttendance(sessionID, 2)
+            coachDAO.createAttendance(sessionID, 3)
+            coachDAO.createAttendance(sessionID, 4)
+
             if not session['isCompetition']:
                 warmupID = planDAO.createSession(self.subSessions[0]['planID'], sessionID,
                                       self.subSessions[0]['sessionTitle'], self.subSessions[0]['location'],

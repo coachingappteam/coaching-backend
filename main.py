@@ -886,6 +886,6 @@ def mlAnalyze():
     else:
         return jsonify(Error="Method not allowed"), 404
 
-
+# TODO : Add request to send all sessions of a team and training plan
 if __name__ == '__main__':
     app.run()

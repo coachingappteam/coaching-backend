@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/PlanDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/PlanDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Handler/Coach.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Coach.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Handler/Plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ORM/DBDump.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/DBDump.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/template/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/mainpage.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +51,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.Database">
     <configuration name="CoachDAO" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="coaching-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -171,8 +171,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.Database" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.SecurityDAO" />
         <item itemvalue="Python.CoachDAO" />
         <item itemvalue="Python.CoachingORM" />
@@ -202,14 +202,7 @@
       <workItem from="1573309228128" duration="9553000" />
       <workItem from="1573742622050" duration="30082000" />
       <workItem from="1573823727167" duration="53000" />
-      <workItem from="1573838821022" duration="61109000" />
-    </task>
-    <task id="LOCAL-00012" summary="Fixed remove token">
-      <created>1571587318877</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1571587318877</updated>
+      <workItem from="1573838821022" duration="64255000" />
     </task>
     <task id="LOCAL-00013" summary="Fixed remove token take 2">
       <created>1571587790414</created>
@@ -547,7 +540,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574036921826</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="fixed collaborator search for teams">
+      <created>1574087109857</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1574087109857</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -567,7 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated how the delete methods work" />
     <MESSAGE value="Fixed bug with delete methods" />
     <MESSAGE value="Log testing" />
     <MESSAGE value="Improving Admin and Access Logistics" />
@@ -592,11 +591,12 @@
     <MESSAGE value="Fixed deletion and searching for Sports, Roles and Exercises" />
     <MESSAGE value="Added new data dump for prepopulating the database." />
     <MESSAGE value="Completed script to populate db with base data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed script to populate db with base data" />
+    <MESSAGE value="fixed collaborator search for teams" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed collaborator search for teams" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
-    <SUITE FILE_PATH="coverage/coaching_backend$Database.coverage" NAME="Database Coverage Results" MODIFIED="1574036734988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
+    <SUITE FILE_PATH="coverage/coaching_backend$Database.coverage" NAME="Database Coverage Results" MODIFIED="1574088313833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
     <SUITE FILE_PATH="coverage/coaching_backend$CoachDAO.coverage" NAME="CoachDAO Coverage Results" MODIFIED="1570668763783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
     <SUITE FILE_PATH="coverage/coaching_backend$main.coverage" NAME="main Coverage Results" MODIFIED="1574087076213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/coaching_backend$CoachingORM.coverage" NAME="CoachingORM Coverage Results" MODIFIED="1570650343170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />

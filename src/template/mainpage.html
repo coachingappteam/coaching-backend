@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <title>Coaching REST API</title>
 </head>
+    <h4>All calls use the following header (Unless stated otherwise:
+        <p> Header:
+            {
+                "token": "4WJMKB2NMZ4HWuaUHXruTZPWsEa1y8vxl8IL3Zf-6H4"
+            }
+        </p>
+    </h4>
+
 <body>
     <h3>Main Page:</h3>
     <ul><li>/</li></ul>
     <h3>Coach Locations:</h3>
     <ul>
         <li>[POST] /coach/login</li>
-        <p>Description: Lets the user get a valid security token and their account details.</p>
+        <p>Description: Lets the user get a valid security token and their account details (Does not use header).</p>
             <p> Body:
                 {
 	                "password": "lolo",
@@ -34,7 +42,7 @@
                 }
             </p>
         <li>[POST] /coach/signup</li>
-        <p>Description: Lets the user get create a coach account.</p>
+        <p>Description: Lets the user get create a coach account (Does not use header).</p>
             <p> Body:
                 {
                     "firstName": "Aly",
@@ -61,11 +69,6 @@
             </p>
         <li>[DELETE] /coach/signout</li>
         <p>Description: Lets the user invalidate the security token.</p>
-            <p> Header:
-                {
-                    "token": "4WJMKB2NMZ4HWuaUHXruTZPWsEa1y8vxl8IL3Zf-6H4"
-                }
-            </p>
             <p>
                 Response:
                 {
@@ -116,8 +119,8 @@
         <p>Description: Lets the user create an athlete with sex of ['M', 'F', 'X'].</p>
             <p> Body:
                 {
-	                "firstName": 1,
-                    "lastName" : "Name",
+	                "firstName": "Name",
+                    "lastName" : "Lastname",
                     "email" : "Desc",
                     "phone" : "8798798757",
                     "sex" : "M",
@@ -135,8 +138,25 @@
             </p>
         <li>[PATCH] /coach/athlete/update</li>
         <p>Description: Lets the user update the details of an athlete they created.</p>
+            <p> Body:
+                {
+                    "athleteID": 3,
+	                "firstName": "Name,
+                    "lastName" : "Name",
+                    "email" : "Desc",
+                    "phone" : "8798798757",
+                    "sex" : "M",
+                    "birthdate" : "2018-11-05 23:32:51.11334"
+                }
+            </p>
         <li>[PATCH] /coach/athlete/delete</li>
         <p>Description: Lets the user invalidate the details of an athlete they created.</p>
+            <p> Body:
+                {
+	                "athleteID": 3,
+                    "isDeleted": True
+                }
+            </p>
     </ul>
         <h3>Team Locations:</h3>
     <ul>
@@ -155,13 +175,26 @@
         <p>Description: Lets the user search and view the details of teams they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf"
+	                "search": "params"
                 }
             </p>
         <li>[PATCH] /coach/team/update</li>
         <p>Description: Lets the user update the details of a team they created.</p>
+            <p> Body:
+                {
+	                "teamID": 1,
+                    "teamName" : "Name",
+                    "teamDescription" : "Desc"
+                }
+            </p>
         <li>[PATCH] /coach/team/delete</li>
         <p>Description: Lets the user invalidate the details of a team they created.</p>
+            <p> Body:
+                {
+	                "teamID": 1,
+                    "isDeleted" : True
+                }
+            </p>
     </ul>
         <h3>Support Locations:</h3>
     <ul>
@@ -179,6 +212,12 @@
         <p>Description: Lets the user view all the coaches that give support to their team.</p>
         <li>[DELETE] /coach/team/support/delete</li>
         <p>Description: Lets the user delete access of a coach to a team they created.</p>
+            <p> Body:
+                {
+	                "teamID": 1,
+                    "supportCoachID" : 2
+                }
+            </p>
     </ul>
         <h3>Member Locations:</h3>
     <ul>
@@ -196,6 +235,12 @@
         <p>Description: Lets the user view all the athletes that are member of a team they manage or created.</p>
         <li>[DELETE] /coach/team/support/delete</li>
         <p>Description: Lets the user delete access of a coach to a team they created.</p>
+            <p> Body:
+                {
+	                "teamID": 1,
+                    "athleteID" : 2
+                }
+            </p>
     </ul>
         <h3>Focus Locations:</h3>
     <ul>
@@ -213,6 +258,12 @@
         <p>Description: Lets the user view all the athletes they created that have a specific role.</p>
         <li>[DELETE] /coach/athlete/focus/delete</li>
         <p>Description: Lets the user delete a role for an athlete they created.</p>
+            <p> Body:
+                {
+	                "roleID": 1,
+                    "athleteID" : 2
+                }
+            </p>
     </ul>
         <h3>Attendance Locations:</h3>
     <ul>
@@ -228,8 +279,23 @@
         <p>Description: Lets the user view all the attendance of an athlete they created or manage has.</p>
         <li>[GET] /coach/athlete/attendance/athletes/[sessionID]</li>
         <p>Description: Lets the user view all the athletes they created that attended a specific session.</p>
+        <li>[PATCH] /coach/athlete/attendance/update</li>
+        <p>Description: Lets the user update the attendance of session for an athlete they created.</p>
+            <p> Body:
+                {
+	                "sessionID": 1,
+                    "athleteID": 2,
+                    "isPresent": False
+                }
+            </p>
         <li>[DELETE] /coach/athlete/attendance/delete</li>
         <p>Description: Lets the user delete a session for an athlete they created.</p>
+            <p> Body:
+                {
+	                "sessionID": 1,
+                    "athleteID" : 2
+                }
+            </p>
     </ul>
         <h3>Sport Locations:</h3>
     <ul>
@@ -247,11 +313,17 @@
         <p>Description: Lets the user search and view the details of a sport.</p>
             <p> Body:
                 {
-	                "search": "fdkgf"
+	                "search": "params"
                 }
             </p>
         <li>[DELETE] /sport/delete</li>
         <p>Description: Lets the admin delete a sport they created.</p>
+          <p> Body:
+                {
+	                "sportID": 1,
+                    "isDeleted" : True
+                }
+            </p>
     </ul>
         <h3>Unit Locations:</h3>
     <ul>
@@ -269,11 +341,17 @@
         <p>Description: Lets the user search and view the details of an unit.</p>
             <p> Body:
                 {
-	                "search": "fdkgf"
+	                "search": "params"
                 }
             </p>
         <li>[DELETE] /unit/delete</li>
         <p>Description: Lets the admin delete an unit they created.</p>
+            <p> Body:
+                {
+	                "unitID": 2,
+                    "isDeleted" : False
+                }
+            </p>
     </ul>
         <h3>Role Locations:</h3>
     <ul>
@@ -292,11 +370,17 @@
         <p>Description: Lets the user search and view the details of a role.</p>
             <p> Body:
                 {
-	                "search": "fdkgf"
+	                "search": "params"
                 }
             </p>
         <li>[DELETE] /sport/role/delete</li>
         <p>Description: Lets the admin delete a role they created.</p>
+            <p> Body:
+                {
+                    "roleID" : 4,
+	                "isDeleted": True
+                }
+            </p>
     </ul>
         <h3>Exercise Locations:</h3>
     <ul>
@@ -314,11 +398,17 @@
         <p>Description: Lets the user search and view the details of an exercise.</p>
             <p> Body:
                 {
-	                "search": "fdkgf"
+	                "search": "param"
                 }
             </p>
         <li>[DELETE] /sport/exercise/delete</li>
         <p>Description: Lets the admin delete an exercise they created.</p>
+            <p> Body:
+                {
+	                "exerciseID": 3,
+                    "isDeleted" : true
+                }
+            </p>
     </ul>
         <h3>Improve Locations:</h3>
     <ul>
@@ -336,6 +426,12 @@
         <p>Description: Lets the user view all the exercises for a role.</p>
         <li>[DELETE] /sport/role/improve/delete</li>
         <p>Description: Lets the admin delete an exercise for a role they created.</p>
+            <p> Body:
+                {
+	                "exerciseID": 4,
+                    "roleID" : 2
+                }
+            </p>
     </ul>
         <h3>Training Plan Locations:</h3>
     <ul>
@@ -357,22 +453,37 @@
         <p>Description: Lets the user search and view the details of training plans for a team they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf",
-                    "planID" : 2
+	                "search": "param",
+                    "teamID" : 2
                 }
             </p>
         <li>[POST] /plan/search/sub</li>
         <p>Description: Lets the user search and view the details of nested training plans for a training plan they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf",
+	                "search": "param",
                     "parentPlanID" : 2
                 }
             </p>
         <li>[PATCH] /plan/update</li>
         <p>Description: Lets the admin update information of a training plan they created.</p>
+            <p> Body:
+                {
+	                "planID": 1,
+                    "title" : "Title",
+                    "startDate" : "2018-11-05 23:32:51.11334",
+                    "endDate" : "2018-11-15 23:32:51.11334",
+                    "planDescription": "Desc"
+                }
+            </p>
         <li>[DELETE] /plan/delete</li>
         <p>Description: Lets the admin delete a training plan they created.</p>
+            <p> Body:
+                {
+	                "planID": 1,
+                    "isDeleted" : true
+                }
+            </p>
     </ul>
         <h3>Session Locations:</h3>
     <ul>
@@ -395,22 +506,38 @@
         <p>Description: Lets the user search and view the details of a session for training plan they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf",
-                    "sessionID" : 2
+	                "search": "param",
+                    "planID" : 2
                 }
             </p>
         <li>[POST] /plan/session/search/sub</li>
         <p>Description: Lets the user search and view the details of nested session for a session they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf",
+	                "search": "param",
                     "parentSessionID" : 2
                 }
             </p>
         <li>[PATCH] /plan/session/update</li>
         <p>Description: Lets the admin update information of a session they created.</p>
+            <p> Body:
+                {
+	                "sessionID": 1,
+                    "sessionTitle" : "Title",
+                    "location" : "Desc",
+                    "sessionDate" : "2018-11-06 23:32:51.11334",
+                    "sessionDescription": "Desc",
+                    "isCompetition" : True
+                }
+            </p>
         <li>[DELETE] /plan/session/delete</li>
         <p>Description: Lets the admin delete a session they created.</p>
+            <p> Body:
+                {
+	                "planID": 1,
+                    "isDeleted" : True
+                }
+            </p>
     </ul>
         <h3>Practice Locations:</h3>
     <ul>
@@ -429,14 +556,26 @@
         <p>Description: Lets the user search and view the details of a practice from a session they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf",
+	                "search": "param",
                     "teamID" : 2
                 }
             </p>
         <li>[PATCH] /plan/session/practice/update</li>
         <p>Description: Lets the admin update information of a practice they created.</p>
+            <p> Body:
+                {
+	                "practiceID": 4,
+                    "repetitions" : 3
+                }
+            </p>
         <li>[DELETE] /plan/session/practice/delete</li>
         <p>Description: Lets the admin delete a practice they created.</p>
+            <p> Body:
+                {
+	                "practiceID": 4,
+                    "repetitions" : 3
+                }
+            </p>
     </ul>
         <h3>Result Locations:</h3>
     <ul>
@@ -454,18 +593,34 @@
             </p>
         <li>[PATCH] /plan/session/practice/result/update</li>
         <p>Description: Lets the admin update information of a result they created.</p>
+            <p> Body:
+                {
+	                "resultID": 4,
+                    "unitID" : 3,
+                    "result" : 6.483748,
+                    "resultDate" : "2018-11-06 23:32:51.11334",
+                    "resultDescription" : ""
+                }
+            </p>
         <li>[GET] /plan/session/practice/result/details/[practiceID]</li>
         <p>Description: Lets the user view the details of a result they created or manage.</p>
         <li>[POST] /plan/session/practice/result/search</li>
         <p>Description: Lets the user search and view the details of a practice from a practice and/or athlete they created or manage.</p>
             <p> Body:
                 {
-	                "search": "fdkgf",
-                    "teamID" : 2
+	                "search": "param",
+                    "practiceID" : 2,
+                    "atheleteID" : 2
                 }
             </p>
         <li>[DELETE] /plan/session/practice/result/delete</li>
         <p>Description: Lets the admin delete a result they created.</p>
+            <p> Body:
+                {
+	                "resultID": 4,
+                    "isDeleted" : true
+                }
+            </p>
     </ul>
 
 </body>
