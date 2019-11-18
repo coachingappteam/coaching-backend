@@ -3,7 +3,7 @@ This Class contain DAO methods for the tables of Training Plan, Session, Practic
 """
 from sqlalchemy import or_, func
 
-from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise, Team, Support
+from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise, Team, Support, Unit
 
 
 class PlanDAO:
@@ -39,8 +39,8 @@ class PlanDAO:
         session.close()
         return id
 
-    def createPractice(self, exerciseID, sessionID, repetitions):
-        practice = Practice(exerciseID=exerciseID, sessionID=sessionID, repetitions=repetitions)
+    def createPractice(self, exerciseID, sessionID, repetitions, unitID, measure):
+        practice = Practice(exerciseID=exerciseID, sessionID=sessionID, repetitions=repetitions, unitID=unitID, measure=measure)
         session = self.conn.getNewSession()
         session.add(practice)
         session.flush()
@@ -51,7 +51,7 @@ class PlanDAO:
         return id
 
     def createResult(self, practiceID, athleteID, unitID, result, resultDate, resultDescription):
-        result = Result(practiceID=practiceID, athleteID=athleteID, unitID=unitID, result=result, resultDate=resultDate, resultDescription=resultDescription)
+        result = Result(practiceID=practiceID, athleteID=athleteID, unitID=unitID, result=result, resultDate=resultDate,resultDescription=resultDescription)
         session = self.conn.getNewSession()
         session.add(result)
         session.flush()
@@ -234,18 +234,21 @@ class PlanDAO:
 
     def searchPractices(self, sessionID, search):
         session = self.conn.getNewSession()
-        result = session.query(Practice, Exercise).filter(Practice.sessionID == sessionID,
-                                                          Practice.isDeleted == False,
+        result = session.query(Practice, Exercise, Unit).filter(Practice.sessionID == sessionID,
+                                                          Practice.isDeleted == False, Unit.unitID == Practice.unitID,
             or_(Practice.repetitions.like(search), Exercise.exerciseName.like(search),
-                Exercise.exerciseDescription.like(search), Exercise.style.like(search),
-                Exercise.measure.like(search))).all()
+                Exercise.exerciseDescription.like(search), Exercise.style.like(search), Unit.unit.like(search))).all()
         return result
 
-    def updatePractice(self, practiceID, repetitions):
+    def updatePractice(self, practiceID, repetitions, unitID, measure):
         session = self.conn.getNewSession()
         update = dict()
         if repetitions is not None and not repetitions == '':
             update[Practice.repetitions] = repetitions
+        if unitID is not None and not unitID == '':
+            update[Practice.unitID] = unitID
+        if measure is not None and not measure == '':
+            update[Practice.measure] = measure
         result = session.query(Practice).filter(Practice.practiceID == practiceID).update(update)
         session.commit()
         session.close()
@@ -332,10 +335,10 @@ class PlanDAO:
 
     def readResultsForAthleteIInSession(self, athleteID, sessionID):
         session = self.conn.getNewSession()
-        result = session.query(Practice.repetitions, Exercise.measure, func.avg(Result.result).label('avg_result')).\
+        result = session.query(Practice.repetitions, Practice.measure, func.avg(Result.result).label('avg_result')).\
             filter(Practice.practiceID == Result.practiceID, Practice.exerciseID == Exercise.exerciseID,
                    Practice.sessionID == sessionID, Result.athleteID == athleteID).\
-            group_by(Exercise.measure, Practice.repetitions).all()
+            group_by(Practice.measure, Practice.repetitions).all()
         return result
 
     def searchTimeline(self, coachID, search):

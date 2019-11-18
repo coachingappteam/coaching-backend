@@ -35,8 +35,8 @@ class SportDAO:
         session.close()
         return id
 
-    def createExercise(self, exerciseName, exerciseDescription, unitID, style, measure):
-        exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription, unitID=unitID, style=style, measure=measure)
+    def createExercise(self, exerciseName, exerciseDescription, style):
+        exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription, style=style)
         session = self.conn.getNewSession()
         session.add(exercise)
         session.flush()
@@ -184,7 +184,7 @@ class SportDAO:
     def searchExercise(self, search):
         session = self.conn.getNewSession()
         result = session.query(Exercise).filter(Exercise.isDeleted == False,
-                                                or_(Exercise.exerciseName.like(search), Exercise.measure.like(search),
+                                                or_(Exercise.exerciseName.like(search),
                                                     Exercise.exerciseDescription.like(search),
                                                     Exercise.style.like(search))).all()
         return result

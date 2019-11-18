@@ -390,6 +390,7 @@
                 {
 	                "exerciseName": "Name",
                     "exerciseDescription" : "Desc"
+                    "style": "Formal name"
                 }
             </p>
         <li>[GET] /sport/exercise/details/[exerciseID]</li>
@@ -582,7 +583,9 @@
                 {
 	                "sessionID": 4,
                     "exerciseID" : 2,
-                    "repetitions" : 3
+                    "repetitions" : 3,
+                    "unitID": 3,
+                    "measure": 22.32
                 }
             </p>
         <li>[GET] /plan/session/practice/details/[practiceID]</li>
@@ -600,7 +603,9 @@
             <p> Body:
                 {
 	                "practiceID": 4,
-                    "repetitions" : 3
+                    "repetitions" : 3,
+                    "unitID": 3,
+                    "measure": 22.32
                 }
             </p>
         <li>[DELETE] /plan/session/practice/delete</li>

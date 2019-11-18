@@ -228,10 +228,12 @@ def createPractice(headers, json):
         sessionID = json['sessionID']
         exerciseID = json['exerciseID']
         repetitions = json['repetitions']
+        unitID = json['unitID']
+        measure = json['measure']
 
-        if coachID and sessionID and exerciseID and repetitions:
+        if coachID and sessionID and exerciseID and repetitions and unitID and measure:
             if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID):
-                id = dao.createPractice(exerciseID, sessionID, repetitions)
+                id = dao.createPractice(exerciseID, sessionID, repetitions, unitID, measure)
                 if id:
                     return jsonify(practiceID=id)
                 return jsonify(Success="Practice added"), 200
@@ -270,6 +272,7 @@ def practiceSearch(headers, json):
             for practice in result:
                 record = practice[0].json()
                 record.update(practice[1].json())
+                record.update(practice[2].json())
                 practices.append(record)
             return jsonify(Practices=practices), 200
         else:
@@ -282,10 +285,12 @@ def practiceUpdate(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     practiceID = json['practiceID']
     repetitions = json['repetitions']
+    unitID = json['unitID']
+    measure = json['measure']
 
-    if coachID and practiceID and repetitions:
+    if coachID and practiceID and (repetitions or unitID or measure):
         if dao.readIfCoachManagePractice(coachID, practiceID):
-            dao.updatePractice(practiceID, repetitions)
+            dao.updatePractice(practiceID, repetitions, unitID, measure)
             return jsonify(Success="Practice Updated"), 200
         else:
             return jsonify(Error="User cant access this Practice"), 400

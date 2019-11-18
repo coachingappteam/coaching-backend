@@ -349,11 +349,9 @@ class Unit(Base):
 class Exercise(Base):
     __tablename__ = 'exercise'
     exerciseID = Column(Integer, primary_key=True, autoincrement=True)
-    unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     exerciseName = Column(String, nullable=False)
     exerciseDescription = Column(Text)
     style = Column(String, nullable=False)
-    measure = Column(DOUBLE_PRECISION, nullable=False)
     creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
     isDeleted = Column(Boolean, nullable=False, default=False)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
@@ -365,11 +363,9 @@ class Exercise(Base):
     def json(self):
         return {
             "exerciseID": self.exerciseID,
-            "unitID": self.unitID,
             "exerciseName": self.exerciseName,
             "exerciseDescription": self.exerciseDescription,
             "style": self.style,
-            "measure": self.measure,
             "creatorID": self.creatorID,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate
@@ -477,6 +473,8 @@ class Practice(Base):
     exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
     sessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
     repetitions = Column(Integer, nullable=False)
+    measure = Column(DOUBLE_PRECISION, nullable=False)
+    unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     isDeleted = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
@@ -489,6 +487,8 @@ class Practice(Base):
             "exerciseID": self.exerciseID,
             "sessionID": self.sessionID,
             "repetitions": self.repetitions,
+            "measure": self.measure,
+            "unitID": self.unitID,
             "isDeleted": self.isDeleted
         }
 

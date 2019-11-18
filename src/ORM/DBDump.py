@@ -95,296 +95,72 @@ class Factory:
                                                                                        "roleDescription": "400 IM Event."
                                                                                        }
                       ]
-        self.exercises = [{"exerciseName": "50 Free",
-                           "exerciseDescription": "50 Free Event.",
-                           "unitID": 1,
-                           "style": "Free",
-                           "measure": 50
-                           }, {"exerciseName": "100 Free",
-                               "exerciseDescription": "100 Free Event.",
-                               "unitID": 1,
-                               "style": "Free",
-                               "measure": 100
-                               }, {"exerciseName": "200 Free",
-                                   "exerciseDescription": "200 Free Event.",
-                                   "unitID": 1,
-                                   "style": "Free",
-                                   "measure": 200
-                                   }, {"exerciseName": "400 Free",
-                                       "exerciseDescription": "400 Free Event.",
-                                       "unitID": 1,
-                                       "style": "Free",
-                                       "measure": 400
-                                       }, {"exerciseName": "800 Free",
-                                           "exerciseDescription": "800 Free Event.",
-                                           "unitID": 1,
-                                           "style": "Free",
-                                           "measure": 800
-                                           }, {"exerciseName": "1500 Free",
-                                               "exerciseDescription": "1500 Free Event.",
-                                               "unitID": 1,
-                                               "style": "Free",
-                                               "measure": 1500
-                                               }, {"exerciseName": "50 Backstroke",
-                                                   "exerciseDescription": "50 Backstroke Event.",
-                                                   "unitID": 1,
-                                                   "style": "Backstroke",
-                                                   "measure": 50
-                                                   }, {"exerciseName": "100 Backstroke",
-                                                       "exerciseDescription": "100 Backstroke Event.",
-                                                       "unitID": 1,
-                                                       "style": "Backstroke",
-                                                       "measure": 100
-                                                       }, {"exerciseName": "200 Backstroke",
-                                                           "exerciseDescription": "200 Backstroke Event.",
-                                                           "unitID": 1,
-                                                           "style": "Backstroke",
-                                                           "measure": 200
-                                                           }, {"exerciseName": "400 Backstroke",
-                                                               "exerciseDescription": "400 Backstroke Event.",
-                                                               "unitID": 1,
-                                                               "style": "Backstroke",
-                                                               "measure": 400
-                                                               }, {"exerciseName": "800 Backstroke",
-                                                                   "exerciseDescription": "800 Backstroke Event.",
-                                                                   "unitID": 1,
-                                                                   "style": "Backstroke",
-                                                                   "measure": 800
-                                                                   }, {"exerciseName": "1500 Backstroke",
-                                                                       "exerciseDescription": "1500 Backstroke Event.",
-                                                                       "unitID": 1,
-                                                                       "style": "Backstroke",
-                                                                       "measure": 1500
-                                                                       }, {"exerciseName": "50 Breaststroke",
-                                                                           "exerciseDescription": "50 Free Breaststroke.",
-                                                                           "unitID": 1,
-                                                                           "style": "Breaststroke",
-                                                                           "measure": 50
-                                                                           }, {"exerciseName": "100 Breaststroke",
-                                                                               "exerciseDescription": "100 Breaststroke Event.",
-                                                                               "unitID": 1,
-                                                                               "style": "Breaststroke",
-                                                                               "measure": 100
-                                                                               }, {"exerciseName": "200 Breaststroke",
-                                                                                   "exerciseDescription": "200 Breaststroke Event.",
-                                                                                   "unitID": 1,
-                                                                                   "style": "Breaststroke",
-                                                                                   "measure": 200
-                                                                                   },
-                          {"exerciseName": "400 Breaststroke",
-                           "exerciseDescription": "400 Breaststroke Event.",
-                           "unitID": 1,
-                           "style": "Breaststroke",
-                           "measure": 400
-                           }, {"exerciseName": "800 Breaststroke",
-                               "exerciseDescription": "800 Breaststroke Event.",
-                               "unitID": 1,
-                               "style": "Breaststroke",
-                               "measure": 800
-                               }, {"exerciseName": "1500 Breaststroke",
-                                   "exerciseDescription": "1500 Breaststroke Event.",
-                                   "unitID": 1,
-                                   "style": "Breaststroke",
-                                   "measure": 1500
-                                   }, {"exerciseName": "50 Butterfly",
-                                       "exerciseDescription": "50 Butterfly Event.",
-                                       "unitID": 1,
-                                       "style": "Butterfly",
-                                       "measure": 50
-                                       }, {"exerciseName": "100 Butterfly",
-                                           "exerciseDescription": "100 Butterfly Event.",
-                                           "unitID": 1,
-                                           "style": "Butterfly",
-                                           "measure": 100
-                                           }, {"exerciseName": "200 Butterfly",
-                                               "exerciseDescription": "200 Butterfly Event.",
-                                               "unitID": 1,
-                                               "style": "Butterfly",
-                                               "measure": 200
-                                               }, {"exerciseName": "400 Butterfly",
-                                                   "exerciseDescription": "400 Butterfly Event.",
-                                                   "unitID": 1,
-                                                   "style": "Butterfly",
-                                                   "measure": 400
-                                                   }, {"exerciseName": "800 Butterfly",
-                                                       "exerciseDescription": "800 Butterfly Event.",
-                                                       "unitID": 1,
-                                                       "style": "Butterfly",
-                                                       "measure": 800
-                                                       }, {"exerciseName": "1500 Butterfly",
-                                                           "exerciseDescription": "1500 Butterfly Event.",
-                                                           "unitID": 1,
-                                                           "style": "Butterfly",
-                                                           "measure": 1500
-                                                           }, {"exerciseName": "50 IM",
-                                                               "exerciseDescription": "50 IM Event.",
-                                                               "unitID": 1,
-                                                               "style": "IM",
-                                                               "measure": 50
-                                                               }, {"exerciseName": "100 IM",
-                                                                   "exerciseDescription": "100 IM Event.",
-                                                                   "unitID": 1,
-                                                                   "style": "IM",
-                                                                   "measure": 100
-                                                                   }, {"exerciseName": "200 IM",
-                                                                       "exerciseDescription": "200 IM Event.",
-                                                                       "unitID": 1,
-                                                                       "style": "IM",
-                                                                       "measure": 200
-                                                                       }, {"exerciseName": "400 IM",
-                                                                           "exerciseDescription": "400 IM Event.",
-                                                                           "unitID": 1,
-                                                                           "style": "IM",
-                                                                           "measure": 400
-                                                                           }, {"exerciseName": "800 IM",
-                                                                               "exerciseDescription": "800 IM Event.",
-                                                                               "unitID": 1,
-                                                                               "style": "IM",
-                                                                               "measure": 800
-                                                                               }, {"exerciseName": "1500 IM",
-                                                                                   "exerciseDescription": "1500 IM Event.",
-                                                                                   "unitID": 1,
-                                                                                   "style": "IM",
-                                                                                   "measure": 1500
-                                                                                   }, {"exerciseName": "50 Drill",
-                                                                                       "exerciseDescription": "50 Drill Event.",
-                                                                                       "unitID": 1,
-                                                                                       "style": "Drill",
-                                                                                       "measure": 50
-                                                                                       }, {"exerciseName": "100 Drill",
-                                                                                           "exerciseDescription": "100 Drill Event.",
-                                                                                           "unitID": 1,
-                                                                                           "style": "Drill",
-                                                                                           "measure": 100
-                                                                                           },
-                          {"exerciseName": "200 Drill",
-                           "exerciseDescription": "200 Drill Event.",
-                           "unitID": 1,
-                           "style": "Drill",
-                           "measure": 200
-                           }, {"exerciseName": "400 Drill",
-                               "exerciseDescription": "400 Drill Event.",
-                               "unitID": 1,
-                               "style": "Drill",
-                               "measure": 400
-                               }, {"exerciseName": "800 Drill",
-                                   "exerciseDescription": "800 Drill Event.",
-                                   "unitID": 1,
-                                   "style": "Drill",
-                                   "measure": 800
-                                   }, {"exerciseName": "1500 Drill",
-                                       "exerciseDescription": "1500 Drill Event.",
-                                       "unitID": 1,
-                                       "style": "Drill",
-                                       "measure": 1500
-                                       }, {"exerciseName": "50 Kick",
-                                           "exerciseDescription": "50 Kick Event.",
-                                           "unitID": 1,
-                                           "style": "Kick",
-                                           "measure": 50
-                                           }, {"exerciseName": "100 Kick",
-                                               "exerciseDescription": "100 Kick Event.",
-                                               "unitID": 1,
-                                               "style": "Kick",
-                                               "measure": 100
-                                               }, {"exerciseName": "200 Kick",
-                                                   "exerciseDescription": "200 Kick Event.",
-                                                   "unitID": 1,
-                                                   "style": "Kick",
-                                                   "measure": 200
-                                                   }, {"exerciseName": "400 Kick",
-                                                       "exerciseDescription": "400 Kick Event.",
-                                                       "unitID": 1,
-                                                       "style": "Kick",
-                                                       "measure": 400
-                                                       }, {"exerciseName": "800 Kick",
-                                                           "exerciseDescription": "800 Kick Event.",
-                                                           "unitID": 1,
-                                                           "style": "Kick",
-                                                           "measure": 800
-                                                           }, {"exerciseName": "1500 Kick",
-                                                               "exerciseDescription": "1500 Kick Event.",
-                                                               "unitID": 1,
-                                                               "style": "Kick",
-                                                               "measure": 1500
-                                                               }, {"exerciseName": "50 Pull and Paddle",
-                                                                   "exerciseDescription": "50 Pull and Paddle Event.",
-                                                                   "unitID": 1,
-                                                                   "style": "Pull and Paddle",
-                                                                   "measure": 50
-                                                                   }, {"exerciseName": "100 Pull and Paddle",
-                                                                       "exerciseDescription": "100 Pull and Paddle Event.",
-                                                                       "unitID": 1,
-                                                                       "style": "Pull and Paddle",
-                                                                       "measure": 100
-                                                                       }, {"exerciseName": "200 Pull and Paddle",
-                                                                           "exerciseDescription": "200 Pull and Paddle Event.",
-                                                                           "unitID": 1,
-                                                                           "style": "Pull and Paddle",
-                                                                           "measure": 200
-                                                                           }, {"exerciseName": "400 Pull and Paddle",
-                                                                               "exerciseDescription": "400 Pull and Paddle Event.",
-                                                                               "unitID": 1,
-                                                                               "style": "Pull and Paddle",
-                                                                               "measure": 400
-                                                                               },
-                          {"exerciseName": "800 Pull and Paddle",
-                           "exerciseDescription": "800 Pull and Paddle Event.",
-                           "unitID": 1,
-                           "style": "Pull and Paddle",
-                           "measure": 800
-                           }, {"exerciseName": "1500 Pull and Paddle",
-                               "exerciseDescription": "1500 Pull and Paddle Event.",
-                               "unitID": 1,
-                               "style": "Pull and Paddle",
-                               "measure": 1500
-                               },
-                          {"exerciseName": "30 Min Run",
-                           "exerciseDescription": "30 min run event",
-                           "unitID": 5,
-                           "style": "Run",
-                           "measure": 30
-                           }, {"exerciseName": "5 Min Streching",
-                               "exerciseDescription": "5 min streching event",
-                               "unitID": 5,
-                               "style": "Run",
-                               "measure": 5
-                               }
+        self.exercises = [{"exerciseName": "Free",
+                           "exerciseDescription": "Free Event.",
+                           "style": "free",
+                           }, {"exerciseName": "Backstroke",
+                               "exerciseDescription": "Backstroke Event.",
+                               "style": "back",
+                               }, {"exerciseName": "Breaststroke",
+                                   "exerciseDescription": "Breaststroke Event.",
+                                   "style": "breast",
+                                   }, {"exerciseName": "Butterfly",
+                                       "exerciseDescription": "Butterfly Event.",
+                                       "style": "butterfly",
+                                       }, {"exerciseName": "IM",
+                                           "exerciseDescription": "IM Event.",
+                                           "style": "im",
+                                           }, {"exerciseName": "Drill",
+                                               "exerciseDescription": "Drill Event.",
+                                               "style": "drill",
+                                               }, {"exerciseName": "Kick",
+                                                   "exerciseDescription": "Kick Event.",
+                                                   "style": "kick",
+                                                   }, {"exerciseName": "Pull and Paddle",
+                                                       "exerciseDescription": "Pull and Paddle Event.",
+                                                       "style": "pull_paddle",
+                                                       }, {"exerciseName": "Running",
+                                                           "exerciseDescription": "Running Event.",
+                                                           "style": "run",
+                                                           }, {"exerciseName": "Stretching",
+                                                               "exerciseDescription": "Stretching Event.",
+                                                               "style": "stretch",
+                                                               }
                           ]
 
         self.improves = [{"exerciseID": 1,
                           "roleID": 1
-                          }, {"exerciseID": 2,
+                          }, {"exerciseID": 1,
                               "roleID": 2
-                              }, {"exerciseID": 3,
+                              }, {"exerciseID": 1,
                                   "roleID": 3
-                                  }, {"exerciseID": 4,
+                                  }, {"exerciseID": 1,
                                       "roleID": 4
-                                      }, {"exerciseID": 5,
+                                      }, {"exerciseID": 1,
                                           "roleID": 5
-                                          }, {"exerciseID": 6,
+                                          }, {"exerciseID": 1,
                                               "roleID": 6
-                                              }, {"exerciseID": 7,
+                                              }, {"exerciseID": 2,
                                                   "roleID": 7
-                                                  }, {"exerciseID": 8,
+                                                  }, {"exerciseID": 2,
                                                       "roleID": 8
-                                                      }, {"exerciseID": 9,
+                                                      }, {"exerciseID": 2,
                                                           "roleID": 9
-                                                          }, {"exerciseID": 13,
+                                                          }, {"exerciseID": 3,
                                                               "roleID": 10
-                                                              }, {"exerciseID": 14,
+                                                              }, {"exerciseID": 3,
                                                                   "roleID": 11
-                                                                  }, {"exerciseID": 15,
+                                                                  }, {"exerciseID": 3,
                                                                       "roleID": 12
-                                                                      }, {"exerciseID": 19,
+                                                                      }, {"exerciseID": 4,
                                                                           "roleID": 13
-                                                                          }, {"exerciseID": 20,
+                                                                          }, {"exerciseID": 4,
                                                                               "roleID": 14
-                                                                              }, {"exerciseID": 21,
+                                                                              }, {"exerciseID": 4,
                                                                                   "roleID": 15
-                                                                                  }, {"exerciseID": 27,
+                                                                                  }, {"exerciseID": 5,
                                                                                       "roleID": 16
-                                                                                      }, {"exerciseID": 28,
+                                                                                      }, {"exerciseID": 5,
                                                                                           "roleID": 17
                                                                                           }
                          ]
@@ -545,11 +321,11 @@ class Factory:
 
         # Create Admin
         coachID = str(coachDAO.createAdmin(self.admin['password'], self.admin['firstName'], self.admin['lastName'],
-                                       self.admin['phone'], self.admin['email']))
+                                           self.admin['phone'], self.admin['email']))
 
         # Create User
         supportID = str(coachDAO.createCoach(self.user['password'], self.user['firstName'], self.user['lastName'],
-                                         self.user['phone'], self.user['email']))
+                                             self.user['phone'], self.user['email']))
         # Create Sports
         for sport in self.sports:
             sportDAO.createSport(sport['sportName'], sport['type'])
@@ -564,8 +340,7 @@ class Factory:
 
         # Create Exercises
         for exercise in self.exercises:
-            sportDAO.createExercise(exercise['exerciseName'], exercise['exerciseDescription'], exercise['unitID'],
-                                    exercise['style'], exercise['measure'])
+            sportDAO.createExercise(exercise['exerciseName'], exercise['exerciseDescription'], exercise['style'])
 
         # Create Improvements
         for improve in self.improves:
@@ -638,64 +413,99 @@ class Factory:
 
             if not session['isCompetition']:
                 warmupID = planDAO.createSession(self.subSessions[0]['planID'], sessionID,
-                                      self.subSessions[0]['sessionTitle'], self.subSessions[0]['location'],
-                                      session['isCompetition'], self.subSessions[0]['isMain'],
-                                      session['sessionDate'], self.subSessions[0]['sessionDescription'])
+                                                 self.subSessions[0]['sessionTitle'], self.subSessions[0]['location'],
+                                                 session['isCompetition'], self.subSessions[0]['isMain'],
+                                                 session['sessionDate'], self.subSessions[0]['sessionDescription'])
 
-                planDAO.createPractice(50, warmupID, 1)
+                planDAO.createPractice(9, warmupID, 1, 5, 30)
 
                 coolDownID = planDAO.createSession(self.subSessions[2]['planID'], sessionID,
-                                      self.subSessions[2]['sessionTitle'], self.subSessions[2]['location'],
-                                      session['isCompetition'], self.subSessions[2]['isMain'],
-                                      session['sessionDate'], self.subSessions[2]['sessionDescription'])
-                planDAO.createPractice(49, coolDownID, 1)
+                                                   self.subSessions[2]['sessionTitle'], self.subSessions[2]['location'],
+                                                   session['isCompetition'], self.subSessions[2]['isMain'],
+                                                   session['sessionDate'], self.subSessions[2]['sessionDescription'])
+                planDAO.createPractice(10, coolDownID, 1, 5, 5)
 
             mainID = planDAO.createSession(self.subSessions[1]['planID'], sessionID,
-                                  self.subSessions[1]['sessionTitle'], self.subSessions[1]['location'],
-                                  session['isCompetition'], self.subSessions[1]['isMain'],
-                                  session['sessionDate'], self.subSessions[1]['sessionDescription'])
+                                           self.subSessions[1]['sessionTitle'], self.subSessions[1]['location'],
+                                           session['isCompetition'], self.subSessions[1]['isMain'],
+                                           session['sessionDate'], self.subSessions[1]['sessionDescription'])
 
             if session['isCompetition']:
-                idHolder = planDAO.createPractice(3, mainID, random.randint(1, 2))
-                planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                idHolder = planDAO.createPractice(9, mainID, random.randint(1, 2))
-                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                idHolder = planDAO.createPractice(15, mainID, random.randint(1, 2))
-                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
+                exerciseList = set()
+                while len(exerciseList) < 3:
+                    exerciseList.add(random.randint(1, 5))
+
+                repetitions = random.randint(1, 3)
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                                                  1, 100 * random.randint(1, 2))
+
+                for x in range(repetitions):
+                    planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+
+                repetitions = random.randint(1, 3)
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                                                  1, 100 * random.randint(1, 2))
+
+                for x in range(repetitions):
+                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+
+                repetitions = random.randint(1, 3)
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                                                  1, 100 * random.randint(1, 2))
+
+                for x in range(repetitions):
+                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
             else:
-                idHolder = planDAO.createPractice(random.randint(1, 18), mainID, random.randint(1, 3))
-                planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                idHolder = planDAO.createPractice(random.randint(19, 32), mainID, random.randint(1, 3))
-                planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                idHolder = planDAO.createPractice(random.randint(33, 48), mainID, random.randint(1, 3))
-                planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
-                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                     , session["sessionDate"], "Great")
+                exerciseList = set()
+                while len(exerciseList) < 3:
+                    exerciseList.add(random.randint(1, 8))
+
+                repetitions = random.randint(1, 3)
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                                                  1, 25 * random.randint(1, 32))
+                for x in range(repetitions):
+                    planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+
+                repetitions = random.randint(1, 3)
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                                                  1, 25 * random.randint(1, 32))
+
+                for x in range(repetitions):
+                    planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+
+                repetitions = random.randint(1, 3)
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                                                  1, 25 * random.randint(1, 32))
+
+                for x in range(repetitions):
+                    planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
+                    planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                         , session["sessionDate"], "Great")
