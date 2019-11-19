@@ -38,11 +38,11 @@ def signupCoach(json):
     if password and fname and lname and email:
         coach = dao.readCoach(email, password)
         if coach is not None:
-            return jsonify(Error="Coach with given email exists."), 401
+            return jsonify(Error="Coach with given email exists."), 409
         dao.createCoach(password, fname, lname, phone, email)
         coach = dao.readCoach(email, password)
         if coach is None:
-            return jsonify(Error="Insert not successful"), 401
+            return jsonify(Error="Insert not successful"), 500
         return jsonify(Coach=coach.json()), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -59,11 +59,11 @@ def signupAdmin(json):
     if password and fname and lname and email:
         coach = dao.readCoach(email, password)
         if coach is not None:
-            return jsonify(Error="Coach with given email exists."), 401
+            return jsonify(Error="Coach with given email exists."), 409
         dao.createAdmin(password, fname, lname, phone, email)
         coach = dao.readCoach(email, password)
         if coach is None:
-            return jsonify(Error="Insert not successful"), 401
+            return jsonify(Error="Insert not successful"), 500
         return jsonify(Coach=coach.json()), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -73,7 +73,7 @@ def signoutCoach(header):
     token = header['token']
     securityDAO.deleteToken(token)
     if securityDAO.validateToken(token):
-        return jsonify(Error="Log out unsuccessful"), 400
+        return jsonify(Error="Log out unsuccessful"), 500
     return jsonify(Success="Log out successful"), 200
 
 
@@ -136,7 +136,7 @@ def addCoachToTeam(headers, json):
         if dao.readIfTeamFromCoach(coachID, teamID):
             dao.createSupport(supportCoachID, teamID)
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team"), 403
         return jsonify(Success="Support added"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -160,7 +160,7 @@ def addAthleteToTeam(headers, json):
                 and dao.readIfAthleteFromCoach(coachID, athleteID):
             dao.createMember(athleteID, teamID)
         else:
-            return jsonify(Error="User doesnt have access to team or athlete"), 400
+            return jsonify(Error="User doesnt have access to team or athlete"), 403
         return jsonify(Success="Member added"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -173,7 +173,7 @@ def readCoach(headers):
         if result is not None:
             return jsonify(Coach=result.json()), 200
         else:
-            return jsonify(Coach="Nothing Found"), 200
+            return jsonify(Coach="Nothing Found"), 404
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -214,9 +214,9 @@ def athleteDetails(headers, json):
             if result is not None:
                 return jsonify(Athlete=result.json()), 200
             else:
-                return jsonify(Athlete="Nothing Found"), 200
+                return jsonify(Athlete="Nothing Found"), 404
         else:
-            return jsonify(Error="User doesnt have access to athlete"), 400
+            return jsonify(Error="User doesnt have access to athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -255,7 +255,7 @@ def athleteUpdate(headers, json):
             dao.updateAthlete(coachID, athleteID, firstName, lastName, phone, email, birthdate, sex)
             return jsonify(Success="Athlete Updated"), 200
         else:
-            return jsonify(Error="User cant access this athlete"), 400
+            return jsonify(Error="User cant access this athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -269,7 +269,7 @@ def athleteDelete(headers, json):
             dao.deleteAthlete(coachID, athleteID, isDeleted)
             return jsonify(Success="Athlete Delete Status changed."), 200
         else:
-            return jsonify(Error="User cant access this athlete"), 400
+            return jsonify(Error="User cant access this athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -283,9 +283,9 @@ def teamDetails(headers, json):
             if result is not None:
                 return jsonify(Team=result.json()), 200
             else:
-                return jsonify(Team="Nothing Found"), 200
+                return jsonify(Team="Nothing Found"), 404
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -317,7 +317,7 @@ def teamUpdate(headers, json):
             dao.updateTeam(coachID, teamID, teamName, teamDescription)
             return jsonify(Success="Team Updated"), 200
         else:
-            return jsonify(Error="User cant access this team"), 400
+            return jsonify(Error="User cant access this team"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -331,7 +331,7 @@ def teamDelete(headers, json):
             dao.deleteTeam(coachID, teamID, isDeleted)
             return jsonify(Success="Team Delete status changed"), 200
         else:
-            return jsonify(Error="User cant access this team"), 400
+            return jsonify(Error="User cant access this team"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -350,7 +350,7 @@ def readCoachesInCharge(headers, json):
                 coaches.append(coach[0].json())
             return jsonify(Coachs=coaches), 200
         else:
-            return jsonify(Error="User cant access this team"), 400
+            return jsonify(Error="User cant access this team"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -376,7 +376,7 @@ def deleteSupport(headers, json):
             dao.deleteSupport(supportCoachID, teamID)
             return jsonify(Success="Coach was removed from team"), 200
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -406,7 +406,7 @@ def readTeamsOfAthlete(headers, json):
                 teams.append(team[0].json())
             return jsonify(Teams=teams), 200
         else:
-            return jsonify(Error="User doesnt have access to athlete"), 400
+            return jsonify(Error="User doesnt have access to athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -420,7 +420,7 @@ def deleteMember(headers, json):
             dao.deleteMember(athleteID, teamID)
             return jsonify(Success="Coach was removed from team"), 200
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -433,7 +433,7 @@ def addRoleToAthlete(headers, json):
         if dao.readIfAthleteFromCoach(coachID, athleteID):
             dao.createFocus(athleteID, roleID, False)
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team"), 403
         return jsonify(Success="Member added"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -463,7 +463,7 @@ def readRolesOfAthlete(headers, json):
                 roles.append(role[0].json())
             return jsonify(Roles=roles), 200
         else:
-            return jsonify(Error="User doesnt have access to athlete"), 400
+            return jsonify(Error="User doesnt have access to athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -477,7 +477,7 @@ def deleteFocus(headers, json):
             dao.deleteFocus(athleteID, roleID)
             return jsonify(Success="Role was removed from athlete"), 200
         else:
-            return jsonify(Error="User doesnt have access to athlete"), 400
+            return jsonify(Error="User doesnt have access to athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -489,7 +489,7 @@ def readCoachByID(json):
         if result is not None:
             return jsonify(Coach=result.json()), 200
         else:
-            return jsonify(Coach="Nothing Found"), 200
+            return jsonify(Coach="Nothing Found"), 404
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -502,7 +502,7 @@ def addAttendanceToAthlete(headers, json):
         if dao.readIfAthleteFromCoach(coachID, athleteID):
             dao.createAttendance(sessionID, athleteID)
         else:
-            return jsonify(Error="User doesnt have access to team"), 400
+            return jsonify(Error="User doesnt have access to team"), 403
         return jsonify(Success="Member added"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -545,7 +545,7 @@ def updateAttendance(headers, json):
             dao.updateAttendance(sessionID, athleteID, isPresent)
             return jsonify(Success="Attendance Updated"), 200
         else:
-            return jsonify(Error="User cant access this athlete"), 400
+            return jsonify(Error="User cant access this athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -559,6 +559,6 @@ def deleteAttendance(headers, json):
             dao.deleteAttendance(athleteID, sessionID)
             return jsonify(Success="Session was removed from athlete"), 200
         else:
-            return jsonify(Error="User doesnt have access to athlete"), 400
+            return jsonify(Error="User doesnt have access to athlete"), 403
     else:
         return jsonify(Error="Required Parameter is missing"), 400
