@@ -3,7 +3,8 @@ This Class contain DAO methods for the tables of Training Plan, Session, Practic
 """
 from sqlalchemy import or_, func
 
-from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise, Team, Support, Unit
+from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise, Team, Support, Unit, \
+    Improves, Role, Athlete
 
 
 class PlanDAO:
@@ -378,7 +379,8 @@ class PlanDAO:
                                                                    TrainingPlan.planID == Session.planID,
                                                                    Session.parentSessionID == None,
                                                                    Session.sessionTitle.like(search),
-                                                                   Session.sessionDescription.like(search)).all()]
+                                                                   Session.sessionDescription.like(search))
+            .order_by(Session.sessionDate).all()]
         session.close()
         return result
 
@@ -391,7 +393,19 @@ class PlanDAO:
                                                                             Session.parentSessionID == None,
                                                                             Session.sessionTitle.like(search),
                                                                             Session.sessionDescription.like(search))\
-            .all()]
+            .order_by(Session.sessionDate).all()]
         session.close()
         return result
 
+    def searchSessionResultsByAthleteAndRoleID(self, athleteID, roleID):
+        session = self.conn.getNewSession()
+        result = [e for e in session.query(Athlete.firstName, Athlete.lastName, Role.roleName, Session.sessionDate,
+                                          func.avg(Result.result).label('avg_result'),  Unit.unit)
+            .filter(Role.roleID == Improves.roleID,
+            Improves.exerciseID == Exercise.exerciseID, Exercise.exerciseID == Practice.exerciseID,
+        Session.sessionID == Practice.sessionID, Practice.practiceID == Result.practiceID, Unit.unitID == Result.unitID,
+        Session.isCompetition == True, Result.athleteID == Athlete.athleteID, Athlete.athleteID == athleteID,
+            Role.roleID == roleID).group_by(Athlete.firstName, Athlete.lastName, Role.roleName, Session.sessionDate,
+                                            Unit.unitID).order_by(Session.sessionDate).all()]
+        session.close()
+        return result

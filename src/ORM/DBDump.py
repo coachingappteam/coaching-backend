@@ -246,7 +246,7 @@ class Factory:
                           "sessionDescription": "Practice #1."
                           }, {"planID": 1,
                               "parentSessionID": None,
-                              "sessionTitle": "Competition #1",
+                              "sessionTitle": "Competition #2",
                               "location": "Gym",
                               "isCompetition": True,
                               "isMain": False,
@@ -284,7 +284,15 @@ class Factory:
                                               "isMain": False,
                                               "sessionDate": datetime.datetime(2019, 5, 19).date(),
                                               "sessionDescription": "Practice #5."
-                                              }
+                                              }, {"planID": 1,
+                                                  "parentSessionID": None,
+                                                  "sessionTitle": "Competition #1",
+                                                  "location": "Gym",
+                                                  "isCompetition": True,
+                                                  "isMain": False,
+                                                  "sessionDate": datetime.datetime(2019, 4, 4).date(),
+                                                  "sessionDescription": "LAI Swimming Competition."
+                                                  }
                          ]
 
         self.subSessions = [{"planID": 1,
@@ -379,22 +387,41 @@ class Factory:
 
         # Create Focus
         coachDAO.createFocus(1, 1, True)
-        coachDAO.createFocus(2, 2, True)
-        coachDAO.createFocus(3, 3, True)
-        coachDAO.createFocus(4, 4, True)
         coachDAO.createFocus(1, 8, False)
+
+        coachDAO.createFocus(2, 2, True)
         coachDAO.createFocus(2, 9, False)
-        coachDAO.createFocus(3, 10, False)
-        coachDAO.createFocus(4, 5, False)
-        coachDAO.createFocus(5, 6, True)
-        coachDAO.createFocus(6, 7, True)
-        coachDAO.createFocus(5, 11, False)
-        coachDAO.createFocus(6, 12, False)
         coachDAO.createFocus(2, 13, False)
+
         coachDAO.createFocus(3, 14, False)
-        coachDAO.createFocus(4, 15, False)
+        coachDAO.createFocus(3, 3, True)
         coachDAO.createFocus(3, 16, False)
+        coachDAO.createFocus(3, 10, False)
+
+        coachDAO.createFocus(4, 4, True)
+        coachDAO.createFocus(4, 15, False)
         coachDAO.createFocus(4, 17, False)
+        coachDAO.createFocus(4, 5, False)
+        coachDAO.createFocus(4, 1, False)
+        coachDAO.createFocus(4, 2, False)
+        coachDAO.createFocus(4, 3, False)
+        coachDAO.createFocus(4, 5, False)
+        coachDAO.createFocus(4, 6, False)
+        coachDAO.createFocus(4, 7, False)
+        coachDAO.createFocus(4, 8, False)
+        coachDAO.createFocus(4, 9, False)
+        coachDAO.createFocus(4, 10, False)
+        coachDAO.createFocus(4, 12, False)
+        coachDAO.createFocus(4, 13, False)
+        coachDAO.createFocus(4, 11, False)
+        coachDAO.createFocus(4, 14, False)
+        coachDAO.createFocus(4, 16, False)
+
+        coachDAO.createFocus(5, 6, True)
+        coachDAO.createFocus(5, 11, False)
+
+        coachDAO.createFocus(6, 7, True)
+        coachDAO.createFocus(6, 12, False)
 
         # Create Training Plan
         planDAO.createTrainingPlan(self.plan['teamID'], self.plan['parentPlanID'], self.plan['title'],
@@ -435,35 +462,33 @@ class Factory:
                 while len(exerciseList) < 3:
                     exerciseList.add(random.randint(1, 5))
 
-                repetitions = random.randint(1, 3)
-                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, 1,
                                                   1, 100 * random.randint(1, 2))
 
-                for x in range(repetitions):
-                    planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                         , session["sessionDate"], "Great")
-                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                         , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
 
-                repetitions = random.randint(1, 3)
-                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, 1,
                                                   1, 100 * random.randint(1, 2))
 
-                for x in range(repetitions):
-                    planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                         , session["sessionDate"], "Great")
-                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                         , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
 
-                repetitions = random.randint(1, 3)
-                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, repetitions,
+                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, 1,
                                                   1, 100 * random.randint(1, 2))
 
-                for x in range(repetitions):
-                    planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                         , session["sessionDate"], "Great")
-                    planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
-                                         , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
+                planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
+                                     , session["sessionDate"], "Great")
             else:
                 exerciseList = set()
                 while len(exerciseList) < 3:

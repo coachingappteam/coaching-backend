@@ -459,3 +459,24 @@ def mlAnalyze(headers, json):
             record = dao.readResultsForAthleteIInSession(athleteID, sessionID)
             requestjson.append(record)
     return jsonify(Results=requestjson)
+
+
+def analyticForAthleteInCompetition(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    athleteID = json['athleteID']
+    roleID = json['roleID']
+    if coachID and athleteID and roleID:
+        if (coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) or
+                     coachDAO.readIfAthleteFromCoach(coachID, athleteID)):
+            result = dao.searchSessionResultsByAthleteAndRoleID(athleteID, roleID)
+            stat = list()
+            for row in result:
+                stat.append({
+                    "firstName": row[0], "lastName": row[1], "roleName": row[2], "result": row[3], "unit": row[4]
+                })
+            return jsonify(Results=stat)
+        else:
+            return jsonify(Error="User cant access this athlete"), 400
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+

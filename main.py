@@ -896,7 +896,20 @@ def mlAnalyze():
     else:
         return jsonify(Error="Method not allowed"), 404
 
+
+# ==================== Analytic Methods ====================== #
+@app.route('/analytic/athlete/role/competition', methods=['POST'])
+def analyticForAthleteInCompetition():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.analyticForAthleteInCompetition(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
+
 # TODO add a route to get all exercises that can only be given in meets
 # TODO add a route that would give all results for competition sessions with their result
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
