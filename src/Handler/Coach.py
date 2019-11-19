@@ -86,6 +86,10 @@ def checkAdminToken(header):
     return securityDAO.getIfAdmin(header['token'])
 
 
+def checkML(header):
+    return securityDAO.getIfML(header['token'])
+
+
 def createAthlete(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
 

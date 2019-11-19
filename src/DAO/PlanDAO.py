@@ -4,7 +4,7 @@ This Class contain DAO methods for the tables of Training Plan, Session, Practic
 from sqlalchemy import or_, func
 
 from src.ORM.CoachingORM import Database, TrainingPlan, Session, Practice, Result, Exercise, Team, Support, Unit, \
-    Improves, Role, Athlete
+    Improves, Role, Athlete, Analyzed
 
 
 class PlanDAO:
@@ -58,6 +58,17 @@ class PlanDAO:
         session.flush()
         session.refresh(result)
         id = result.resultID
+        session.commit()
+        session.close()
+        return id
+
+    def createAnalyzed(self, athleteID, sessionID, label):
+        result = Analyzed(athleteID=athleteID, sessionID=sessionID, label=label)
+        session = self.conn.getNewSession()
+        session.add(result)
+        session.flush()
+        session.refresh(result)
+        id = result.analyzeID
         session.commit()
         session.close()
         return id
@@ -370,7 +381,7 @@ class PlanDAO:
         session.close()
         return result
 
-    def readResultsForAthleteIInSession(self, athleteID, sessionID):
+    def readResultsForAthleteInSession(self, athleteID, sessionID):
         session = self.conn.getNewSession()
         result = [e for e in session.query(Practice.repetitions, Practice.measure,
                                            func.avg(Result.result).label('avg_result')).\
@@ -417,3 +428,4 @@ class PlanDAO:
                                             Unit.unitID).order_by(Session.sessionDate).all()]
         session.close()
         return result
+

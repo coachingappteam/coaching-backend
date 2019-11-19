@@ -897,6 +897,16 @@ def mlAnalyze():
         return jsonify(Error="Method not allowed"), 405
 
 
+@app.route('/ml/record/result', methods=['POST'])
+def mlRecordResult():
+    if request.method == 'POST':
+        if not Coach.checkML(request.headers):
+            return jsonify(Error="Not Authorized"), 401
+        result = Plan.mlRecordResult(request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 405
+
 # ==================== Analytic Methods ====================== #
 @app.route('/analytic/athlete/role/competition', methods=['POST'])
 def analyticForAthleteInCompetition():

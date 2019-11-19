@@ -1,6 +1,8 @@
 """
 This Class contain DAO methods for the entity Security
 """
+import os
+import json
 import secrets
 from datetime import datetime
 from src.ORM.CoachingORM import Database, Security, Coach
@@ -90,6 +92,16 @@ class SecurityDAO:
             return False
         return coach.isAdmin
 
+    def getIfML(self, token):
+        if os.environ.get('AZURE_CODE'):
+            azureToken = os.environ.get('AZURE_CODE')
+        else:
+            with open('config.json') as f:
+                obj = json.load(f)
+                azureToken = obj['AZURE_CODE']
+
+        return token == azureToken
+
     # ============================== Update Methods =========================== #
     def validateToken(self, token):
         session = self.conn.getNewSession()
@@ -122,7 +134,3 @@ class SecurityDAO:
         session.query(Security).filter(Security.token == token).delete()
         session.commit()
         session.close()
-
-
-
-

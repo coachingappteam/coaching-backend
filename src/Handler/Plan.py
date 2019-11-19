@@ -453,11 +453,17 @@ def mlAnalyze(headers, json):
     competition_week = json['cw']
     if len(athletes) <= 0 or len(sessions) <= 0:
         return jsonify(Error="Insufficient Data for analysis"), 400
-    requestjson = [competition_week]
+    requestjson = {"competition_week": competition_week, "records": list()}
     for athleteID in athletes:
-        for sessionID in sessions:
-            record = dao.readResultsForAthleteIInSession(athleteID, sessionID)
-            requestjson.append(record)
+        if coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) \
+                or coachDAO.readIfAthleteFromCoach(coachID, athleteID):
+            for sessionID in sessions:
+                if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID,
+                                                                                                     sessionID):
+                    record = dao.readResultsForAthleteInSession(athleteID, sessionID)
+                    if len(record) > 0:
+                        json = {"athleteID": athleteID, "sessionID": sessionID, "results": record}
+                        requestjson["records"].append(json)
     return jsonify(Results=requestjson)
 
 
@@ -481,3 +487,12 @@ def analyticForAthleteInCompetition(headers, json):
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
+
+def mlRecordResult(json):
+    result = json['results']
+    sessionID = json['sessionID']
+    if len(result) > 0:
+        for row in result:
+            dao.createAnalyzed(row['athleteID'], sessionID, row['label'])
+        return jsonify(Success="All labels added"), 200
+    return jsonify(Error="Insufficient Arguments"), 400

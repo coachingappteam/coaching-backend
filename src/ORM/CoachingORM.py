@@ -448,9 +448,11 @@ class Attendance(Base):
 
 class Analyzed(Base):
     __tablename__ = 'analyzed'
+    analyzeID = Column(Integer, primary_key=True, autoincrement=True)
     sessionID = Column(Integer,  ForeignKey('session.sessionID'), nullable=False)
     athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
-    result = Column(Integer, nullable=False, default=0)
+    label = Column(Integer, nullable=False, default=0)
+    feedback = Column(Integer, nullable=True)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
     __table_args__ = (PrimaryKeyConstraint('sessionID', 'athleteID'), {},)
 
@@ -460,9 +462,11 @@ class Analyzed(Base):
 
     def json(self):
         return {
+            "analyzeID": self.analyzeID,
             "sessionID": self.sessionID,
             "athleteID": self.athleteID,
-            "result": self.result,
+            "label": self.label,
+            "feedback": self.feedback,
             "creationDate": self.creationDate
         }
 
