@@ -1,0 +1,9 @@
+vector_input.csv
+ongoing/
+.ipynb_checkpoints/
+package/
+allResults.csv
+
+.python_packages
+__pycache__
+.venv

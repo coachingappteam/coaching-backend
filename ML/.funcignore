@@ -1,0 +1,17 @@
+.git*
+.vscode
+local.settings.json
+test
+.venv
+.ypynb_chekpoints
+ongoing/
+test/
+allResults.csv
+swimcloud_scraper.py
+TFE_scoring.py
+Training.ipynb
+Untitled.ipynb
+Untitled1.ipynb
+vector_input.csv
+package/
+
