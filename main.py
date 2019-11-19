@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from src.Handler import Coach, Plan, Sport
+import sys
+import src.config as config
 
 app = Flask(__name__, template_folder='./src/template')
 CORS(app)
@@ -920,4 +922,15 @@ def analyticForAthleteInCompetition():
 
 
 if __name__ == '__main__':
-    app.run()
+    if len(sys.argv) == 2 :
+        app.run(debug=((sys.argv[1].lower()) == "true"))
+    else:
+        config.local = False
+        app.run()
+
+
+
+
+
+
+
