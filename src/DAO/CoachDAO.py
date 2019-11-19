@@ -25,8 +25,24 @@ class CoachDAO:
                       email=email, phone=phone)
         session = self.conn.getNewSession()
         session.add(coach)
+        session.flush()
+        session.refresh(coach)
+        id = coach.coachID
         session.commit()
         session.close()
+        return id
+
+    def createAdmin(self, password, firstName, lastName, phone, email):
+        coach = Coach(password=str(hashlib.md5(password.encode()).hexdigest()), firstName=firstName, lastName=lastName,
+                      email=email, phone=phone, isAdmin=True)
+        session = self.conn.getNewSession()
+        session.add(coach)
+        session.flush()
+        session.refresh(coach)
+        id = coach.coachID
+        session.commit()
+        session.close()
+        return id
 
     def createAthlete(self, coachID, firstName, lastName, email, phone, sex, birthdate):
         athl = Athlete(coachID=coachID, firstName=firstName, lastName=lastName, email=email, phone=phone, sex=sex,
@@ -39,7 +55,6 @@ class CoachDAO:
         session.commit()
         session.close()
         return id
-
 
     def createPayment(self, coachID, recieptID, payTotal, paySource):
         payment = Payment(coachID=coachID, sourceReceiptID=recieptID, payTotal=payTotal, paymentSource=paySource)

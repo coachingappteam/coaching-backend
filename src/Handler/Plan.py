@@ -106,10 +106,11 @@ def createSession(headers, json):
         sessionDate = json['sessionDate']
         sessionDescription = json['sessionDescription']
         isCompetition = json['isCompetition']
+        isMain = json['isMain']
 
-        if coachID and planID and sessionTitle and sessionDate and isCompetition is not None:
+        if coachID and planID and sessionTitle and sessionDate and isCompetition is not None and isMain is not None:
             if dao.readIfCoachManagePlan(coachID, planID) or dao.readIfCoachSupportPlan(coachID, planID):
-                id = dao.createSession(planID, parentSessionID, sessionTitle, location, isCompetition,
+                id = dao.createSession(planID, parentSessionID, sessionTitle, location, isCompetition, isMain,
                                   sessionDate, sessionDescription)
                 if id:
                     return jsonify(sessionID=id)
@@ -227,10 +228,12 @@ def createPractice(headers, json):
         sessionID = json['sessionID']
         exerciseID = json['exerciseID']
         repetitions = json['repetitions']
+        unitID = json['unitID']
+        measure = json['measure']
 
-        if coachID and sessionID and exerciseID and repetitions:
+        if coachID and sessionID and exerciseID and repetitions and unitID and measure:
             if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID):
-                id = dao.createPractice(exerciseID, sessionID, repetitions)
+                id = dao.createPractice(exerciseID, sessionID, repetitions, unitID, measure)
                 if id:
                     return jsonify(practiceID=id)
                 return jsonify(Success="Practice added"), 200
@@ -269,6 +272,7 @@ def practiceSearch(headers, json):
             for practice in result:
                 record = practice[0].json()
                 record.update(practice[1].json())
+                record.update(practice[2].json())
                 practices.append(record)
             return jsonify(Practices=practices), 200
         else:
@@ -281,10 +285,12 @@ def practiceUpdate(headers, json):
     coachID = securityDAO.getTokenOwner(headers['token'])
     practiceID = json['practiceID']
     repetitions = json['repetitions']
+    unitID = json['unitID']
+    measure = json['measure']
 
-    if coachID and practiceID and repetitions:
+    if coachID and practiceID and (repetitions or unitID or measure):
         if dao.readIfCoachManagePractice(coachID, practiceID):
-            dao.updatePractice(practiceID, repetitions)
+            dao.updatePractice(practiceID, repetitions, unitID, measure)
             return jsonify(Success="Practice Updated"), 200
         else:
             return jsonify(Error="User cant access this Practice"), 400
@@ -414,3 +420,42 @@ def resultSearch(headers, json):
             return jsonify(Error="User doesnt have access to athlete"), 400
     else:
         return jsonify(Error="Required Parameter is missing"), 400
+
+
+def timelineSearch(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    if coachID:
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchTimeline(coachID, search)
+            result2 = dao.searchSupportTimeline(coachID, search)
+            sessions = list()
+            for session in result:
+                team = session[0].json()
+                team.update(session[1].json())
+                team.update(session[2].json())
+                sessions.append(team)
+            for session in result2:
+                team = session[0].json()
+                team.update(session[1].json())
+                team.update(session[2].json())
+                team.update(session[3].json())
+                sessions.append(team)
+            return jsonify(Sessions=sessions), 200
+
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def mlAnalyze(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    athletes = json['athletes']
+    sessions = json['sessions']
+    competition_week = json['cw']
+    if len(athletes) <= 0 or len(sessions) <= 0:
+        return jsonify(Error="Insufficient Data for analysis"), 400
+    requestjson = [competition_week]
+    for athleteID in athletes:
+        for sessionID in sessions:
+            record = dao.readResultsForAthleteIInSession(athleteID, sessionID)
+            requestjson.append(record)
+    return jsonify(Results=requestjson)

@@ -119,11 +119,12 @@ def roleSearch(json):
 
 
 def createExercise(json):
-    if json != 2:
+    if json != 5:
         exerciseName = json["exerciseName"]
         exerciseDescription = json["exerciseDescription"]
-        if exerciseName:
-            id = dao.createExercise(exerciseName, exerciseDescription)
+        style = json['style']
+        if exerciseName and style:
+            id = dao.createExercise(exerciseName, exerciseDescription, style)
             if id:
                 return jsonify(exerciseID=id)
             return jsonify(Success="Exercise added"), 200
@@ -154,8 +155,9 @@ def exerciseSearch(json):
 
 def deleteSport(json):
     sportID = json['sportID']
+    isDeleted = json['isDeleted']
     if sportID:
-        dao.deleteSport(sportID)
+        dao.deleteSport(sportID, isDeleted)
         return jsonify(Success="Sport was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400
@@ -163,8 +165,9 @@ def deleteSport(json):
 
 def deleteUnit(json):
     unitID = json['unitID']
+    isDeleted = json['isDeleted']
     if unitID:
-        dao.deleteUnit(unitID)
+        dao.deleteUnit(unitID, isDeleted)
         return jsonify(Success="Unit was deleted"), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400

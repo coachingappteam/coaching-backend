@@ -35,8 +35,8 @@ class SportDAO:
         session.close()
         return id
 
-    def createExercise(self, exerciseName, exerciseDescription):
-        exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription)
+    def createExercise(self, exerciseName, exerciseDescription, style):
+        exercise = Exercise(exerciseName=exerciseName, exerciseDescription=exerciseDescription, style=style)
         session = self.conn.getNewSession()
         session.add(exercise)
         session.flush()
@@ -124,15 +124,17 @@ class SportDAO:
 
     def searchSport(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Sport).filter(or_(Sport.sportName.like(search))).all()
+        result = session.query(Sport).filter(Sport.isDeleted == False,or_(Sport.sportName.like(search))).all()
         return result
 
-    def deleteSport(self, sportID):
+    def deleteSport(self, sportID, isDeleted):
         session = self.conn.getNewSession()
-
-        session.query(Sport).filter(Sport.sportID == sportID).delete()
+        update = dict()
+        update[Sport.isDeleted] = isDeleted
+        result = session.query(Sport).filter(Sport.sportID == sportID).update(update)
         session.commit()
         session.close()
+        return result
 
     def readUnitDetails(self, unitID):
         session = self.conn.getNewSession()
@@ -142,15 +144,18 @@ class SportDAO:
 
     def searchUnit(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Unit).filter(or_(Unit.unit.like(search), Unit.unitName.like(search))).all()
+        result = session.query(Unit).filter(Unit.isDeleted == False,
+                                            or_(Unit.unit.like(search), Unit.unitName.like(search))).all()
         return result
 
-    def deleteUnit(self, unitID):
+    def deleteUnit(self, unitID, isDeleted):
         session = self.conn.getNewSession()
-
-        session.query(Unit).filter(Unit.unitID == unitID).delete()
+        update = dict()
+        update[Unit.isDeleted] = isDeleted
+        result = session.query(Unit).filter(Unit.unitID == unitID).update(update)
         session.commit()
         session.close()
+        return result
 
     def deleteRole(self, roleID, isDeleted):
         session = self.conn.getNewSession()
@@ -163,7 +168,8 @@ class SportDAO:
 
     def searchRole(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Role).filter(or_(Role.roleName.like(search), Role.roleDescription.like(search))).all()
+        result = session.query(Role).filter(Role.isDeleted == False,
+                                            or_(Role.roleName.like(search), Role.roleDescription.like(search))).all()
         return result
 
     def deleteExercise(self, exerciseID, isDeleted):
@@ -177,7 +183,8 @@ class SportDAO:
 
     def searchExercise(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Exercise).filter(or_(Exercise.exerciseName.like(search), Exercise.measure.like(search),
+        result = session.query(Exercise).filter(Exercise.isDeleted == False,
+                                                or_(Exercise.exerciseName.like(search),
                                                     Exercise.exerciseDescription.like(search),
                                                     Exercise.style.like(search))).all()
         return result

@@ -729,6 +729,16 @@ def sessionSearch():
     else:
         return jsonify(Error="Method not allowed"), 404
 
+@app.route('/plan/session/timeline/search', methods=['POST'])
+def timelineSearch():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.timelineSearch(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
+
 
 @app.route('/plan/session/search/sub', methods=['POST'])
 def getSessionSubSessions():
@@ -874,6 +884,17 @@ def resultDelete():
     else:
         return jsonify(Error="Method not allowed"), 404
 
+
+# ==================== Machine Learning Methods ====================== #
+@app.route('/ml/analyze', methods=['POST'])
+def mlAnalyze():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Invalid or Missing Security Token"), 404
+        result = Plan.mlAnalyze(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 404
 
 if __name__ == '__main__':
     app.run()

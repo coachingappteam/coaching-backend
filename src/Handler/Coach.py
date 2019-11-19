@@ -48,6 +48,27 @@ def signupCoach(json):
         return jsonify(Error="Required Parameter is missing"), 400
 
 
+def signupAdmin(json):
+    if len(json) != 5:
+        return jsonify(Error="Missing Parameters"), 400
+    password = json['password']
+    fname = json['firstName']
+    lname = json['lastName']
+    phone = json['phone']
+    email = json['email']
+    if password and fname and lname and email:
+        coach = dao.readCoach(email, password)
+        if coach is not None:
+            return jsonify(Error="Coach with given email exists."), 401
+        dao.createAdmin(password, fname, lname, phone, email)
+        coach = dao.readCoach(email, password)
+        if coach is None:
+            return jsonify(Error="Insert not successful"), 401
+        return jsonify(Coach=coach.json()), 200
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
 def signoutCoach(header):
     token = header['token']
     securityDAO.deleteToken(token)
@@ -279,7 +300,7 @@ def teamSearch(headers, json):
         for team in result:
             teams.append(team.json())
         for team in result2:
-            teams.append(team.json())
+            teams.append(team[0].json())
         return jsonify(Teams=teams), 200
     else:
         return jsonify(Error="Required Parameter is missing"), 400

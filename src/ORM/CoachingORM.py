@@ -1,5 +1,4 @@
 import enum
-
 from sqlalchemy.dialects.postgresql import UUID, DOUBLE_PRECISION
 from sqlalchemy.ext.declarative import declarative_base
 from uuid import uuid4
@@ -128,12 +127,13 @@ class Payment(Base):
         }
 
 
-# TODO: Add isDeleted and CreatorID Field
 class Sport(Base):
     __tablename__ = 'sport'
     sportID = Column(Integer, primary_key=True)
     sportName = Column(String, nullable=False)
     type = Column(Enum(Type), nullable=False)
+    creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
+    isDeleted = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return "<sport(sportName='{}', type='{}')>" \
@@ -143,7 +143,9 @@ class Sport(Base):
         return {
             "sportID": self.sportID,
             "sportName": self.sportName,
-            "type": self.type.value
+            "type": self.type.value,
+            "creatorID": self.creatorID,
+            "isDeleted": self.isDeleted
         }
 
 
@@ -314,20 +316,21 @@ class TrainingPlan(Base):
             "parentPlanID": self.parentPlanID,
             "title": self.title,
             "isParentPlan": self.isParentPlan,
-            "endDate": self.startDate,
-            "birthdate": self.endDate,
+            "startDate": self.startDate,
+            "endDate": self.endDate,
             "planDescription": self.planDescription,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate,
         }
 
 
-# TODO: Add isDeleted and CreatorID Field
 class Unit(Base):
     __tablename__ = 'unit'
     unitID = Column(Integer, primary_key=True, autoincrement=True)
     unitName = Column(String, nullable=False)
     unit = Column(String, nullable=False)
+    isDeleted = Column(String, nullable=False, default=False)
+    creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
 
     def __repr__(self):
         return "<athlete(unitName='{}', unit='{}')>" \
@@ -337,18 +340,18 @@ class Unit(Base):
         return {
             "unitID": self.unitID,
             "unitName": self.unitName,
-            "unit": self.unit
+            "unit": self.unit,
+            "creatorID": self.creatorID,
+            "isDeleted": self.isDeleted
         }
 
 
 class Exercise(Base):
     __tablename__ = 'exercise'
     exerciseID = Column(Integer, primary_key=True, autoincrement=True)
-    unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     exerciseName = Column(String, nullable=False)
     exerciseDescription = Column(Text)
     style = Column(String, nullable=False)
-    measure = Column(DOUBLE_PRECISION, nullable=False)
     creatorID = Column(UUID, ForeignKey('coach.coachID'), nullable=True, default=None)
     isDeleted = Column(Boolean, nullable=False, default=False)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
@@ -360,11 +363,9 @@ class Exercise(Base):
     def json(self):
         return {
             "exerciseID": self.exerciseID,
-            "unitID": self.unitID,
             "exerciseName": self.exerciseName,
             "exerciseDescription": self.exerciseDescription,
             "style": self.style,
-            "measure": self.measure,
             "creatorID": self.creatorID,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate
@@ -392,12 +393,13 @@ class Session(Base):
     __tablename__ = 'session'
     sessionID = Column(Integer, primary_key=True, autoincrement=True)
     planID = Column(Integer, ForeignKey('trainingPlan.planID'), nullable=False)
-    parentSessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
+    parentSessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=True)
     sessionTitle = Column(String, nullable=False)
     location = Column(Text)
     isCompetition = Column(Boolean, default=False)
     isCompleted = Column(Boolean, nullable=False, default=False)
     isDeleted = Column(Boolean, nullable=False, default=False)
+    isMain = Column(Boolean, nullable=False, default=False)
     sessionDate = Column(Date, nullable=False)
     sessionDescription = Column(Text)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
@@ -415,6 +417,7 @@ class Session(Base):
             "location": self.location,
             "isCompetition": self.isCompetition,
             "isCompleted": self.isCompleted,
+            "isMain": self.isMain,
             "sessionDate": self.sessionDate,
             "isDeleted": self.isDeleted,
             "creationDate": self.creationDate,
@@ -443,12 +446,35 @@ class Attendance(Base):
         }
 
 
+class Analyzed(Base):
+    __tablename__ = 'analyzed'
+    sessionID = Column(Integer,  ForeignKey('session.sessionID'), nullable=False)
+    athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
+    result = Column(Integer, nullable=False, default=0)
+    creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
+    __table_args__ = (PrimaryKeyConstraint('sessionID', 'athleteID'), {},)
+
+    def __repr__(self):
+        return "<analyzed(athleteID='{}', sessionID='{}')>" \
+            .format(self.athleteID, self.sessionID)
+
+    def json(self):
+        return {
+            "sessionID": self.sessionID,
+            "athleteID": self.athleteID,
+            "result": self.result,
+            "creationDate": self.creationDate
+        }
+
+
 class Practice(Base):
     __tablename__ = 'practice'
     practiceID = Column(Integer, primary_key=True, autoincrement=True)
     exerciseID = Column(Integer,  ForeignKey('exercise.exerciseID'), nullable=False)
     sessionID = Column(Integer, ForeignKey('session.sessionID'), nullable=False)
     repetitions = Column(Integer, nullable=False)
+    measure = Column(DOUBLE_PRECISION, nullable=False)
+    unitID = Column(Integer, ForeignKey('unit.unitID'), nullable=False)
     isDeleted = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
@@ -461,6 +487,8 @@ class Practice(Base):
             "exerciseID": self.exerciseID,
             "sessionID": self.sessionID,
             "repetitions": self.repetitions,
+            "measure": self.measure,
+            "unitID": self.unitID,
             "isDeleted": self.isDeleted
         }
 
