@@ -43,7 +43,7 @@ def load_model(function_dir):
     feature_columns = [role, competition_week, back_reps, back_distance,
                     back_split, breast_reps, breast_distance, 
                     breast_split, butterfly_reps, butterfly_distance,
-                    
+
                     butterfly_split, drill_reps, drill_distance,
                     drill_split, free_reps, free_distance,
                     free_split, im_reps, im_distance, 
@@ -122,12 +122,11 @@ def main(req: func.HttpRequest, context: azure.functions.Context) -> func.HttpRe
     if not model:
         model = load_model(context.function_directory)
 
-    try:
-        req_body = req.get_json()
-    except ValueError:
-        pass
+    
+    req_body = req.get_json()
+    
 
 
-    return func.HttpResponse(body=process(req_body, model), status_code=200, mimetype='application/json')
+    return func.HttpResponse(body=process(req_body["results"], model), status_code=200, mimetype='application/json')
 
     

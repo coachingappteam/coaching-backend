@@ -50,61 +50,61 @@ feature_columns = [role, competition_week, back_reps, back_distance,
 
 model = tf.estimator.LinearClassifier(feature_columns=feature_columns,model_dir="model", n_classes=2)
 
-# objects = [
-#     {
-#     "id": 1,
-#     "role": 5,
-#     "competition_week": 0,
-#     "back": [1, 100, 33],
-#     "breast": [1, 200, 33],
-#     "butterfly": [],
-#     "drill": [],
-#     "free": [2, 100, 33],
-#     "im": [],
-#     "kick": [],
-#     "pull_paddle": []
-#     },
-#     {
-#     "id": 2,
-#     "role": 0,
-#     "competition_week": 0,
-#     "back": [1, 300, 25.6],
-#     "breast": [1, 300, 25.6],
-#     "butterfly": [1, 300, 25.6],
-#     "drill": [1, 300, 25.6],
-#     "free": [1, 300, 25.6],
-#     "im": [1, 300, 25.6],
-#     "kick": [1, 300, 25.6],
-#     "pull_paddle": []
-#     },
-#     {
-#     "id": 3,
-#     "role": 0,
-#     "competition_week": 0,
-#     "back": [1, 300, 25.6],
-#     "breast": [1, 300, 25.6],
-#     "butterfly": [1, 300, 25.6],
-#     "drill": [1, 300, 25.6],
-#     "free": [1, 300, 25.6],
-#     "im": [1, 300, 25.6],
-#     "kick": [1, 300, 25.6],
-#     "pull_paddle": []
-#     },
-#     {
-#     "id": 5,
-#     "role": 0,
-#     "competition_week": 0,
-#     "back": [1, 100, 25.6],
-#     "breast": [],
-#     "butterfly": [1, 100, 25.6],
-#     "drill": [],
-#     "free": [3, 50, 25.6],
-#     "im": [2, 50, 25.6],
-#     "kick": [2, 50, 25.6],
-#     "pull_paddle": []
-#     },
+objects = [
+    {
+    "id": 1,
+    "role": 5,
+    "competition_week": 0,
+    "back": [1, 100, 33],
+    "breast": [1, 200, 33],
+    "butterfly": [],
+    "drill": [],
+    "free": [2, 100, 33],
+    "im": [],
+    "kick": [],
+    "pull_paddle": []
+    },
+    {
+    "id": 2,
+    "role": 0,
+    "competition_week": 0,
+    "back": [1, 300, 25.6],
+    "breast": [1, 300, 25.6],
+    "butterfly": [1, 300, 25.6],
+    "drill": [1, 300, 25.6],
+    "free": [1, 300, 25.6],
+    "im": [1, 300, 25.6],
+    "kick": [1, 300, 25.6],
+    "pull_paddle": []
+    },
+    {
+    "id": 3,
+    "role": 0,
+    "competition_week": 0,
+    "back": [1, 300, 25.6],
+    "breast": [1, 300, 25.6],
+    "butterfly": [1, 300, 25.6],
+    "drill": [1, 300, 25.6],
+    "free": [1, 300, 25.6],
+    "im": [1, 300, 25.6],
+    "kick": [1, 300, 25.6],
+    "pull_paddle": []
+    },
+    {
+    "id": 5,
+    "role": 0,
+    "competition_week": 0,
+    "back": [1, 100, 25.6],
+    "breast": [],
+    "butterfly": [1, 100, 25.6],
+    "drill": [],
+    "free": [3, 50, 25.6],
+    "im": [2, 50, 25.6],
+    "kick": [2, 50, 25.6],
+    "pull_paddle": []
+    },
 
-# ]
+]
 
 styles = [
     "back",
