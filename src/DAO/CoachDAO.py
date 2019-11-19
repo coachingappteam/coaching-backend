@@ -117,6 +117,8 @@ class CoachDAO:
         result = [e for e in session.query(Coach).filter(Coach.email == email,
                                              Coach.password == hashed).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     '''
@@ -135,6 +137,8 @@ class CoachDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(Coach).filter(Coach.coachID == coachID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     '''
@@ -155,6 +159,8 @@ class CoachDAO:
         result = [e for e in session.query(Payment).filter(Payment.coachID == coachID).
             order_by(Payment.payDate.asc()).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     # ============================== Update Methods =========================== #
@@ -247,6 +253,8 @@ class CoachDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(Athlete).filter(Athlete.athleteID == athleteID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def searchAthletes(self, coachID, search):
@@ -292,6 +300,8 @@ class CoachDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(Team).filter(Team.teamID == teamID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def searchTeams(self, coachID, search):
@@ -411,6 +421,8 @@ class CoachDAO:
         result = [e for e in session.query(Coach, Team).filter(Coach.coachID == Team.coachID,
                                                                Team.teamID == teamID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def getAthletesBySessionID(self, sessionID):

@@ -246,7 +246,7 @@ class Factory:
                           "sessionDescription": "Practice #1."
                           }, {"planID": 1,
                               "parentSessionID": None,
-                              "sessionTitle": "Competition #2",
+                              "sessionTitle": "Competition #5",
                               "location": "Gym",
                               "isCompetition": True,
                               "isMain": False,
@@ -290,9 +290,33 @@ class Factory:
                                                   "location": "Gym",
                                                   "isCompetition": True,
                                                   "isMain": False,
-                                                  "sessionDate": datetime.datetime(2019, 4, 4).date(),
+                                                  "sessionDate": datetime.datetime(2019, 2, 28).date(),
                                                   "sessionDescription": "LAI Swimming Competition."
-                                                  }
+                                                  }, {"planID": 1,
+                                                      "parentSessionID": None,
+                                                      "sessionTitle": "Competition #2",
+                                                      "location": "Gym",
+                                                      "isCompetition": True,
+                                                      "isMain": False,
+                                                      "sessionDate": datetime.datetime(2019, 3, 15).date(),
+                                                      "sessionDescription": "LAI Swimming Competition."
+                                                      }, {"planID": 1,
+                                                          "parentSessionID": None,
+                                                          "sessionTitle": "Competition #3",
+                                                          "location": "Gym",
+                                                          "isCompetition": True,
+                                                          "isMain": False,
+                                                          "sessionDate": datetime.datetime(2019, 4, 1).date(),
+                                                          "sessionDescription": "LAI Swimming Competition."
+                                                          }, {"planID": 1,
+                                                              "parentSessionID": None,
+                                                              "sessionTitle": "Competition #4",
+                                                              "location": "Gym",
+                                                              "isCompetition": True,
+                                                              "isMain": False,
+                                                              "sessionDate": datetime.datetime(2019, 4, 30).date(),
+                                                              "sessionDescription": "LAI Swimming Competition."
+                                                              }
                          ]
 
         self.subSessions = [{"planID": 1,
@@ -401,7 +425,6 @@ class Factory:
         coachDAO.createFocus(4, 4, True)
         coachDAO.createFocus(4, 15, False)
         coachDAO.createFocus(4, 17, False)
-        coachDAO.createFocus(4, 5, False)
         coachDAO.createFocus(4, 1, False)
         coachDAO.createFocus(4, 2, False)
         coachDAO.createFocus(4, 3, False)
@@ -458,12 +481,9 @@ class Factory:
                                            session['sessionDate'], self.subSessions[1]['sessionDescription'])
 
             if session['isCompetition']:
-                exerciseList = set()
-                while len(exerciseList) < 3:
-                    exerciseList.add(random.randint(1, 5))
 
-                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, 1,
-                                                  1, 100 * random.randint(1, 2))
+                idHolder = planDAO.createPractice(1, mainID, 1,
+                                                  1, 100)
 
                 planDAO.createResult(idHolder, 1, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
                                      , session["sessionDate"], "Great")
@@ -472,8 +492,8 @@ class Factory:
                 planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
                                      , session["sessionDate"], "Great")
 
-                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, 1,
-                                                  1, 100 * random.randint(1, 2))
+                idHolder = planDAO.createPractice(2, mainID, 1,
+                                                  1, 200)
 
                 planDAO.createResult(idHolder, 2, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
                                      , session["sessionDate"], "Great")
@@ -482,8 +502,8 @@ class Factory:
                 planDAO.createResult(idHolder, 4, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
                                      , session["sessionDate"], "Great")
 
-                idHolder = planDAO.createPractice(exerciseList.pop(), mainID, 1,
-                                                  1, 100 * random.randint(1, 2))
+                idHolder = planDAO.createPractice(5, mainID, 1,
+                                                  1, 400)
 
                 planDAO.createResult(idHolder, 3, 2, random.randrange(22, 28) + (0.01 * random.randrange(0, 100))
                                      , session["sessionDate"], "Great")

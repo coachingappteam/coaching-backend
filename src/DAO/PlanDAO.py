@@ -104,6 +104,8 @@ class PlanDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(TrainingPlan).filter(TrainingPlan.planID == planID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def searchPlans(self, teamID, search):
@@ -167,6 +169,8 @@ class PlanDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(Session).filter(Session.sessionID == sessionID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def searchSessions(self, planID, search):
@@ -227,6 +231,8 @@ class PlanDAO:
         result = [e for e in session.query(Practice, Exercise).filter(Practice.exerciseID == Exercise.exerciseID,
                                                           Practice.practiceID == practiceID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def readIfCoachManagePractice(self, coachID, practiceID):
@@ -338,6 +344,8 @@ class PlanDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(Result).filter(Result.resultID == resultID).all()]
         session.close()
+        if len(result) <= 0:
+            return None
         return result[0]
 
     def searchResultsForAthleteInPractice(self, practiceID, athleteID, search):

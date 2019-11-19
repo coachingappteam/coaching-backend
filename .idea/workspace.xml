@@ -4,9 +4,11 @@
     <list default="true" id="50d4efa7-efc5-4427-9f16-101584128252" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/CoachDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/CoachDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DAO/PlanDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/PlanDAO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Handler/Plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Handler/Plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/SportDAO.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/SportDAO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ORM/DBDump.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ORM/DBDump.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/template/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/mainpage.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +54,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.Database Create">
     <configuration name="CoachDAO" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="coaching-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -195,8 +197,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.Database Create" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.SecurityDAO" />
         <item itemvalue="Python.CoachDAO" />
         <item itemvalue="Python.CoachingORM" />
@@ -227,14 +229,7 @@
       <workItem from="1573742622050" duration="30082000" />
       <workItem from="1573823727167" duration="53000" />
       <workItem from="1573838821022" duration="72666000" />
-      <workItem from="1574108043286" duration="11004000" />
-    </task>
-    <task id="LOCAL-00017" summary="Created Add methods and Get methods for all Sport related tables and add methods for Plan related methods.">
-      <created>1572457725572</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1572457725572</updated>
+      <workItem from="1574108043286" duration="13147000" />
     </task>
     <task id="LOCAL-00018" summary="Implemented more Coach, Team and Sport methods.">
       <created>1572726139391</created>
@@ -572,7 +567,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574139210930</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Added more sample data in script">
+      <created>1574151205710</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1574151205710</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -592,7 +594,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed admin check" />
     <MESSAGE value="Search Fix" />
     <MESSAGE value="Finished adding calls for Coach and Sport modules" />
     <MESSAGE value="Fixed method name conflicts in api." />
@@ -617,25 +618,15 @@
     <MESSAGE value="created and tested method for extracting sessions in timeline form." />
     <MESSAGE value="Changed behavior of exercises and practices" />
     <MESSAGE value="Removed lazy loading for bulk searches" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed lazy loading for bulk searches" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/Handler/Plan.py</url>
-          <line>471</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added more sample data in script" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added more sample data in script" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/coaching_backend$SecurityDAO.coverage" NAME="SecurityDAO Coverage Results" MODIFIED="1570801468577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
-    <SUITE FILE_PATH="coverage/coaching_backend$Database.coverage" NAME="Database Create Coverage Results" MODIFIED="1574137227444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
+    <SUITE FILE_PATH="coverage/coaching_backend$Database.coverage" NAME="Database Create Coverage Results" MODIFIED="1574152338836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
     <SUITE FILE_PATH="coverage/coaching_backend$CoachDAO.coverage" NAME="CoachDAO Coverage Results" MODIFIED="1570668763783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/DAO" />
-    <SUITE FILE_PATH="coverage/coaching_backend$main.coverage" NAME="main Coverage Results" MODIFIED="1574149727227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/coaching_backend$Database_Drop.coverage" NAME="Database Drop Coverage Results" MODIFIED="1574137206296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
+    <SUITE FILE_PATH="coverage/coaching_backend$main.coverage" NAME="main Coverage Results" MODIFIED="1574151719813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/coaching_backend$Database_Drop.coverage" NAME="Database Drop Coverage Results" MODIFIED="1574152328585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
     <SUITE FILE_PATH="coverage/coaching_backend$CoachingORM.coverage" NAME="CoachingORM Coverage Results" MODIFIED="1570650343170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ORM" />
   </component>
 </project>
