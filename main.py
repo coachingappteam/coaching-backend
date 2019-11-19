@@ -896,5 +896,7 @@ def mlAnalyze():
     else:
         return jsonify(Error="Method not allowed"), 404
 
+# TODO add a route to get all exercises that can only be given in meets
+# TODO add a route that would give all results for competition sessions with their result
 if __name__ == '__main__':
     app.run()

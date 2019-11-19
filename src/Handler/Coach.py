@@ -458,10 +458,10 @@ def readRolesOfAthlete(headers, json):
     if coachID and athleteID:
         if dao.readIfAthleteFromCoach(coachID, athleteID) or dao.readIfAthleteInTeamFromSupport(coachID, athleteID):
             result = dao.getRolesByAthleteID(athleteID)
-            teams = list()
-            for team in result:
-                teams.append(team[0].json())
-            return jsonify(Teams=teams), 200
+            roles = list()
+            for role in result:
+                roles.append(role[0].json())
+            return jsonify(Roles=roles), 200
         else:
             return jsonify(Error="User doesnt have access to athlete"), 400
     else:

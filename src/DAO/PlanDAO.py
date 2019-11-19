@@ -65,17 +65,20 @@ class PlanDAO:
 
     def readPracticesInSession(self, sessionID):
         session = self.conn.getNewSession()
-        result = session.query(Practice).filter(Practice.sessionID == sessionID).all()
+        result = [e for e in session.query(Practice).filter(Practice.sessionID == sessionID).all()]
+        session.close()
         return result
 
     def readExercisesInSession(self, sessionID):
         session = self.conn.getNewSession()
-        result = session.query(Practice, Exercise).filter(Practice.sessionID == sessionID).all()
+        result = [e for e in session.query(Practice, Exercise).filter(Practice.sessionID == sessionID).all()]
+        session.close()
         return result
 
     def readResultForSession(self, sessionID):
         session = self.conn.getNewSession()
-        result = session.query(Practice, Result).filter(Practice.sessionID == sessionID).all()
+        result = [e for e in session.query(Practice, Result).filter(Practice.sessionID == sessionID).all()]
+        session.close()
         return result
 
     def readIfCoachManagePlan(self, coachID, planID):
@@ -83,27 +86,32 @@ class PlanDAO:
         result = session.query(TrainingPlan, Team).filter(TrainingPlan.teamID == Team.teamID, 
                                                           TrainingPlan.planID == planID, 
                                                           Team.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
     
     def readIfCoachSupportPlan(self, coachID, planID):
         session = self.conn.getNewSession()
         result = session.query(TrainingPlan, Team, Support).filter(TrainingPlan.teamID == Team.teamID, 
                                                           TrainingPlan.planID == planID, Support.teamID == Team.teamID, 
                                                           Support.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def readPlanByID(self, planID):
         session = self.conn.getNewSession()
-        result = session.query(TrainingPlan).filter(TrainingPlan.planID == planID).first()
-        
-        return result
+        result = [e for e in session.query(TrainingPlan).filter(TrainingPlan.planID == planID).all()]
+        session.close()
+        return result[0]
 
     def searchPlans(self, teamID, search):
         session = self.conn.getNewSession()
-        result = session.query(TrainingPlan).filter(TrainingPlan.teamID == teamID,
+        result = [e for e in session.query(TrainingPlan).filter(TrainingPlan.teamID == teamID,
                                                           TrainingPlan.isDeleted == False, 
                                                           TrainingPlan.parentPlanID == None,
-            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search))).all()
+            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search))).all()]
+        session.close()
         return result
 
     def updatePlan(self, planID, title, startDate, endDate, planDescription):
@@ -139,7 +147,9 @@ class PlanDAO:
                                                           TrainingPlan.planID == Session.planID,
                                                           Session.sessionID == sessionID,
                                                           Team.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def readIfCoachSupportSession(self, coachID, sessionID):
         session = self.conn.getNewSession()
@@ -148,20 +158,23 @@ class PlanDAO:
                                                           Support.teamID == Team.teamID,
                                                           Session.sessionID == sessionID,
                                                           Support.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def readSessionByID(self, sessionID):
         session = self.conn.getNewSession()
-        result = session.query(Session).filter(Session.sessionID == sessionID).first()
-
-        return result
+        result = [e for e in session.query(Session).filter(Session.sessionID == sessionID).all()]
+        session.close()
+        return result[0]
 
     def searchSessions(self, planID, search):
         session = self.conn.getNewSession()
-        result = session.query(Session).filter(Session.planID == planID,
+        result = [e for e in session.query(Session).filter(Session.planID == planID,
                                                           Session.isDeleted == False,
                                                           Session.parentSessionID == None,
-            or_(Session.sessionDescription.like(search), Session.sessionTitle.like(search))).all()
+            or_(Session.sessionDescription.like(search), Session.sessionTitle.like(search))).all()]
+        session.close()
         return result
 
     def updateSession(self, sessionID, sessionTitle, location, sessionDate, sessionDescription, isCompetition):
@@ -193,24 +206,27 @@ class PlanDAO:
 
     def searchSubPlans(self, parentPlanID, search):
         session = self.conn.getNewSession()
-        result = session.query(TrainingPlan).filter(TrainingPlan.isDeleted == False,
+        result = [e for e in session.query(TrainingPlan).filter(TrainingPlan.isDeleted == False,
                                                           TrainingPlan.parentPlanID == parentPlanID,
-            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search))).all()
+            or_(TrainingPlan.title.like(search), TrainingPlan.planDescription.like(search))).all()]
+        session.close()
         return result
 
     def searchSubSessions(self, parentSessionID, search):
         session = self.conn.getNewSession()
-        result = session.query(Session).filter(Session.isDeleted == False, Session.parentSessionID == parentSessionID,
+        result = [e for e in session.query(Session).filter(Session.isDeleted == False,
+                                                           Session.parentSessionID == parentSessionID,
                                                or_(Session.sessionDescription.like(search),
-                                                   Session.sessionTitle.like(search))).all()
+                                                   Session.sessionTitle.like(search))).all()]
+        session.close()
         return result
 
     def readPracticeByID(self, practiceID):
         session = self.conn.getNewSession()
-        result = session.query(Practice, Exercise).filter(Practice.exerciseID == Exercise.exerciseID,
-                                                          Practice.practiceID == practiceID).first()
-
-        return result
+        result = [e for e in session.query(Practice, Exercise).filter(Practice.exerciseID == Exercise.exerciseID,
+                                                          Practice.practiceID == practiceID).all()]
+        session.close()
+        return result[0]
 
     def readIfCoachManagePractice(self, coachID, practiceID):
         session = self.conn.getNewSession()
@@ -219,7 +235,9 @@ class PlanDAO:
                                                           TrainingPlan.planID == Session.planID,
                                                           Practice.practiceID == practiceID,
                                                           Team.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def readIfCoachSupportPractice(self, coachID, practiceID):
         session = self.conn.getNewSession()
@@ -230,14 +248,17 @@ class PlanDAO:
                                                           Practice.practiceID == practiceID,
                                                           Team.teamID == Support.teamID,
                                                           Support.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def searchPractices(self, sessionID, search):
         session = self.conn.getNewSession()
-        result = session.query(Practice, Exercise, Unit).filter(Practice.sessionID == sessionID,
+        result = [e for e in session.query(Practice, Exercise, Unit).filter(Practice.sessionID == sessionID,
                                                           Practice.isDeleted == False, Unit.unitID == Practice.unitID,
             or_(Practice.repetitions.like(search), Exercise.exerciseName.like(search),
-                Exercise.exerciseDescription.like(search), Exercise.style.like(search), Unit.unit.like(search))).all()
+                Exercise.exerciseDescription.like(search), Exercise.style.like(search), Unit.unit.like(search))).all()]
+        session.close()
         return result
 
     def updatePractice(self, practiceID, repetitions, unitID, measure):
@@ -271,7 +292,9 @@ class PlanDAO:
                                                           TrainingPlan.planID == Session.planID,
                                                           Result.resultID == resultID,
                                                           Team.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def readIfCoachSupportResult(self, coachID, resultID):
         session = self.conn.getNewSession()
@@ -283,7 +306,9 @@ class PlanDAO:
                                                           Result.resultID == resultID,
                                                           Team.teamID == Support.teamID,
                                                           Support.coachID == coachID).first()
-        return result is not None
+        ans = result is not None
+        session.close()
+        return ans
 
     def updateResult(self, resultID, unitID, result, resultDate, resultDescription):
         session = self.conn.getNewSession()
@@ -310,56 +335,63 @@ class PlanDAO:
 
     def readResultByID(self, resultID):
         session = self.conn.getNewSession()
-        result = session.query(Result).filter(Result.resultID == resultID).first()
-
-        return result
+        result = [e for e in session.query(Result).filter(Result.resultID == resultID).all()]
+        session.close()
+        return result[0]
 
     def searchResultsForAthleteInPractice(self, practiceID, athleteID, search):
         session = self.conn.getNewSession()
-        result = session.query(Result).filter(Result.practiceID == practiceID, Result.athleteID == athleteID,
-            or_(Result.resultDescription.like(search), Result.result.like(search))).all()
+        result = [e for e in session.query(Result).filter(Result.practiceID == practiceID, Result.athleteID == athleteID,
+            or_(Result.resultDescription.like(search), Result.result.like(search))).all()]
+        session.close()
         return result
 
     def searchResultsInPractice(self, practiceID, search):
         session = self.conn.getNewSession()
-        result = session.query(Result).filter(Result.practiceID == practiceID,
-            or_(Result.resultDescription.like(search), Result.result.like(search))).all()
+        result = [e for e in session.query(Result).filter(Result.practiceID == practiceID,
+            or_(Result.resultDescription.like(search), Result.result.like(search))).all()]
+        session.close()
         return result
 
     def searchResultsForAthlete(self, athleteID, search):
         session = self.conn.getNewSession()
-        result = session.query(Result).filter(Result.athleteID == athleteID,
+        result = [e for e in session.query(Result).filter(Result.athleteID == athleteID,
                                               or_(Result.resultDescription.like(search),
-                                                  Result.result.like(search))).all()
+                                                  Result.result.like(search))).all()]
+        session.close()
         return result
 
     def readResultsForAthleteIInSession(self, athleteID, sessionID):
         session = self.conn.getNewSession()
-        result = session.query(Practice.repetitions, Practice.measure, func.avg(Result.result).label('avg_result')).\
+        result = [e for e in session.query(Practice.repetitions, Practice.measure,
+                                           func.avg(Result.result).label('avg_result')).\
             filter(Practice.practiceID == Result.practiceID, Practice.exerciseID == Exercise.exerciseID,
                    Practice.sessionID == sessionID, Result.athleteID == athleteID).\
-            group_by(Practice.measure, Practice.repetitions).all()
+            group_by(Practice.measure, Practice.repetitions).all()]
+        session.close()
         return result
 
     def searchTimeline(self, coachID, search):
         session = self.conn.getNewSession()
-        result = session.query(Team, TrainingPlan, Session).filter(Team.coachID == coachID,
+        result = [e for e in session.query(Team, TrainingPlan, Session).filter(Team.coachID == coachID,
                                                                    Team.teamID == TrainingPlan.teamID,
                                                                    TrainingPlan.planID == Session.planID,
                                                                    Session.parentSessionID == None,
                                                                    Session.sessionTitle.like(search),
-                                                                   Session.sessionDescription.like(search)).all()
+                                                                   Session.sessionDescription.like(search)).all()]
+        session.close()
         return result
 
     def searchSupportTimeline(self, coachID, search):
         session = self.conn.getNewSession()
-        result = session.query(Support, Team, TrainingPlan, Session).filter(Support.coachID == coachID,
+        result = [e for e in session.query(Support, Team, TrainingPlan, Session).filter(Support.coachID == coachID,
                                                                             Support.teamID == Team.teamID,
                                                                             Team.teamID == TrainingPlan.teamID,
                                                                             TrainingPlan.planID == Session.planID,
                                                                             Session.parentSessionID == None,
                                                                             Session.sessionTitle.like(search),
                                                                             Session.sessionDescription.like(search))\
-            .all()
+            .all()]
+        session.close()
         return result
 

@@ -65,66 +65,55 @@ class SportDAO:
         return id
 
     # ============================== Read Methods =========================== #
-    def readAllSports(self):
-        session = self.conn.getNewSession()
-        result = session.query(Sport).all()
-        return result
-
-    def readAllUnits(self):
-        session = self.conn.getNewSession()
-        result = session.query(Unit).all()
-        return result
-
-    def readAllRoles(self):
-        session = self.conn.getNewSession()
-        result = session.query(Role).all()
-        return result
-
-    def readAllExercises(self):
-        session = self.conn.getNewSession()
-        result = session.query(Exercise).all()
-        return result
 
     def readUnit(self, unitID):
         session = self.conn.getNewSession()
-        result = session.query(Unit).filter(Unit.unitID == unitID).first()
-        return result
+        result = [e for e in session.query(Unit).filter(Unit.unitID == unitID).all()]
+        session.close()
+        return result[0]
 
     def readSport(self, sportID):
         session = self.conn.getNewSession()
-        result = session.query(Sport).filter(Sport.sportID == sportID).first()
-        return result
+        result = [e for e in session.query(Sport).filter(Sport.sportID == sportID).all()]
+        session.close()
+        return result[0]
 
     def readRole(self, roleID):
         session = self.conn.getNewSession()
-        result = session.query(Role).filter(Role.roleID == roleID).first()
-        return result
+        result = [e for e in session.query(Role).filter(Role.roleID == roleID).all()]
+        session.close()
+        return result[0]
 
     def readExercise(self, exerciseID):
         session = self.conn.getNewSession()
-        result = session.query(Exercise).filter(Exercise.exerciseID == exerciseID).first()
-        return result
+        result = [e for e in session.query(Exercise).filter(Exercise.exerciseID == exerciseID).all()]
+        session.close()
+        return result[0]
 
     def readExercisesForRole(self, roleID):
         session = self.conn.getNewSession()
-        result = session.query(Exercise, Improves).filter(Improves.roleID == roleID,
-                                                          Exercise.exerciseID == Improves.exerciseID).all()
+        result = [e for e in session.query(Exercise, Improves).filter(Improves.roleID == roleID,
+                                                          Exercise.exerciseID == Improves.exerciseID).all()]
+        session.close()
         return result
 
     def readRolesForSport(self, sportID):
         session = self.conn.getNewSession()
-        result = session.query(Sport, Role).filter(Sport.sportID == sportID).all()
+        result = [e for e in session.query(Sport, Role).filter(Sport.sportID == sportID).all()]
+        session.close()
         return result
 
     def readSportDetails(self, sportID):
         session = self.conn.getNewSession()
-        result = session.query(Sport).filter(Sport.sportID == sportID).first()
+        result = [e for e in session.query(Sport).filter(Sport.sportID == sportID).all()]
         session.close()
-        return result
+        return result[0]
 
     def searchSport(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Sport).filter(Sport.isDeleted == False,or_(Sport.sportName.like(search))).all()
+        result = [e for e in session.query(Sport).filter(Sport.isDeleted == False,
+                                                         or_(Sport.sportName.like(search))).all()]
+        session.close()
         return result
 
     def deleteSport(self, sportID, isDeleted):
@@ -138,14 +127,15 @@ class SportDAO:
 
     def readUnitDetails(self, unitID):
         session = self.conn.getNewSession()
-        result = session.query(Unit).filter(Unit.unitID == unitID).first()
+        result = [e for e in session.query(Unit).filter(Unit.unitID == unitID).all()]
         session.close()
-        return result
+        return result[0]
 
     def searchUnit(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Unit).filter(Unit.isDeleted == False,
-                                            or_(Unit.unit.like(search), Unit.unitName.like(search))).all()
+        result = [e for e in session.query(Unit).filter(Unit.isDeleted == False,
+                                            or_(Unit.unit.like(search), Unit.unitName.like(search))).all()]
+        session.close()
         return result
 
     def deleteUnit(self, unitID, isDeleted):
@@ -168,8 +158,9 @@ class SportDAO:
 
     def searchRole(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Role).filter(Role.isDeleted == False,
-                                            or_(Role.roleName.like(search), Role.roleDescription.like(search))).all()
+        result = [e for e in session.query(Role).filter(Role.isDeleted == False,
+                                            or_(Role.roleName.like(search), Role.roleDescription.like(search))).all()]
+        session.close()
         return result
 
     def deleteExercise(self, exerciseID, isDeleted):
@@ -183,35 +174,36 @@ class SportDAO:
 
     def searchExercise(self, search):
         session = self.conn.getNewSession()
-        result = session.query(Exercise).filter(Exercise.isDeleted == False,
+        result = [e for e in session.query(Exercise).filter(Exercise.isDeleted == False,
                                                 or_(Exercise.exerciseName.like(search),
                                                     Exercise.exerciseDescription.like(search),
-                                                    Exercise.style.like(search))).all()
+                                                    Exercise.style.like(search))).all()]
+        session.close()
         return result
 
     def readRoleDetails(self, roleID):
         session = self.conn.getNewSession()
-        result = session.query(Role).filter(Role.roleID == roleID).first()
+        result = [e for e in session.query(Role).filter(Role.roleID == roleID).all()]
         session.close()
-        return result
+        return result[0]
 
     def readExerciseDetails(self, exerciseID):
         session = self.conn.getNewSession()
-        result = session.query(Exercise).filter(Exercise.exerciseID == exerciseID).first()
+        result = [e for e in session.query(Exercise).filter(Exercise.exerciseID == exerciseID).all()]
         session.close()
-        return result
+        return result[0]
 
     def getRolesByExerciseID(self, exerciseID):
         session = self.conn.getNewSession()
-        result = session.query(Role, Improves).filter(Improves.exerciseID == exerciseID,
-                                                      Improves.roleID == Role.roleID).all()
+        result = [e for e in session.query(Role, Improves).filter(Improves.exerciseID == exerciseID,
+                                                      Improves.roleID == Role.roleID).all()]
         session.close()
         return result
 
     def getExerciseByRoleID(self, roleID):
         session = self.conn.getNewSession()
-        result = session.query(Exercise, Improves).filter(Improves.roleID == roleID,
-                                                      Improves.exerciseID == Exercise.exerciseID).all()
+        result = [e for e in session.query(Exercise, Improves).filter(Improves.roleID == roleID,
+                                                      Improves.exerciseID == Exercise.exerciseID).all()]
         session.close()
         return result
 
