@@ -6,7 +6,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Text, Boolean, ForeignKey, Date, \
     PrimaryKeyConstraint, Enum, create_engine
 from datetime import datetime
-from src.pg_config import pg_config
+from src.config import DATABASE_URL
+
 
 Base = declarative_base()
 
@@ -14,9 +15,7 @@ Base = declarative_base()
 class Database:
 
     def __init__(self):
-        self.__DATABASE_URI = 'postgres+psycopg2://%s:%s@%s:%s/%s' % \
-                              (pg_config['user'], pg_config['passwd'], pg_config['host'],
-                               pg_config['port'], pg_config['dbname'])
+        self.__DATABASE_URI = DATABASE_URL
         self.db = create_engine(self.__DATABASE_URI)
         self.session = sessionmaker(bind=self.db)
 
