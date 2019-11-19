@@ -22,7 +22,7 @@ def createSport(json):
             else:
                 return jsonify(Error="Type does not exist"), 400
             if id:
-                return jsonify(sportID=id)
+                return jsonify(sportID=id), 200
             return jsonify(Success="Sport added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -36,7 +36,7 @@ def createRole(json):
         if sportID and roleName:
             id = dao.createRole(sportID=sportID, roleName=roleName, roleDescription=roleDescription)
             if id:
-                return jsonify(roleID=id)
+                return jsonify(roleID=id), 200
             return jsonify(Success="Role added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -49,7 +49,7 @@ def sportDetails(json):
         if result is not None:
             return jsonify(Sport=result.json()), 200
         else:
-            return jsonify(Sport="Nothing Found"), 200
+            return jsonify(Sport="Nothing Found"), 404
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -79,7 +79,7 @@ def unitDetails(json):
         if result is not None:
             return jsonify(Sport=result.json()), 200
         else:
-            return jsonify(Sport="Nothing Found"), 200
+            return jsonify(Sport="Nothing Found"), 404
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -91,7 +91,7 @@ def createUnit(json):
         if unitName and unit:
             id = dao.createUnit(unitName, unit)
             if id:
-                return jsonify(unitID=id)
+                return jsonify(unitID=id), 200
             return jsonify(Success="Unit added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -104,7 +104,7 @@ def roleDetails(json):
         if result is not None:
             return jsonify(Role=result.json()), 200
         else:
-            return jsonify(Role="Nothing Found"), 200
+            return jsonify(Role="Nothing Found"), 404
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
@@ -126,7 +126,7 @@ def createExercise(json):
         if exerciseName and style:
             id = dao.createExercise(exerciseName, exerciseDescription, style)
             if id:
-                return jsonify(exerciseID=id)
+                return jsonify(exerciseID=id), 200
             return jsonify(Success="Exercise added"), 200
         else:
             return jsonify(Error="Required Parameter is missing"), 400
@@ -139,7 +139,7 @@ def exerciseDetails(json):
         if result is not None:
             return jsonify(Exercise=result.json()), 200
         else:
-            return jsonify(Exercise="Nothing Found"), 200
+            return jsonify(Exercise="Nothing Found"), 404
     else:
         return jsonify(Error="Required Parameter is missing"), 400
 
