@@ -2,6 +2,7 @@
 This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams, Member, Focus, Support, Attendance
 """
 from datetime import datetime
+from sqlalchemy import Boolean
 import hashlib
 
 from sqlalchemy import or_
@@ -205,6 +206,8 @@ class CoachDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Coach.isActiveUser] = isActiveUser
+        if len(update) <= 0:
+            return None
         result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
         session.commit()
         session.close()
@@ -242,8 +245,10 @@ class CoachDAO:
             update[Coach.lastName] = lname
         if phone is not None and not phone == '':
             update[Coach.phone] = phone
-        if isActiveMember is not None and not isActiveMember == '':
+        if isActiveMember is not None:
             update[Coach.isActiveMember] = isActiveMember
+        if len(update) <= 0:
+            return None
         result = session.query(Coach).filter(Coach.coachID == coachID).update(update)
         session.commit()
         session.close()
@@ -279,7 +284,8 @@ class CoachDAO:
             update[Athlete.birthdate] = email
         if sex is not None and not sex == '':
             update[Athlete.sex] = sex
-
+        if len(update) <= 0:
+            return None
         result = session.query(Athlete).filter(Athlete.coachID == coachID, Athlete.athleteID == athleteID)\
             .update(update)
         session.commit()
@@ -290,6 +296,8 @@ class CoachDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Athlete.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Athlete).filter(Athlete.coachID == coachID,
                                                Athlete.athleteID == athleteID).update(update)
         session.commit()
@@ -318,7 +326,8 @@ class CoachDAO:
             update[Team.teamName] = teamName
         if teamDescription is not None and not teamDescription == '':
             update[Team.teamDescription] = teamDescription
-
+        if len(update) <= 0:
+            return None
         result = session.query(Team).filter(Team.coachID == coachID, Team.teamID == teamID) \
             .update(update)
         session.commit()
@@ -329,6 +338,8 @@ class CoachDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Team.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Athlete).filter(Team.coachID == coachID,
                                                Team.teamID == teamID).update(update)
         session.commit()
@@ -435,9 +446,10 @@ class CoachDAO:
     def updateAttendance(self, sessionID, athleteID, isPresent):
         session = self.conn.getNewSession()
         update = dict()
-        if isPresent is not None and not isPresent == '':
+        if isPresent is not None:
             update[Attendance.isPresent] = isPresent
-
+        if len(update) <= 0:
+            return None
         result = session.query(Attendance).filter(Attendance.athleteID == athleteID,
                                                   Attendance.sessionID == sessionID).update(update)
         session.commit()

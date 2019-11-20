@@ -130,6 +130,8 @@ class SportDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Sport.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Sport).filter(Sport.sportID == sportID).update(update)
         session.commit()
         session.close()
@@ -154,6 +156,8 @@ class SportDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Unit.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Unit).filter(Unit.unitID == unitID).update(update)
         session.commit()
         session.close()
@@ -163,6 +167,8 @@ class SportDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Role.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Role).filter(Role.roleID == roleID).update(update)
         session.commit()
         session.close()
@@ -179,6 +185,8 @@ class SportDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Exercise.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Exercise).filter(Exercise.exerciseID == exerciseID).update(update)
         session.commit()
         session.close()

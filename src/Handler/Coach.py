@@ -190,7 +190,7 @@ def updateCoach(headers, json):
     phone = json['phone']
     isActiveMember = json['isActiveMember']
     if coachID and (fname or lname or phone or isActiveMember is not None):
-        if fname or lname or phone:
+        if fname or lname or phone or isActiveMember is not None:
             dao.updateCoach(coachID, fname, lname, phone, isActiveMember)
         if password and not password == '':
             dao.updatePassword(coachID, password)

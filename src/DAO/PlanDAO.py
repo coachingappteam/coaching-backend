@@ -140,7 +140,8 @@ class PlanDAO:
             update[TrainingPlan.endDate] = endDate
         if planDescription is not None and not planDescription == '':
             update[TrainingPlan.planDescription] = planDescription
-
+        if len(update) <= 0:
+            return None
         result = session.query(TrainingPlan).filter(TrainingPlan.planID == planID).update(update)
         session.commit()
         session.close()
@@ -150,6 +151,8 @@ class PlanDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[TrainingPlan.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(TrainingPlan).filter(TrainingPlan.planID == planID).update(update)
         session.commit()
         session.close()
@@ -204,8 +207,10 @@ class PlanDAO:
             update[Session.sessionDate] = sessionDate
         if sessionDescription is not None and not sessionDescription == '':
             update[Session.sessionDescription] = sessionDescription
-        if isCompetition is not None and not isCompetition == '':
+        if isCompetition is not None:
             update[Session.isCompetition] = isCompetition
+        if len(update) <= 0:
+            return None
         result = session.query(Session).filter(Session.sessionID == sessionID).update(update)
         session.commit()
         session.close()
@@ -215,6 +220,8 @@ class PlanDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Session.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Session).filter(Session.sessionID == sessionID).update(update)
         session.commit()
         session.close()
@@ -288,6 +295,8 @@ class PlanDAO:
             update[Practice.unitID] = unitID
         if measure is not None and not measure == '':
             update[Practice.measure] = measure
+        if len(update) <= 0:
+            return None
         result = session.query(Practice).filter(Practice.practiceID == practiceID).update(update)
         session.commit()
         session.close()
@@ -297,6 +306,8 @@ class PlanDAO:
         session = self.conn.getNewSession()
         update = dict()
         update[Practice.isDeleted] = isDeleted
+        if len(update) <= 0:
+            return None
         result = session.query(Practice).filter(Practice.practiceID == practiceID).update(update)
         session.commit()
         session.close()
@@ -339,6 +350,8 @@ class PlanDAO:
             update[Result.resultDate] = resultDate
         if resultDescription is not None and not resultDescription == '':
             update[Result.resultDescription] = resultDescription
+        if len(update) <= 0:
+            return None
         result = session.query(Result).filter(Result.resultID == resultID).update(update)
         session.commit()
         session.close()
@@ -443,6 +456,8 @@ class PlanDAO:
         update = dict()
         if feedback is not None and not feedback == '':
             update[Analyzed.feedback] = feedback
+        if len(update) <= 0:
+            return None
         result = session.query(Analyzed).filter(Analyzed.analyzedID == analyzedID).update(update)
         session.commit()
         session.close()
