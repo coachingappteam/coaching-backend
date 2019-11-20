@@ -958,7 +958,7 @@ if __name__ == '__main__':
         app.run(debug=((sys.argv[1].lower()) == "true"))
     else:
         config.local = False
-        app.run(debug=True)
+        app.run()
 
 
 
