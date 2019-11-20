@@ -1,5 +1,5 @@
 """
-This Class contain DAO methods for the tables of Training Plan, Session, Practice, Results
+This Class contain DAO methods for the tables of Training Plan, Session, Practice, Results and Analyzed
 """
 from sqlalchemy import or_, func
 
@@ -62,13 +62,13 @@ class PlanDAO:
         session.close()
         return id
 
-    def createAnalyzed(self, athleteID, sessionID, label):
-        result = Analyzed(athleteID=athleteID, sessionID=sessionID, label=label)
+    def createAnalyzed(self, athleteID, roleID, sessionID, performance):
+        result = Analyzed(athleteID=athleteID, roleID=roleID, sessionID=sessionID, performance=performance)
         session = self.conn.getNewSession()
         session.add(result)
         session.flush()
         session.refresh(result)
-        id = result.analyzeID
+        id = result.analyzedID
         session.commit()
         session.close()
         return id
@@ -383,11 +383,12 @@ class PlanDAO:
 
     def readResultsForAthleteInSession(self, athleteID, sessionID):
         session = self.conn.getNewSession()
-        result = [e for e in session.query(Practice.repetitions, Practice.measure,
-                                           func.avg(Result.result).label('avg_result')).\
-            filter(Practice.practiceID == Result.practiceID, Practice.exerciseID == Exercise.exerciseID,
-                   Practice.sessionID == sessionID, Result.athleteID == athleteID).\
-            group_by(Practice.measure, Practice.repetitions).all()]
+        result = [e for e in session.query(Exercise.style, Practice.repetitions, Practice.measure,
+                                           func.avg(Result.result).label('avg_result')).
+            filter(Session.sessionID == Practice.sessionID, Practice.exerciseID == Exercise.exerciseID,
+                   Practice.practiceID == Result.practiceID, Result.athleteID == athleteID,
+                   Session.sessionID == sessionID).
+            group_by(Exercise.style, Practice.measure, Practice.repetitions).all()]
         session.close()
         return result
 
@@ -429,3 +430,55 @@ class PlanDAO:
         session.close()
         return result
 
+    def alreadyAnalyzed(self, sessionID, athleteID, roleID):
+        session = self.conn.getNewSession()
+        result = session.query(Analyzed).filter(Analyzed.sessionID == sessionID, Analyzed.athleteID == athleteID
+                                                , Analyzed.roleID == roleID).first()
+        ans = result is not None
+        session.close()
+        return ans
+
+    def updateAnalyze(self, analyzedID, feedback):
+        session = self.conn.getNewSession()
+        update = dict()
+        if feedback is not None and not feedback == '':
+            update[Analyzed.feedback] = feedback
+        result = session.query(Analyzed).filter(Analyzed.analyzedID == analyzedID).update(update)
+        session.commit()
+        session.close()
+        return result
+
+    def readAnalyzeByID(self, analyzedID):
+        session = self.conn.getNewSession()
+        result = [e for e in session.query(Analyzed).filter(Analyzed.analyzedID == analyzedID).all()]
+        session.close()
+        if len(result) <= 0:
+            return None
+        return result[0]
+
+    def searchAnalyzedForAthleteInSession(self, sessionID, athleteID, search):
+        session = self.conn.getNewSession()
+        result = [e for e in session.query(Analyzed).
+            filter(Analyzed.sessionID == sessionID, Analyzed.athleteID == athleteID,
+                   Analyzed.roleID == Role.roleID, or_(Role.roleName.like(search),
+                                                       Role.roleDescription.like(search))).all()]
+        session.close()
+        return result
+
+    def searchAnalyzedInSession(self, sessionID, search):
+        session = self.conn.getNewSession()
+        result = [e for e in session.query(Analyzed).
+            filter(Analyzed.sessionID == sessionID,
+                   Analyzed.roleID == Role.roleID, or_(Role.roleName.like(search),
+                                                       Role.roleDescription.like(search))).all()]
+        session.close()
+        return result
+
+    def searchAnalyzedForAthlete(self, athleteID, search):
+        session = self.conn.getNewSession()
+        result = [e for e in session.query(Analyzed).
+            filter(Analyzed.athleteID == athleteID,
+                   Analyzed.roleID == Role.roleID, or_(Role.roleName.like(search),
+                                                       Role.roleDescription.like(search))).all()]
+        session.close()
+        return result

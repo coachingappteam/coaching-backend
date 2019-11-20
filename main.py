@@ -909,6 +909,38 @@ def mlRecordResult():
     else:
         return jsonify(Error="Method not allowed"), 405
 
+
+@app.route('/ml/record/feedback', methods=['PATCH'])
+def mlRecordFeedback():
+    if request.method == 'PATCH':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Not Authorized"), 401
+        result = Plan.mlRecordFeedback(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 405
+
+
+@app.route('/ml/result/<int:analyzedID>', methods=['GET'])
+def mlAnalyzeDetails(analyzedID):
+    if request.method == 'GET':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Not Authorized"), 401
+        result = Plan.mlAnalyzeDetails(request.headers, {"analyzedID": analyzedID})
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 405
+
+
+@app.route('/ml/result/search', methods=['POST'])
+def mlAnalyzedSearch():
+    if request.method == 'POST':
+        if not Coach.checkToken(request.headers):
+            return jsonify(Error="Not Authorized"), 401
+        result = Plan.mlAnlyzedSearch(request.headers, request.json)
+        return result
+    else:
+        return jsonify(Error="Method not allowed"), 405
 # ==================== Analytic Methods ====================== #
 @app.route('/analytic/athlete/role/competition', methods=['POST'])
 def analyticForAthleteInCompetition():
@@ -922,11 +954,11 @@ def analyticForAthleteInCompetition():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2 :
+    if len(sys.argv) == 2:
         app.run(debug=((sys.argv[1].lower()) == "true"))
     else:
         config.local = False
-        app.run()
+        app.run(debug=True)
 
 
 

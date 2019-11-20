@@ -1,5 +1,7 @@
+import eventlet
 from flask import jsonify
-
+import requests
+from src.config import AZURE_CODE
 from src.DAO.CoachDAO import CoachDAO
 from src.DAO.PlanDAO import PlanDAO
 from src.DAO.SecurityDAO import SecurityDAO
@@ -451,20 +453,37 @@ def mlAnalyze(headers, json):
     athletes = json['athletes']
     sessions = json['sessions']
     competition_week = json['cw']
-    if len(athletes) <= 0 or len(sessions) <= 0:
+    if len(athletes) <= 0 or len(sessions) <= 0 or competition_week is None or \
+            competition_week > 1 or competition_week < 0:
         return jsonify(Error="Insufficient Data for analysis"), 400
-    requestjson = {"competition_week": competition_week, "records": list()}
-    for athleteID in athletes:
-        if coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) \
-                or coachDAO.readIfAthleteFromCoach(coachID, athleteID):
-            for sessionID in sessions:
-                if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID,
-                                                                                                     sessionID):
+    # requestjson = list()
+    for sessionID in sessions:
+        json = {"results": [],
+                "sessionID": sessionID,
+                "competition_week": competition_week
+                }
+        if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID):
+            for athleteID in athletes:
+                if coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) \
+                        or coachDAO.readIfAthleteFromCoach(coachID, athleteID):
+                    resultTemp = {"id": athleteID, "role": None, "back": [], "breast": [], "butterfly": [], "drill": [],
+                                  "free": [], "im": [], "kick": [], "pull_paddle": []}
                     record = dao.readResultsForAthleteInSession(athleteID, sessionID)
                     if len(record) > 0:
-                        json = {"athleteID": athleteID, "sessionID": sessionID, "results": record}
-                        requestjson["records"].append(json)
-    return jsonify(Results=requestjson)
+                        for row in record:
+                            resultTemp[row[0]] = [row[1], row[2], row[3]]
+                        roles = coachDAO.getRolesByAthleteID(athleteID)
+                        if len(roles) > 0:
+                            for role in roles:
+                                resultTemp['role'] = role[0].json()['roleID']
+                                if not dao.alreadyAnalyzed(sessionID, resultTemp['id'], resultTemp['role']):
+                                    json['results'].append(resultTemp)
+                            with eventlet.Timeout(5):
+                                requests.post(
+                                    "https://coaching-predictions.azurewebsites.net/api/PredictionsHttpTrigger?code="
+                                    + AZURE_CODE + "==", data=json)
+                            #requestjson.append(json)
+    return jsonify(Succes="Sent predictions") #Results=requestjson)
 
 
 def analyticForAthleteInCompetition(headers, json):
@@ -489,10 +508,74 @@ def analyticForAthleteInCompetition(headers, json):
 
 
 def mlRecordResult(json):
-    result = json['results']
+    predictions = json['predictions']
     sessionID = json['sessionID']
-    if len(result) > 0:
-        for row in result:
-            dao.createAnalyzed(row['athleteID'], sessionID, row['label'])
-        return jsonify(Success="All labels added"), 200
+    if len(predictions) > 0:
+        for row in predictions:
+            dao.createAnalyzed(row['id'], row['role'], sessionID, row['performance'])
+        return jsonify(Success="All performance results added."), 200
     return jsonify(Error="Insufficient Arguments"), 400
+
+
+def mlRecordFeedback(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    analyzedID = json['analyzedID']
+    feedback = json['feedback']
+    if coachID and analyzedID and feedback is not None:
+        dao.updateAnalyze(analyzedID, feedback)
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def mlAnalyzeDetails(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    analyzedID = json['analyzedID']
+    if coachID and analyzedID:
+        result = dao.readAnalyzeByID(analyzedID)
+        if result is not None:
+            return jsonify(Analyze=result.json()), 200
+        else:
+            return jsonify(Analyze="Nothing Found"), 404
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400
+
+
+def mlAnlyzedSearch(headers, json):
+    coachID = securityDAO.getTokenOwner(headers['token'])
+    sessionID = json['sessionID']
+    athleteID = json['athleteID']
+    if coachID and sessionID and athleteID:
+        if (dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID)) \
+                and (coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) or
+                     coachDAO.readIfAthleteFromCoach(coachID, athleteID)):
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchAnalyzedForAthleteInSession(sessionID, athleteID, search)
+            results = list()
+            for row in result:
+                results.append(row.json())
+            return jsonify(Analyzed=results), 200
+        else:
+            return jsonify(Error="User doesnt have access to athlete or session"), 403
+    elif coachID and sessionID:
+        if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID):
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchAnalyzedInSession(sessionID, search)
+            results = list()
+            for row in result:
+                results.append(row.json())
+            return jsonify(Analyzed=results), 200
+        else:
+            return jsonify(Error="User doesnt have access to session"), 403
+    elif coachID and athleteID:
+        if coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) or \
+                coachDAO.readIfAthleteFromCoach(coachID, athleteID):
+            search = '%' + str(json['search']) + '%'
+            result = dao.searchAnalyzedForAthlete(athleteID, search)
+            results = list()
+            for row in result:
+                results.append(row.json())
+            return jsonify(Analyzed=results), 200
+        else:
+            return jsonify(Error="User doesnt have access to athlete"), 403
+    else:
+        return jsonify(Error="Required Parameter is missing"), 400

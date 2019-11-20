@@ -662,8 +662,45 @@
                 }
             </p>
 
-        <h3>Analyzed Locations:</h3>
+        <h3>ML model Locations:</h3>
+        <li>[POST] /ml/analyze</li>
+        <p>Description: Lets the user send to the ML model batches to get the perfomance of athletes in sessions.</p>
+            <p> Body:
+                {
+	                "athletes": [4, 5, ...],
+                    "sessions": [2, 3, ...],
+                    "cw": 1
+                }
+            </p>
 
+        <li>[POST] /ml/record/result</li>
+        <p>Description: Lets the user search and view the details of an athlete's result corresponding to a role.</p>
+            <p> Body:
+                {
+	                "predictions": [ {"id": 5, "performance": 1, "role"}, ... ],
+                    "sessionID" : 5
+                }
+            </p>
+        <li>[PATCH] /ml/record/feedback</li>
+        <p>Description: Lets the user change feedback for a performance analysis.</p>
+            <p> Body:
+                {
+	                "feedback": 1,
+                    "analyzedID" : 5
+                }
+            </p>
+        <li>[GET] /ml/result/[analyzedID]</li>
+        <p>Description: Lets the user view the details of an analysis they created or manage.</p>
+        <li>[POST] /ml/result/search</li>
+        <p>Description: Lets the user search and view the details of an analysis from a session and/or athlete they created or manage.</p>
+            <p> Body:
+                {
+	                "search": "param",
+                    "sessionID" : 2,
+                    "atheleteID" : 2
+                }
+            </p>
+        <h3>Analyzed Locations:</h3>
         <li>[POST] /analytic/athlete/role/competition</li>
         <p>Description: Lets the user search and view the details of an athlete's result corresponding to a role.</p>
             <p> Body:
@@ -672,6 +709,7 @@
                     "roleID" : 5
                 }
             </p>
+
     </ul>
 
 </body>

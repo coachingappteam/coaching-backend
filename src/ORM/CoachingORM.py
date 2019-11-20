@@ -447,13 +447,13 @@ class Attendance(Base):
 
 class Analyzed(Base):
     __tablename__ = 'analyzed'
-    analyzeID = Column(Integer, primary_key=True, autoincrement=True)
+    analyzedID = Column(Integer, primary_key=True, autoincrement=True)
     sessionID = Column(Integer,  ForeignKey('session.sessionID'), nullable=False)
     athleteID = Column(Integer, ForeignKey('athlete.athleteID'), nullable=False)
-    label = Column(Integer, nullable=False, default=0)
+    roleID = Column(Integer, ForeignKey('role.roleID'), nullable=False)
+    performance = Column(Integer, nullable=False, default=0)
     feedback = Column(Integer, nullable=True)
     creationDate = Column(TIMESTAMP, nullable=False, default=datetime.today())
-    __table_args__ = (PrimaryKeyConstraint('sessionID', 'athleteID'), {},)
 
     def __repr__(self):
         return "<analyzed(athleteID='{}', sessionID='{}')>" \
@@ -461,10 +461,10 @@ class Analyzed(Base):
 
     def json(self):
         return {
-            "analyzeID": self.analyzeID,
+            "analyzeID": self.analyzedID,
             "sessionID": self.sessionID,
             "athleteID": self.athleteID,
-            "label": self.label,
+            "performance": self.performance,
             "feedback": self.feedback,
             "creationDate": self.creationDate
         }
