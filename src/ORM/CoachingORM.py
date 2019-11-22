@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Text, Boolean, ForeignKey, Date, \
     PrimaryKeyConstraint, Enum, create_engine
 from datetime import datetime
-from src.config import DATABASE_URL
+from src.config import DATABASE_URL, LOCAL_DB
 
 
 Base = declarative_base()
@@ -14,8 +14,11 @@ Base = declarative_base()
 
 class Database:
 
-    def __init__(self):
-        self.__DATABASE_URI = DATABASE_URL
+    def __init__(self, local=False):
+        if local:
+            self.__DATABASE_URI = LOCAL_DB
+        else:
+            self.__DATABASE_URI = DATABASE_URL
         self.db = create_engine(self.__DATABASE_URI)
         self.session = sessionmaker(bind=self.db)
 

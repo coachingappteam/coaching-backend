@@ -281,7 +281,7 @@ class PlanDAO:
         session = self.conn.getNewSession()
         result = [e for e in session.query(Practice, Exercise, Unit).filter(Practice.sessionID == sessionID,
                                                           Practice.isDeleted == False, Unit.unitID == Practice.unitID,
-            or_(Practice.repetitions.like(search), Exercise.exerciseName.like(search),
+            or_(Exercise.exerciseName.like(search),
                 Exercise.exerciseDescription.like(search), Exercise.style.like(search), Unit.unit.like(search))).all()]
         session.close()
         return result
@@ -375,22 +375,21 @@ class PlanDAO:
     def searchResultsForAthleteInPractice(self, practiceID, athleteID, search):
         session = self.conn.getNewSession()
         result = [e for e in session.query(Result).filter(Result.practiceID == practiceID, Result.athleteID == athleteID,
-            or_(Result.resultDescription.like(search), Result.result.like(search))).all()]
+            Result.resultDescription.like(search)).all()]
         session.close()
         return result
 
     def searchResultsInPractice(self, practiceID, search):
         session = self.conn.getNewSession()
         result = [e for e in session.query(Result).filter(Result.practiceID == practiceID,
-            or_(Result.resultDescription.like(search), Result.result.like(search))).all()]
+            Result.resultDescription.like(search)).all()]
         session.close()
         return result
 
     def searchResultsForAthlete(self, athleteID, search):
         session = self.conn.getNewSession()
         result = [e for e in session.query(Result).filter(Result.athleteID == athleteID,
-                                              or_(Result.resultDescription.like(search),
-                                                  Result.result.like(search))).all()]
+                                              Result.resultDescription.like(search)).all()]
         session.close()
         return result
 

@@ -2,7 +2,6 @@
 This Class contain DAO methods for the tables of Coach, Payment, Athletes, Teams, Member, Focus, Support, Attendance
 """
 from datetime import datetime
-from sqlalchemy import Boolean
 import hashlib
 
 from sqlalchemy import or_
