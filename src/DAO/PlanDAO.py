@@ -496,3 +496,13 @@ class PlanDAO:
                                                        Role.roleDescription.like(search))).all()]
         session.close()
         return result
+
+    def readIfPairAdded(self, athleteID, roleID, sessionID):
+        session = self.conn.getNewSession()
+        result = session.query(Analyzed).filter(
+                                                          Analyzed.sessionID == sessionID,
+                                                          Analyzed.athleteID == athleteID,
+                                                          Analyzed.roleID == roleID).first()
+        ans = result is not None
+        session.close()
+        return ans

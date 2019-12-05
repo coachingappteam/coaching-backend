@@ -1,3 +1,5 @@
+import json
+
 import eventlet
 from flask import jsonify
 import requests
@@ -448,20 +450,20 @@ def timelineSearch(headers, json):
         return jsonify(Error="Required Parameter is missing"), 400
 
 
-def mlAnalyze(headers, json):
+def mlAnalyze(headers, jsonObj):
     coachID = securityDAO.getTokenOwner(headers['token'])
-    athletes = json['athletes']
-    sessions = json['sessions']
-    competition_week = json['cw']
+    athletes = jsonObj['athletes']
+    sessions = jsonObj['sessions']
+    competition_week = jsonObj['cw']
     if len(athletes) <= 0 or len(sessions) <= 0 or competition_week is None or \
             competition_week > 1 or competition_week < 0:
         return jsonify(Error="Insufficient Data for analysis"), 400
     # requestjson = list()
     for sessionID in sessions:
-        json = {"results": [],
+        jsonObj = {"results": [],
                 "sessionID": sessionID,
                 "competition_week": competition_week
-                }
+                   }
         if dao.readIfCoachManageSession(coachID, sessionID) or dao.readIfCoachSupportSession(coachID, sessionID):
             for athleteID in athletes:
                 if coachDAO.readIfAthleteInTeamFromSupport(coachID, athleteID) \
@@ -477,13 +479,11 @@ def mlAnalyze(headers, json):
                             for role in roles:
                                 resultTemp['role'] = role[0].json()['roleID']
                                 if not dao.alreadyAnalyzed(sessionID, resultTemp['id'], resultTemp['role']):
-                                    json['results'].append(resultTemp)
-                            with eventlet.Timeout(5):
+                                    jsonObj['results'].append(resultTemp)
                                 requests.post(
                                     "https://coaching-predictions.azurewebsites.net/api/PredictionsHttpTrigger?code="
-                                    + AZURE_CODE + "==", data=json)
-                            #requestjson.append(json)
-    return jsonify(Succes="Sent predictions") #Results=requestjson)
+                                    + AZURE_CODE, data=json.dumps(jsonObj))
+    return jsonify(Succes="Sent predictions")
 
 
 def analyticForAthleteInCompetition(headers, json):
@@ -512,7 +512,8 @@ def mlRecordResult(json):
     sessionID = json['sessionID']
     if len(predictions) > 0:
         for row in predictions:
-            dao.createAnalyzed(row['id'], row['role'], sessionID, row['performance'])
+            if not dao.readIfPairAdded(row['id'], row['role'], sessionID):
+                dao.createAnalyzed(row['id'], row['role'], sessionID, row['performance'])
         return jsonify(Success="All performance results added."), 200
     return jsonify(Error="Insufficient Arguments"), 400
 

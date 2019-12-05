@@ -957,7 +957,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         app.run(debug=((sys.argv[1].lower()) == "true"))
     else:
-        app.run()
+        app.run(debug=True)
 
 
 
