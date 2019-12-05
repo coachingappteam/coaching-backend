@@ -3,7 +3,7 @@ import json
 import eventlet
 from flask import jsonify
 import requests
-from src.config import AZURE_CODE
+from src.config import AZURE_CODE, AZURE_URL
 from src.DAO.CoachDAO import CoachDAO
 from src.DAO.PlanDAO import PlanDAO
 from src.DAO.SecurityDAO import SecurityDAO
@@ -480,9 +480,7 @@ def mlAnalyze(headers, jsonObj):
                                 resultTemp['role'] = role[0].json()['roleID']
                                 if not dao.alreadyAnalyzed(sessionID, resultTemp['id'], resultTemp['role']):
                                     jsonObj['results'].append(resultTemp)
-                                requests.post(
-                                    "https://coaching-predictions.azurewebsites.net/api/PredictionsHttpTrigger?code="
-                                    + AZURE_CODE, data=json.dumps(jsonObj))
+                                    requests.post(AZURE_URL + AZURE_CODE, data=json.dumps(jsonObj))
     return jsonify(Succes="Sent predictions")
 
 
